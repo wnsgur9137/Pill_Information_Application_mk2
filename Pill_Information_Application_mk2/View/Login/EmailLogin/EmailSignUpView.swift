@@ -17,9 +17,11 @@ final class EmailSignUpViewController: UIViewController {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 7.0
-        imageView.layer.borderWidth = 0.5
-        imageView.layer.borderColor = UIColor.separator.cgColor
-        imageView.backgroundColor = .systemBlue
+//        imageView.layer.borderWidth = 0.5
+//        imageView.layer.borderColor = UIColor.separator.cgColor
+        imageView.image = UIImage(named: "sign_with")
+        imageView.contentMode = .scaleAspectFit
+//        imageView.backgroundColor = .systemBlue
         
         return imageView
     }()
@@ -219,6 +221,10 @@ final class EmailSignUpViewController: UIViewController {
 private extension EmailSignUpViewController {
     func bind() {
         
+        emailTextField.rx.text
+            .subscribe(onNext: { changeText in
+//                if changeText
+            })
     }
     
     func setupLayout() {

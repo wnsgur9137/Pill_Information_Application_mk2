@@ -17,8 +17,10 @@ final class EmailLoginViewController: UIViewController {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 4.0
-        imageView.layer.borderWidth = 2.0
-        imageView.layer.borderColor = UIColor.systemMint.cgColor
+//        imageView.layer.borderWidth = 2.0
+//        imageView.layer.borderColor = UIColor.systemMint.cgColor
+        imageView.image = UIImage(named: "sign_with")
+        imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()

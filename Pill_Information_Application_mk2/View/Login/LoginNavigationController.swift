@@ -17,9 +17,10 @@ final class LoginViewController: UIViewController {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 7.0
-        imageView.layer.borderWidth = 0.5
-        imageView.layer.borderColor = UIColor.separator.cgColor
-        imageView.backgroundColor = .systemBlue
+//        imageView.layer.borderWidth = 0.5
+//        imageView.layer.borderColor = UIColor.separator.cgColor
+        imageView.image = UIImage(named: "Logo_Kor")
+        imageView.contentMode = .scaleAspectFill
         
         return imageView
     }()
