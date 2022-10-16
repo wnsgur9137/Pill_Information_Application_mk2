@@ -13,6 +13,9 @@ import RxCocoa
 final class EmailSignUpViewController: UIViewController {
     
     let disposeBag = DisposeBag()
+    var emailBool = false
+    var pwdTypeBool = false
+    var pwdCheckBool = false
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -49,14 +52,14 @@ final class EmailSignUpViewController: UIViewController {
     private lazy var emailTextField: UITextField = {
         let emailTextField = UITextField()
         emailTextField.backgroundColor = .systemGray
-        
+        emailTextField.keyboardType = .emailAddress
         
         return emailTextField
     }()
     
     private lazy var warningEmailTypeLabel: UILabel = {
         let label = UILabel()
-        label.text = "이메일 형식에 맞추어 주십시오."
+        label.text = ""
         label.textColor = .systemRed
         label.font = .systemFont(ofSize: 15.0, weight: .bold)
         label.textAlignment = .right
@@ -77,13 +80,14 @@ final class EmailSignUpViewController: UIViewController {
     private lazy var passwdTextField: UITextField = {
         let passwdTextField = UITextField()
         passwdTextField.backgroundColor = .systemGray
+        passwdTextField.isSecureTextEntry = true
         
         return passwdTextField
     }()
     
     private lazy var warningPasswdTypeLabel: UILabel = {
         let label = UILabel()
-        label.text = "소문자, 대문자, 숫자를 조합하여\n 8자 이상 입력해 주십시오."
+        label.text = ""
         label.textColor = .systemRed
         label.font = .systemFont(ofSize: 15.0, weight: .bold)
         label.textAlignment = .right
@@ -94,7 +98,7 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var passwdCheckLabel: UILabel = {
         let passwdCheckLabel = UILabel()
-        passwdCheckLabel.text = "Password"
+        passwdCheckLabel.text = "pwdCheck"
         passwdCheckLabel.textColor = .label
         passwdCheckLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         passwdCheckLabel.textAlignment = .center
@@ -105,13 +109,14 @@ final class EmailSignUpViewController: UIViewController {
     private lazy var passwdCheckTextField: UITextField = {
         let passwdCheckTextField = UITextField()
         passwdCheckTextField.backgroundColor = .systemGray
+        passwdCheckTextField.isSecureTextEntry = true
         
         return passwdCheckTextField
     }()
     
     private lazy var warningPasswdCheckLabel: UILabel = {
         let label = UILabel()
-        label.text = "비밀번호가 일치하지 않습니다."
+        label.text = ""
         label.textColor = .systemRed
         label.font = .systemFont(ofSize: 15.0, weight: .bold)
         label.textAlignment = .right
@@ -149,7 +154,7 @@ final class EmailSignUpViewController: UIViewController {
         ])
         
         stackView.axis = .vertical
-        stackView.spacing = 6.0
+        stackView.spacing = 1.0
         stackView.distribution = .fill
         
         return stackView
@@ -175,7 +180,7 @@ final class EmailSignUpViewController: UIViewController {
         ])
         
         stackView.axis = .vertical
-        stackView.spacing = 6.0
+        stackView.spacing = 1.0
         stackView.distribution = .fill
         
         return stackView
@@ -201,7 +206,7 @@ final class EmailSignUpViewController: UIViewController {
         ])
         
         stackView.axis = .vertical
-        stackView.spacing = 6.0
+        stackView.spacing = 1.0
         stackView.distribution = .fill
         
         return stackView
@@ -222,9 +227,66 @@ private extension EmailSignUpViewController {
     func bind() {
         
         emailTextField.rx.text
-            .subscribe(onNext: { changeText in
-//                if changeText
+            .subscribe(onNext: { [weak self] changeText in
+                guard let self = self else { return }
+                if changeText != "" {
+                    let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+                    if !NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: changeText) {
+                        self.warningEmailTypeLabel.text = "이메일 형식에 맞추어 주십시오."
+                        self.emailBool = false
+                    }
+                    else {
+                        self.warningEmailTypeLabel.text = ""
+                        self.emailBool = true
+                    }
+                }
             })
+            .disposed(by: disposeBag)
+        
+        passwdTextField.rx.text
+            .subscribe(onNext: { [weak self] changeText in
+                guard let self = self else { return }
+                if changeText != "" {
+                    let passwordreg =  ("(?=.*[A-Za-z])(?=.*[0-9]).{8,20}")
+                    if !NSPredicate(format: "SELF MATCHES %@", passwordreg).evaluate(with: changeText) {
+                        self.warningPasswdTypeLabel.text = """
+                                                            문자, 숫자, 특수문자르 조합하여
+                                                            8~20 길이의 형식을 맞추어 주십시오.
+                                                            """
+                        self.pwdTypeBool = false
+                    } else {
+                        self.warningPasswdTypeLabel.text = ""
+                        self.pwdTypeBool = true
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        passwdCheckTextField.rx.text
+            .subscribe(onNext: { [weak self] changeText in
+                guard let self = self else { return }
+                if changeText != self.passwdTextField.text {
+                    self.warningPasswdCheckLabel.text = "비밀번호가 일치하지 않습니다."
+                    self.pwdCheckBool = false
+                } else {
+                    self.warningPasswdCheckLabel.text = ""
+                    self.pwdCheckBool = true
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        signupButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                if self.emailBool && self.pwdCheckBool && self.pwdCheckBool {
+                    print("email: \(self.emailTextField.text)")
+                    print("passwd: \(self.passwdTextField.text)")
+                    print("pwdCheck: \(self.passwdCheckTextField.text)")
+                } else {
+                    print("확인 필요")
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func setupLayout() {
@@ -255,37 +317,49 @@ private extension EmailSignUpViewController {
             $0.width.equalTo(100)
         }
         
+        emailTextField.snp.makeConstraints {
+            $0.height.equalTo(32)
+        }
+        
         emailVerticalStackView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(90)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(328)
-            $0.height.equalTo(34)
+            $0.height.equalTo(64)
         }
         
         passwdLabel.snp.makeConstraints {
             $0.width.equalTo(100)
         }
         
+        passwdTextField.snp.makeConstraints {
+            $0.height.equalTo(32)
+        }
+        
         passwdVerticalStackView.snp.makeConstraints {
-            $0.top.equalTo(emailVerticalStackView.snp.bottom).offset(20)
+            $0.top.equalTo(emailVerticalStackView.snp.bottom).offset(30)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(328)
-            $0.height.equalTo(34)
+            $0.height.equalTo(90)
         }
         
         passwdCheckLabel.snp.makeConstraints {
             $0.width.equalTo(100)
         }
         
+        passwdCheckTextField.snp.makeConstraints {
+            $0.height.equalTo(32)
+        }
+        
         passwdCheckVerticalStackView.snp.makeConstraints {
-            $0.top.equalTo(passwdVerticalStackView.snp.bottom).offset(20)
+            $0.top.equalTo(passwdVerticalStackView.snp.bottom).offset(1)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(328)
-            $0.height.equalTo(34)
+            $0.height.equalTo(64)
         }
         
         signupButton.snp.makeConstraints {
-            $0.top.equalTo(passwdCheckVerticalStackView.snp.bottom).offset(100)
+            $0.top.equalTo(passwdCheckVerticalStackView.snp.bottom).offset(80)
             $0.centerX.equalToSuperview()
         }
     }

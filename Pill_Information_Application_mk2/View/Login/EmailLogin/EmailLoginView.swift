@@ -48,6 +48,7 @@ final class EmailLoginViewController: UIViewController {
     private lazy var emailTextField: UITextField = {
         let emailTextField = UITextField()
         emailTextField.backgroundColor = .systemGray
+        emailTextField.keyboardType = .emailAddress
         
         
         return emailTextField
@@ -66,6 +67,7 @@ final class EmailLoginViewController: UIViewController {
     private lazy var passwdTextField: UITextField = {
         let passwdTextField = UITextField()
         passwdTextField.backgroundColor = .systemGray
+        passwdTextField.isSecureTextEntry = true
         
         return passwdTextField
     }()
