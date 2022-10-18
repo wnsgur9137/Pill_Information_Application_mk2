@@ -283,7 +283,10 @@ private extension EmailSignUpViewController {
                     print("passwd: \(self.passwdTextField.text)")
                     print("pwdCheck: \(self.passwdCheckTextField.text)")
                 } else {
-                    print("확인 필요")
+                    let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
                 }
             })
             .disposed(by: disposeBag)
