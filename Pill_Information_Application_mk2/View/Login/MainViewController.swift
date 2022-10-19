@@ -29,3 +29,5 @@ private extension MainViewController {
         self.present(rootController, animated: true, completion: nil)
     }
 }
+
+//error build: In /Users/junhyeok/study/Xcode/Pill_Information_Application_mk2/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/GoogleSignIn(GIDAuthStateMigration_425a588fcd149b383bb30d0e6a3b4322.o), building for iOS Simulator, but linking in object file built for iOS, file '/Users/junhyeok/study/Xcode/Pill_Information_Application_mk2/Pods/GoogleSignIn/Frameworks/GoogleSignIn.framework/GoogleSignIn' for architecture arm64

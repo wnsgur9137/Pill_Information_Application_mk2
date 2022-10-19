@@ -138,7 +138,6 @@
 				665E927028F7BD130090B51F /* Frameworks */,
 				665E927128F7BD130090B51F /* Resources */,
 				3F5CBC7E8E0EA6FE06C46796 /* [CP] Embed Pods Frameworks */,
-				0F3C8A5BA01E4F6D3B9546B7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -177,7 +176,7 @@
 			);
 			mainGroup = 665E926A28F7BD130090B51F;
 			packageReferences = (
-				661DB27D28FFD4B300F79691 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				661DB27D28FFD4B300F79691 /* XCRemoteSwiftPackageReference "SnapKit.git" */,
 			);
 			productRefGroup = 665E927428F7BD130090B51F /* Products */;
 			projectDirPath = "";
@@ -201,23 +200,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0F3C8A5BA01E4F6D3B9546B7 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Pill_Information_Application_mk2/Pods-Pill_Information_Application_mk2-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Pill_Information_Application_mk2/Pods-Pill_Information_Application_mk2-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Pill_Information_Application_mk2/Pods-Pill_Information_Application_mk2-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3F5CBC7E8E0EA6FE06C46796 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -482,7 +464,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		661DB27D28FFD4B300F79691 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		661DB27D28FFD4B300F79691 /* XCRemoteSwiftPackageReference "SnapKit.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -495,7 +477,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		661DB27E28FFD4B300F79691 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 661DB27D28FFD4B300F79691 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 661DB27D28FFD4B300F79691 /* XCRemoteSwiftPackageReference "SnapKit.git" */;
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
