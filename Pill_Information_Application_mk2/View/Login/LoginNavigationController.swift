@@ -121,7 +121,7 @@ final class LoginViewController: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [
             appleStackView,
             kakaoStackView,
-            googleStackView,
+//            googleStackView,
             emailStackView
         ])
         

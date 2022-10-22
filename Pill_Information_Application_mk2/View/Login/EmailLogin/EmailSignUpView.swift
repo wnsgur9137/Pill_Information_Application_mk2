@@ -10,6 +10,9 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+import Firebase
+import FirebaseAuth
+
 final class EmailSignUpViewController: UIViewController {
     
     let disposeBag = DisposeBag()
@@ -279,9 +282,10 @@ private extension EmailSignUpViewController {
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
                 if self.emailBool && self.pwdCheckBool && self.pwdCheckBool {
-                    print("email: \(self.emailTextField.text)")
-                    print("passwd: \(self.passwdTextField.text)")
-                    print("pwdCheck: \(self.passwdCheckTextField.text)")
+                    let vc = NicknameSetView()
+                    vc.email = self.emailTextField.text!
+                    vc.passwd = self.passwdTextField.text!
+                    self.navigationController?.pushViewController(vc, animated: true)
                 } else {
                     let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)

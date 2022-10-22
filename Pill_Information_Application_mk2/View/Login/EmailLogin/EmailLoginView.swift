@@ -10,6 +10,9 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+import Firebase
+import FirebaseAuth
+
 final class EmailLoginViewController: UIViewController {
     
     let disposeBag = DisposeBag()
@@ -134,6 +137,20 @@ final class EmailLoginViewController: UIViewController {
         return passwdStackView
     }()
     
+    private lazy var buttonStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [
+            findEmailButton,
+            findPasswdButton,
+            signupButton
+        ])
+        
+        stackView.axis = .horizontal
+        stackView.spacing = 6.0
+        stackView.distribution = .fill
+        
+        return stackView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "EmailLogin"
@@ -146,17 +163,44 @@ final class EmailLoginViewController: UIViewController {
 private extension EmailLoginViewController {
     
     func bind() {
-//        signinButton.rx.tap
-            
-//        findEmailButton.rx.tap
-        
-//        findPasswdButton.rx.tap
         
         signupButton.rx.tap
             .bind {
                 let vc = EmailSignUpViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
             }
+            .disposed(by: disposeBag)
+        
+        signinButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                if self.emailTextField.text != "" && self.passwdTextField.text != "" {
+                    
+                    Auth.auth().signIn(withEmail: self.emailTextField.text!, password: self.passwdTextField.text!) { (user, error) in
+                        
+                        if user != nil {
+//                            UserDefaults.standard.set("email", forKey: "loginType")
+//                            UserDefaults.standard.set(self.emailTextField.text!, forKey: "email")
+//                            UserDefaults.standard.set(self.passwdTextField.text!, forKey: "passwd")
+                            
+                            let vc = HomeTabBarController()
+                            vc.modalPresentationStyle = .fullScreen
+                            self.present(vc, animated: true)
+                        } else {
+                            let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            alertCon.addAction(alertAct)
+                            self.present(alertCon, animated: true, completion: nil)
+                        }
+                    }
+                        
+                } else {
+                    let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 입력해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
+                }
+            })
             .disposed(by: disposeBag)
     }
     
@@ -168,9 +212,10 @@ private extension EmailLoginViewController {
             emailStackView,
             passwdStackView,
             signinButton,
-            findEmailButton,
-            findPasswdButton,
-            signupButton
+            buttonStackView
+//            findEmailButton,
+//            findPasswdButton,
+//            signupButton
         ].forEach{ view.addSubview($0) }
         
         imageView.snp.makeConstraints {
@@ -209,21 +254,30 @@ private extension EmailLoginViewController {
             $0.height.equalTo(34)
         }
         
-        findEmailButton.snp.makeConstraints {
+        signinButton.snp.makeConstraints {
             $0.top.equalTo(passwdStackView.snp.bottom).offset(100)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(34)
         }
         
-        findPasswdButton.snp.makeConstraints {
-            $0.top.equalTo(findEmailButton.snp.bottom).offset(20)
+        buttonStackView.snp.makeConstraints {
+            $0.top.equalTo(signinButton.snp.bottom).offset(40)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(34)
         }
         
+        findEmailButton.snp.makeConstraints {
+            $0.width.equalTo(100)
+            $0.height.equalTo(34)
+        }
+
+        findPasswdButton.snp.makeConstraints {
+            $0.width.equalTo(100)
+            $0.height.equalTo(34)
+        }
+
         signupButton.snp.makeConstraints {
-            $0.top.equalTo(findPasswdButton.snp.bottom).offset(20)
-            $0.centerX.equalToSuperview()
+            $0.width.equalTo(100)
             $0.height.equalTo(34)
         }
     }
