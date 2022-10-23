@@ -12,8 +12,11 @@ import RxCocoa
 
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 
 final class NicknameSetView: UIViewController {
+    
+    let db = Firestore.firestore()
     
     let disposeBag = DisposeBag()
     var email: String? = ""
@@ -59,20 +62,59 @@ final class NicknameSetView: UIViewController {
 private extension NicknameSetView {
     func bind() {
         signUpButton.rx.tap
-            .subscribe(onNext: {
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
                 // 유저 생성
-                Auth.auth().createUser(withEmail: self.email!, password: self.passwd!) {
-                    [self]authResult, error in
-                    if let _ = error {  // 유저 생성에 실패할 경우
-                        let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+                
+                // 이메일 중복체크
+                let userDB = self.db.collection("USER")
+                let query = userDB.whereField("NickName", isEqualTo: self.nicknameTextField.text!)
+                query.getDocuments { (qs, err) in
+                    if qs!.documents.isEmpty {
+                        Auth.auth().createUser(withEmail: self.email!, password: self.passwd!) {
+                            [self]authResult, error in
+                            if let _ = error {  // 유저 생성에 실패할 경우
+                                let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+                                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                                alertCon.addAction(alertAct)
+                                self.present(alertCon, animated: true, completion: nil)
+                            } else {    // 유저 생성에 성공할 경우
+                                
+                                // Firestore에 데이터 생성
+                                self.db.collection("USER").document(self.nicknameTextField.text!).setData([
+                                    "Email": self.email!,
+                                    "NickName": self.nicknameTextField.text!
+                                ])
+                                
+                                // 회원가입시 자동 로그인
+                                Auth.auth().signIn(withEmail: self.email!, password: self.passwd!) { (user, error) in
+                                    
+                                    if user != nil {
+                                        UserDefaults.standard.set("email", forKey: "loginType")
+                                        UserDefaults.standard.set(self.email!, forKey: "email")
+                                        UserDefaults.standard.set(self.passwd!, forKey: "passwd")
+                                        
+                                        let alertCon = UIAlertController(title: "성공", message: "환영합니다.", preferredStyle: UIAlertController.Style.alert)
+                                        let alertAct = UIAlertAction(title: "로그인", style: UIAlertAction.Style.default, handler: { _ in
+                                            let vc = HomeTabBarController()
+                                            vc.modalPresentationStyle = .fullScreen
+                                            self.present(vc, animated: true)
+                                        })
+                                        alertCon.addAction(alertAct)
+                                        self.present(alertCon, animated: true, completion: nil)
+                                    } else {
+                                        let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+                                        let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                                        alertCon.addAction(alertAct)
+                                        self.present(alertCon, animated: true, completion: nil)
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        // 이메일이 중복된 경우
+                        let alertCon = UIAlertController(title: "경고", message: "중복된 닉네임입니다.", preferredStyle: UIAlertController.Style.alert)
                         let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
-                        alertCon.addAction(alertAct)
-                        self.present(alertCon, animated: true, completion: nil)
-                    } else {    // 유저 생성에 성공할 경우
-                        let alertCon = UIAlertController(title: "성공", message: "환영합니다.", preferredStyle: UIAlertController.Style.alert)
-                        let alertAct = UIAlertAction(title: "로그인", style: UIAlertAction.Style.default, handler: { (action) in
-                            self.dismiss(animated: true)
-                        })
                         alertCon.addAction(alertAct)
                         self.present(alertCon, animated: true, completion: nil)
                     }

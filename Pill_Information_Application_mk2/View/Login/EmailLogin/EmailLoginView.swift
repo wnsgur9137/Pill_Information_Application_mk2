@@ -179,9 +179,9 @@ private extension EmailLoginViewController {
                     Auth.auth().signIn(withEmail: self.emailTextField.text!, password: self.passwdTextField.text!) { (user, error) in
                         
                         if user != nil {
-//                            UserDefaults.standard.set("email", forKey: "loginType")
-//                            UserDefaults.standard.set(self.emailTextField.text!, forKey: "email")
-//                            UserDefaults.standard.set(self.passwdTextField.text!, forKey: "passwd")
+                            UserDefaults.standard.set("email", forKey: "loginType")
+                            UserDefaults.standard.set(self.emailTextField.text!, forKey: "email")
+                            UserDefaults.standard.set(self.passwdTextField.text!, forKey: "passwd")
                             
                             let vc = HomeTabBarController()
                             vc.modalPresentationStyle = .fullScreen

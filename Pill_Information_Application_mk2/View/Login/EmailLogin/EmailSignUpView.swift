@@ -12,6 +12,7 @@ import RxCocoa
 
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 
 final class EmailSignUpViewController: UIViewController {
     
@@ -19,6 +20,8 @@ final class EmailSignUpViewController: UIViewController {
     var emailBool = false
     var pwdTypeBool = false
     var pwdCheckBool = false
+    
+    let db = Firestore.firestore()
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -282,10 +285,25 @@ private extension EmailSignUpViewController {
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
                 if self.emailBool && self.pwdCheckBool && self.pwdCheckBool {
-                    let vc = NicknameSetView()
-                    vc.email = self.emailTextField.text!
-                    vc.passwd = self.passwdTextField.text!
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    
+                    // 이메일 중복체크
+                    let userDB = self.db.collection("USER")
+                    let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
+                    query.getDocuments { (qs, err) in
+                        if qs!.documents.isEmpty {
+                            // 사용 가능한 이메일일 경우
+                            let vc = NicknameSetView()
+                            vc.email = self.emailTextField.text!
+                            vc.passwd = self.passwdTextField.text!
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        } else {
+                            // 이메일이 중복된 경우
+                            let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            alertCon.addAction(alertAct)
+                            self.present(alertCon, animated: true, completion: nil)
+                        }
+                    }
                 } else {
                     let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
