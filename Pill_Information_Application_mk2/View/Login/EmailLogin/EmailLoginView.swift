@@ -16,6 +16,7 @@ import FirebaseAuth
 final class EmailLoginViewController: UIViewController {
     
     let disposeBag = DisposeBag()
+    let db = Firestore.firestore()
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -171,6 +172,22 @@ private extension EmailLoginViewController {
             }
             .disposed(by: disposeBag)
         
+        findEmailButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                let vc = FindEmailView()
+                vc.modalPresentationStyle = .fullScreen
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        findPasswdButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                let vc = FindPasswdView()
+                vc.modalPresentationStyle = .fullScreen
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
         signinButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
@@ -182,6 +199,20 @@ private extension EmailLoginViewController {
                             UserDefaults.standard.set("email", forKey: "loginType")
                             UserDefaults.standard.set(self.emailTextField.text!, forKey: "email")
                             UserDefaults.standard.set(self.passwdTextField.text!, forKey: "passwd")
+                            let userDB = self.db.collection("USER")
+                            let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
+                            query.getDocuments { (qs, err) in
+                                if qs!.documents.isEmpty {
+                                    let alertCon = UIAlertController(title: "경고", message: "회원 정보가 없습니다.", preferredStyle: UIAlertController.Style.alert)
+                                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                                    alertCon.addAction(alertAct)
+                                    self.present(alertCon, animated: true, completion: nil)
+                                } else {
+                                    for document in qs!.documents {
+                                        UserDefaults.standard.set(document.data()["NickName"]!, forKey: "nickname")
+                                    }
+                                }
+                            }
                             
                             let vc = HomeTabBarController()
                             vc.modalPresentationStyle = .fullScreen

@@ -240,8 +240,7 @@ private extension EmailSignUpViewController {
                     if !NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: changeText) {
                         self.warningEmailTypeLabel.text = "이메일 형식에 맞추어 주십시오."
                         self.emailBool = false
-                    }
-                    else {
+                    } else {
                         self.warningEmailTypeLabel.text = ""
                         self.emailBool = true
                     }

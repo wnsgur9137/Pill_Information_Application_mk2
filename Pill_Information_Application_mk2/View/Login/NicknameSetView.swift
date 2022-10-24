@@ -93,6 +93,7 @@ private extension NicknameSetView {
                                         UserDefaults.standard.set("email", forKey: "loginType")
                                         UserDefaults.standard.set(self.email!, forKey: "email")
                                         UserDefaults.standard.set(self.passwd!, forKey: "passwd")
+                                        UserDefaults.standard.set(self.nicknameTextField.text!, forKey: "nickname")
                                         
                                         let alertCon = UIAlertController(title: "성공", message: "환영합니다.", preferredStyle: UIAlertController.Style.alert)
                                         let alertAct = UIAlertAction(title: "로그인", style: UIAlertAction.Style.default, handler: { _ in
