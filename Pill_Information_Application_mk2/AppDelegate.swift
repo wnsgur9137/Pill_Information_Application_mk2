@@ -17,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
+        // TabBar 배경색
+        UITabBarAppearance().configureWithOpaqueBackground()
+        UITabBar.appearance().backgroundColor = UIColor.lightGray
+        
         return true
     }
 

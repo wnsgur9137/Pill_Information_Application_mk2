@@ -14,6 +14,13 @@ final class LoginViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
+    
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        return view
+    }()
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 7.0
@@ -243,10 +250,15 @@ private extension LoginViewController {
     
     func setupLayout() {
         [
+            backgroundView,
             imageView,
             titleLabel,
             stackView
         ].forEach{ view.addSubview($0) }
+        
+        backgroundView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
         
         let imageViewWidth = 200.0
         imageView.snp.makeConstraints {

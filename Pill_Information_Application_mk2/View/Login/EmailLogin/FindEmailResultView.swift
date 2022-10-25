@@ -1,5 +1,5 @@
 //
-//  FindPasswdView.swift
+//  FindEmailResultView.swift
 //  Pill_Information_Application_mk2
 //
 //  Created by 이준혁 on 2022/10/25.
@@ -7,18 +7,10 @@
 
 import UIKit
 import SnapKit
-import RxSwift
-import RxCocoa
 
-import Firebase
-
-final class FindPasswdView: UIViewController {
+final class FindEmailResultView: UIViewController {
     
-    let disposeBag = DisposeBag()
-    let db = Firestore.firestore()
-    let userDB = Firestore.firestore().collection("USER")
-    
-    var emailBool = false
+    var email: String! = nil
     
     
     private lazy var backgroundView: UIView = {
@@ -37,7 +29,7 @@ final class FindPasswdView: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "비밀번호 찾기"
+        label.text = "이메일 찾기"
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .regular)
         label.textAlignment = .center
@@ -46,86 +38,75 @@ final class FindPasswdView: UIViewController {
     
     private lazy var emailLabel: UILabel = {
         let label = UILabel()
-        label.text = "이메일"
+        label.text = "test@test.com 입니다."
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
-    private lazy var emailTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .systemGray
-        textField.delegate = self
-        return textField
+    private lazy var gotoEmailLoginButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("로그인 하기", for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
+        button.addTarget(self, action: #selector(gotoEmailLoginButtonTapped), for: .touchUpInside)
+        return button
     }()
     
-    private lazy var warningEmailTypeLabel: UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.textColor = .systemRed
-        label.font = .systemFont(ofSize: 15.0, weight: .bold)
-        label.textAlignment = .right
-        return label
-    }()
-    
-    private lazy var findPasswdButton: UIButton = {
+    private lazy var gotoFindPasswdButton: UIButton = {
         let button = UIButton()
         button.setTitle("비밀번호 찾기", for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
+        button.addTarget(self, action: #selector(gotoFindPasswdButtonTapped), for: .touchUpInside)
         return button
     }()
     
     
-    private lazy var emailStackView: UIStackView = {
+    private lazy var buttonStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
-            emailLabel,
-            emailTextField
+            gotoEmailLoginButton,
+            gotoFindPasswdButton
         ])
         stackView.axis = .horizontal
-        stackView.spacing = 6.0
         stackView.distribution = .fill
+        stackView.spacing = 20.0
         return stackView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "비밀번호 찾기"
-        bind()
+        self.title = "이메일 찾기"
         setupLayout()
+        setupLayoutInfo()
     }
 }
 
-extension FindPasswdView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+private extension FindEmailResultView {
+    
+    @objc func gotoEmailLoginButtonTapped() {
+        let controllers = self.navigationController?.viewControllers
+        for vc in controllers! {
+            if vc is EmailLoginViewController {
+                _ = self.navigationController?.popToViewController(vc as! EmailLoginViewController, animated: true)
+            }
+        }
     }
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        self.view.endEditing(true)
+    
+    @objc func gotoFindPasswdButtonTapped() {
+        let controllers = self.navigationController?.viewControllers
+        for vc in controllers! {
+            if vc is EmailLoginViewController {
+                _ = self.navigationController?.popToViewController(vc as! EmailLoginViewController, animated: true)
+                self.navigationController?.pushViewController(FindPasswdView(), animated: true)
+            }
+        }
     }
-}
-
-private extension FindPasswdView {
-    func bind() {
-        emailTextField.rx.text
-            .subscribe(onNext: { [weak self] changeText in
-                guard let self = self else { return }
-                if changeText != "" {
-                    let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
-                    if !NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: changeText) {
-                        self.warningEmailTypeLabel.text = "이메일 형식에 맞추어 주십시오."
-                        self.emailBool = false
-                    } else {
-                        self.warningEmailTypeLabel.text = ""
-                        self.emailBool = true
-                    }
-                }
-            })
-            .disposed(by: disposeBag)
-
+    
+    func setupLayoutInfo() {
+        self.emailLabel.text = "해당 닉네임의 이메일은\n\(String(describing: email!)) 입니다."
     }
     
     func setupLayout() {
@@ -133,8 +114,8 @@ private extension FindPasswdView {
             backgroundView,
             imageView,
             titleLabel,
-            emailStackView,
-            findPasswdButton
+            emailLabel,
+            buttonStackView
         ].forEach{ view.addSubview($0) }
         
         backgroundView.snp.makeConstraints {
@@ -155,18 +136,14 @@ private extension FindPasswdView {
         }
         
         emailLabel.snp.makeConstraints {
-            $0.width.equalTo(100)
-        }
-
-        emailStackView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(90)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(320)
-            $0.height.equalTo(34)
+//            $0.height.equalTo(102)
         }
-
-        findPasswdButton.snp.makeConstraints {
-            $0.top.equalTo(emailStackView.snp.bottom).offset(100)
+        
+        buttonStackView.snp.makeConstraints {
+            $0.top.equalTo(emailLabel.snp.bottom).offset(100.0)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(34)
         }

@@ -18,6 +18,12 @@ final class EmailLoginViewController: UIViewController {
     let disposeBag = DisposeBag()
     let db = Firestore.firestore()
     
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        return view
+    }()
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 4.0
@@ -53,8 +59,8 @@ final class EmailLoginViewController: UIViewController {
         let emailTextField = UITextField()
         emailTextField.backgroundColor = .systemGray
         emailTextField.keyboardType = .emailAddress
-        
-        
+        emailTextField.autocapitalizationType = .none
+        emailTextField.delegate = self
         return emailTextField
     }()
     
@@ -72,7 +78,7 @@ final class EmailLoginViewController: UIViewController {
         let passwdTextField = UITextField()
         passwdTextField.backgroundColor = .systemGray
         passwdTextField.isSecureTextEntry = true
-        
+        passwdTextField.delegate = self
         return passwdTextField
     }()
     
@@ -81,7 +87,7 @@ final class EmailLoginViewController: UIViewController {
         signinButton.setTitle("Signin", for: .normal)
         signinButton.setTitleColor(.label, for: .normal)
         signinButton.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
-        
+        signinButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
         return signinButton
     }()
     
@@ -90,7 +96,7 @@ final class EmailLoginViewController: UIViewController {
         findEmailButton.setTitle("이메일 찾기", for: .normal)
         findEmailButton.setTitleColor(.label, for: .normal)
         findEmailButton.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
-        
+        findEmailButton.addTarget(self, action: #selector(findEmailButtonTapped), for: .touchUpInside)
         return findEmailButton
     }()
     
@@ -99,7 +105,7 @@ final class EmailLoginViewController: UIViewController {
         findPasswdButton.setTitle("비밀번호 찾기", for: .normal)
         findPasswdButton.setTitleColor(.label, for: .normal)
         findPasswdButton.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
-        
+        findPasswdButton.addTarget(self, action: #selector(findPasswdButtonTapped), for: .touchUpInside)
         return findPasswdButton
     }()
     
@@ -108,7 +114,7 @@ final class EmailLoginViewController: UIViewController {
         signupButton.setTitle("SignUp", for: .normal)
         signupButton.setTitleColor(.label, for: .normal)
         signupButton.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
-        
+        signupButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         return signupButton
     }()
     
@@ -161,83 +167,92 @@ final class EmailLoginViewController: UIViewController {
     }
 }
 
+extension EmailLoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.emailTextField {
+            self.passwdTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+            signInButtonTapped()
+        }
+        return true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.view.endEditing(true)
+    }
+}
+
 private extension EmailLoginViewController {
     
     func bind() {
         
-        signupButton.rx.tap
-            .bind {
-                let vc = EmailSignUpViewController()
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-            .disposed(by: disposeBag)
-        
-        findEmailButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                let vc = FindEmailView()
-                vc.modalPresentationStyle = .fullScreen
-                self?.navigationController?.pushViewController(vc, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        findPasswdButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                let vc = FindPasswdView()
-                vc.modalPresentationStyle = .fullScreen
-                self?.navigationController?.pushViewController(vc, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        signinButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                if self.emailTextField.text != "" && self.passwdTextField.text != "" {
-                    
-                    Auth.auth().signIn(withEmail: self.emailTextField.text!, password: self.passwdTextField.text!) { (user, error) in
-                        
-                        if user != nil {
-                            UserDefaults.standard.set("email", forKey: "loginType")
-                            UserDefaults.standard.set(self.emailTextField.text!, forKey: "email")
-                            UserDefaults.standard.set(self.passwdTextField.text!, forKey: "passwd")
-                            let userDB = self.db.collection("USER")
-                            let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
-                            query.getDocuments { (qs, err) in
-                                if qs!.documents.isEmpty {
-                                    let alertCon = UIAlertController(title: "경고", message: "회원 정보가 없습니다.", preferredStyle: UIAlertController.Style.alert)
-                                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
-                                    alertCon.addAction(alertAct)
-                                    self.present(alertCon, animated: true, completion: nil)
-                                } else {
-                                    for document in qs!.documents {
-                                        UserDefaults.standard.set(document.data()["NickName"]!, forKey: "nickname")
-                                    }
-                                }
-                            }
-                            
-                            let vc = HomeTabBarController()
-                            vc.modalPresentationStyle = .fullScreen
-                            self.present(vc, animated: true)
-                        } else {
-                            let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+    }
+    
+    @objc func signInButtonTapped() {
+        if self.emailTextField.text != "" && self.passwdTextField.text != "" {
+            
+            Auth.auth().signIn(withEmail: self.emailTextField.text!, password: self.passwdTextField.text!) { (user, error) in
+                
+                if user != nil {
+                    UserDefaults.standard.set("email", forKey: "loginType")
+                    UserDefaults.standard.set(self.emailTextField.text!, forKey: "email")
+                    UserDefaults.standard.set(self.passwdTextField.text!, forKey: "passwd")
+                    let userDB = self.db.collection("USER")
+                    let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
+                    query.getDocuments { (qs, err) in
+                        if qs!.documents.isEmpty {
+                            let alertCon = UIAlertController(title: "경고", message: "회원 정보가 없습니다.", preferredStyle: UIAlertController.Style.alert)
                             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
+                        } else {
+                            for document in qs!.documents {
+                                UserDefaults.standard.set(document.data()["NickName"]!, forKey: "nickname")
+                            }
                         }
                     }
-                        
+                    
+                    let vc = HomeTabBarController()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
                 } else {
-                    let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 입력해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+                    let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
                 }
-            })
-            .disposed(by: disposeBag)
+            }
+                
+        } else {
+            let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 입력해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            alertCon.addAction(alertAct)
+            self.present(alertCon, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func signUpButtonTapped() {
+        let vc = EmailSignUpViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func findEmailButtonTapped() {
+        let vc = FindEmailView()
+        vc.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func findPasswdButtonTapped() {
+        let vc = FindPasswdView()
+        vc.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
     func setupLayout() {
         [
+            backgroundView,
             imageView,
             titleLabel,
             emailStackView,
@@ -248,6 +263,10 @@ private extension EmailLoginViewController {
 //            findPasswdButton,
 //            signupButton
         ].forEach{ view.addSubview($0) }
+        
+        backgroundView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
         
         imageView.snp.makeConstraints {
 //            $0.top.equalToSuperview().offset(20)

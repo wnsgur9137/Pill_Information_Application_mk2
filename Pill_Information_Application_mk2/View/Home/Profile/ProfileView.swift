@@ -7,14 +7,17 @@
 
 import UIKit
 import SnapKit
-import RxSwift
-import RxCocoa
+
 import Firebase
 import FirebaseAuth
 
 final class ProfileView: UIViewController {
     
-    let disposeBag = DisposeBag()
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        return view
+    }()
     
     private lazy var userImageView: UIImageView = {
         let image = UIImageView()
@@ -42,6 +45,7 @@ final class ProfileView: UIViewController {
         let button = UIButton()
         button.setTitle("로그아웃", for: .normal)
         button.setTitleColor(.label, for: .normal)
+        button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -59,6 +63,7 @@ final class ProfileView: UIViewController {
         button.setTitle("즐겨찾기 초기화", for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .regular)
+        button.addTarget(self, action: #selector(resetBookmarkButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -72,6 +77,9 @@ final class ProfileView: UIViewController {
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.spacing = 20.0
+        stackView.layer.borderColor = UIColor.gray.cgColor
+        stackView.layer.borderWidth = 1.0
+        stackView.layer.cornerRadius = 8.0
         return stackView
     }()
     
@@ -107,7 +115,6 @@ final class ProfileView: UIViewController {
         self.navigationItem.title = "Profile"
         self.bookmarkTableView.delegate = self
         self.bookmarkTableView.dataSource = self
-        bind()
         setupLayout()
         setupLayoutInfo()
     }
@@ -150,27 +157,38 @@ extension ProfileView: UITableViewDelegate, UITableViewDataSource {
 }
 
 private extension ProfileView {
-    func bind() {
+    
+    @objc func logoutButtonTapped() {
+        let alertCon = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+        let alertActCancel = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+        let alertActSure = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { [weak self] _ in
+            self?.logout()
+        })
+        alertCon.addAction(alertActCancel)
+        alertCon.addAction(alertActSure)
+        present(alertCon, animated: true)
+    }
+    
+    func logout() {
+        do {
+            // 자동 로그인 제거
+            UserDefaults.standard.removeObject(forKey: "loginType")
+            UserDefaults.standard.removeObject(forKey: "email")
+            UserDefaults.standard.removeObject(forKey: "passwd")
+            UserDefaults.standard.removeObject(forKey: "nickname")
+            
+            // 로그아웃
+            try Auth.auth().signOut()
+            let vc = MainViewController()
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        } catch let signOutError as NSError {
+            print("ERROR: signout \(signOutError.localizedDescription)")
+        }
+    }
+    
+    @objc func resetBookmarkButtonTapped() {
         
-        logoutButton.rx.tap
-            .subscribe(onNext: {
-                do {
-                    // 자동 로그인 제거
-                    UserDefaults.standard.removeObject(forKey: "loginType")
-                    UserDefaults.standard.removeObject(forKey: "email")
-                    UserDefaults.standard.removeObject(forKey: "passwd")
-                    UserDefaults.standard.removeObject(forKey: "nickname")
-                    
-                    // 로그아웃
-                    try Auth.auth().signOut()
-                    let vc = MainViewController()
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true, completion: nil)
-                } catch let signOutError as NSError {
-                    print("ERROR: signout \(signOutError.localizedDescription)")
-                }
-            })
-            .disposed(by: disposeBag)
     }
     
     func setupLayoutInfo() {
@@ -179,10 +197,15 @@ private extension ProfileView {
     
     func setupLayout() {
         [
+            backgroundView,
             userStackView,
             bookmarkStackView,
             bookmarkTableView
         ].forEach{ view.addSubview($0) }
+        
+        backgroundView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
         
         userImageView.snp.makeConstraints {
             $0.width.equalTo(80)
@@ -197,6 +220,7 @@ private extension ProfileView {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(80)
+            $0.width.equalTo(340)
         }
         
         bookmarkStackView.snp.makeConstraints {
@@ -205,6 +229,10 @@ private extension ProfileView {
             $0.trailing.equalToSuperview().inset(20)
 //            $0.centerX.equalToSuperview()
             $0.height.equalTo(40)
+        }
+        
+        bookmarkLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
         }
         
         resetBookmarkButton.snp.makeConstraints {

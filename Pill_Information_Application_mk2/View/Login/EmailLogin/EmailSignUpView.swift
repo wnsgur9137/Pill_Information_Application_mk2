@@ -23,6 +23,13 @@ final class EmailSignUpViewController: UIViewController {
     
     let db = Firestore.firestore()
     
+    
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        return view
+    }()
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 7.0
@@ -37,11 +44,11 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.text = "Email Login"
+        titleLabel.text = "Email 회원가입"
         titleLabel.textColor = .label
         titleLabel.font = .systemFont(ofSize: 20.0, weight: .regular)
         titleLabel.textAlignment = .center
-        
+        titleLabel.numberOfLines = 0
         return titleLabel
     }()
     
@@ -59,7 +66,8 @@ final class EmailSignUpViewController: UIViewController {
         let emailTextField = UITextField()
         emailTextField.backgroundColor = .systemGray
         emailTextField.keyboardType = .emailAddress
-        
+        emailTextField.autocapitalizationType = .none
+        emailTextField.delegate = self
         return emailTextField
     }()
     
@@ -87,7 +95,7 @@ final class EmailSignUpViewController: UIViewController {
         let passwdTextField = UITextField()
         passwdTextField.backgroundColor = .systemGray
         passwdTextField.isSecureTextEntry = true
-        
+        passwdTextField.delegate = self
         return passwdTextField
     }()
     
@@ -116,7 +124,7 @@ final class EmailSignUpViewController: UIViewController {
         let passwdCheckTextField = UITextField()
         passwdCheckTextField.backgroundColor = .systemGray
         passwdCheckTextField.isSecureTextEntry = true
-        
+        passwdCheckTextField.delegate = self
         return passwdCheckTextField
     }()
     
@@ -135,7 +143,7 @@ final class EmailSignUpViewController: UIViewController {
         button.setTitle("SignUp", for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
-        
+        button.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -229,6 +237,24 @@ final class EmailSignUpViewController: UIViewController {
     }
 }
 
+extension EmailSignUpViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.emailTextField {
+            self.passwdTextField.becomeFirstResponder()
+        } else if textField == self.passwdTextField {
+            self.passwdCheckTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+            signupButtonTapped()
+        }
+        return true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.view.endEditing(true)
+    }
+}
+
 private extension EmailSignUpViewController {
     func bind() {
         
@@ -279,42 +305,41 @@ private extension EmailSignUpViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
-        signupButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                guard let self = self else { return }
-                if self.emailBool && self.pwdCheckBool && self.pwdCheckBool {
-                    
-                    // 이메일 중복체크
-                    let userDB = self.db.collection("USER")
-                    let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
-                    query.getDocuments { (qs, err) in
-                        if qs!.documents.isEmpty {
-                            // 사용 가능한 이메일일 경우
-                            let vc = NicknameSetView()
-                            vc.email = self.emailTextField.text!
-                            vc.passwd = self.passwdTextField.text!
-                            self.navigationController?.pushViewController(vc, animated: true)
-                        } else {
-                            // 이메일이 중복된 경우
-                            let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
-                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
-                            alertCon.addAction(alertAct)
-                            self.present(alertCon, animated: true, completion: nil)
-                        }
-                    }
+
+    }
+    
+    @objc func signupButtonTapped() {
+        if self.emailBool && self.pwdCheckBool && self.pwdCheckBool {
+            
+            // 이메일 중복체크
+            let userDB = self.db.collection("USER")
+            let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
+            query.getDocuments { (qs, err) in
+                if qs!.documents.isEmpty {
+                    // 사용 가능한 이메일일 경우
+                    let vc = NicknameSetView()
+                    vc.email = self.emailTextField.text!
+                    vc.passwd = self.passwdTextField.text!
+                    self.navigationController?.pushViewController(vc, animated: true)
                 } else {
-                    let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+                    // 이메일이 중복된 경우
+                    let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
                 }
-            })
-            .disposed(by: disposeBag)
+            }
+        } else {
+            let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            alertCon.addAction(alertAct)
+            self.present(alertCon, animated: true, completion: nil)
+        }
     }
     
     func setupLayout() {
         [
+            backgroundView,
             imageView,
             titleLabel,
             emailVerticalStackView,
@@ -322,6 +347,10 @@ private extension EmailSignUpViewController {
             passwdCheckVerticalStackView,
             signupButton
         ].forEach { view.addSubview($0) }
+        
+        backgroundView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
         
         imageView.snp.makeConstraints {
 //            $0.top.equalToSuperview().offset(20)
