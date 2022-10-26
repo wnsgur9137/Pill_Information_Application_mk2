@@ -38,6 +38,7 @@ final class ProfileView: UIViewController {
         let button = UIButton()
         button.setTitle("회원 정보 변경", for: .normal)
         button.setTitleColor(.label, for: .normal)
+        button.addTarget(self, action: #selector(userUpdateButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -167,6 +168,11 @@ private extension ProfileView {
         alertCon.addAction(alertActCancel)
         alertCon.addAction(alertActSure)
         present(alertCon, animated: true)
+    }
+    
+    @objc func userUpdateButtonTapped() {
+        let vc = ProfileUpdateView()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func logout() {
