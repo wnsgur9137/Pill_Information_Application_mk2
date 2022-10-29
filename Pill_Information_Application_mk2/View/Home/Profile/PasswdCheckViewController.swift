@@ -1,5 +1,5 @@
 //
-//  PasswdCheckView.swift
+//  PasswdCheckViewController.swift
 //  Pill_Information_Application_mk2
 //
 //  Created by 이준혁 on 2022/10/25.
@@ -10,7 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class PasswdCheckView: UIViewController {
+final class PasswdCheckViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     

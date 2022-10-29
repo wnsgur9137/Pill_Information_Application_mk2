@@ -1,5 +1,5 @@
 //
-//  ProfileView.swift
+//  ProfileViewController.swift
 //  Pill_Information_Application_mk2
 //
 //  Created by 이준혁 on 2022/10/22.
@@ -11,7 +11,7 @@ import SnapKit
 import Firebase
 import FirebaseAuth
 
-final class ProfileView: UIViewController {
+final class ProfileViewController: UIViewController {
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -121,7 +121,7 @@ final class ProfileView: UIViewController {
     }
 }
 
-extension ProfileView: UITableViewDelegate, UITableViewDataSource {
+extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        if bookmarkList.count == 0 {
 //            emptyView.isHidden = false
@@ -129,7 +129,7 @@ extension ProfileView: UITableViewDelegate, UITableViewDataSource {
 //            emptyView.isHidden = true
 //        }
 //        return bookmarkList.count
-        return 0
+        return 10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -157,7 +157,7 @@ extension ProfileView: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-private extension ProfileView {
+private extension ProfileViewController {
     
     @objc func logoutButtonTapped() {
         let alertCon = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
@@ -171,7 +171,7 @@ private extension ProfileView {
     }
     
     @objc func userUpdateButtonTapped() {
-        let vc = ProfileUpdateView()
+        let vc = ProfileUpdateViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -248,6 +248,9 @@ private extension ProfileView {
         bookmarkTableView.snp.makeConstraints {
             $0.top.equalTo(bookmarkStackView.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
 }

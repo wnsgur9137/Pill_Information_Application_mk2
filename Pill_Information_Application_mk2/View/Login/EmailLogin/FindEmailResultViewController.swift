@@ -1,5 +1,5 @@
 //
-//  FindEmailResultView.swift
+//  FindEmailResultViewController.swift
 //  Pill_Information_Application_mk2
 //
 //  Created by 이준혁 on 2022/10/25.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class FindEmailResultView: UIViewController {
+final class FindEmailResultViewController: UIViewController {
     
     var email: String! = nil
     
@@ -84,7 +84,7 @@ final class FindEmailResultView: UIViewController {
     }
 }
 
-private extension FindEmailResultView {
+private extension FindEmailResultViewController {
     
     @objc func gotoEmailLoginButtonTapped() {
         let controllers = self.navigationController?.viewControllers
@@ -100,7 +100,7 @@ private extension FindEmailResultView {
         for vc in controllers! {
             if vc is EmailLoginViewController {
                 _ = self.navigationController?.popToViewController(vc as! EmailLoginViewController, animated: true)
-                self.navigationController?.pushViewController(FindPasswdView(), animated: true)
+                self.navigationController?.pushViewController(FindPasswdViewController(), animated: true)
             }
         }
     }

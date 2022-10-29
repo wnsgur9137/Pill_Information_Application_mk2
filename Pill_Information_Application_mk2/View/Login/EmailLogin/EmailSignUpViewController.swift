@@ -317,7 +317,7 @@ private extension EmailSignUpViewController {
             query.getDocuments { (qs, err) in
                 if qs!.documents.isEmpty {
                     // 사용 가능한 이메일일 경우
-                    let vc = NicknameSetView()
+                    let vc = NicknameSetViewController()
                     vc.email = self.emailTextField.text!
                     vc.passwd = self.passwdTextField.text!
                     self.navigationController?.pushViewController(vc, animated: true)

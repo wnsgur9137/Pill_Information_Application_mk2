@@ -1,5 +1,5 @@
 //
-//  FindEmailView.swift
+//  FindEmailViewController.swift
 //  Pill_Information_Application_mk2
 //
 //  Created by 이준혁 on 2022/10/25.
@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Firebase
 
-final class FindEmailView: UIViewController {
+final class FindEmailViewController: UIViewController {
     
     let db = Firestore.firestore()
     let userDB = Firestore.firestore().collection("USER")
@@ -83,7 +83,7 @@ final class FindEmailView: UIViewController {
     }
 }
 
-extension FindEmailView: UITextFieldDelegate {
+extension FindEmailViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -94,7 +94,7 @@ extension FindEmailView: UITextFieldDelegate {
     }
 }
 
-private extension FindEmailView {
+private extension FindEmailViewController {
     
     @objc func findEmailButtonTapped() {
         if self.nicknameLabel.text != "" {
@@ -107,7 +107,7 @@ private extension FindEmailView {
                     self.present(alertCon, animated: true, completion: nil)
                 } else {
                     for document in qs!.documents {
-                        let vc = FindEmailResultView()
+                        let vc = FindEmailResultViewController()
                         vc.email = String(describing: document.data()["Email"]!)
                         self.navigationController?.pushViewController(vc, animated: true)
                     }

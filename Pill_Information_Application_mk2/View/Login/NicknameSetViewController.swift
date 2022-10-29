@@ -1,5 +1,5 @@
 //
-//  NicknameSetView.swift
+//  NicknameSetViewController.swift
 //  Pill_Information_Application_mk2
 //
 //  Created by 이준혁 on 2022/10/22.
@@ -14,7 +14,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
-final class NicknameSetView: UIViewController {
+final class NicknameSetViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     let db = Firestore.firestore()
@@ -67,7 +67,7 @@ final class NicknameSetView: UIViewController {
     }
 }
 
-extension NicknameSetView: UITextFieldDelegate {
+extension NicknameSetViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         signUpButtonTapped()
@@ -79,7 +79,7 @@ extension NicknameSetView: UITextFieldDelegate {
     }
 }
 
-private extension NicknameSetView {
+private extension NicknameSetViewController {
     
     func bind() {
         nicknameTextField.rx.text

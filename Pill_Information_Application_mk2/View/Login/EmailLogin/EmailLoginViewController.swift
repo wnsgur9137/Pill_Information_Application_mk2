@@ -238,13 +238,13 @@ private extension EmailLoginViewController {
     }
     
     @objc func findEmailButtonTapped() {
-        let vc = FindEmailView()
+        let vc = FindEmailViewController()
         vc.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func findPasswdButtonTapped() {
-        let vc = FindPasswdView()
+        let vc = FindPasswdViewController()
         vc.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(vc, animated: true)
     }

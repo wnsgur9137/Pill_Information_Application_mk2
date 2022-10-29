@@ -1,5 +1,5 @@
 //
-//  FindPasswdView.swift
+//  FindPasswdViewController.swift
 //  Pill_Information_Application_mk2
 //
 //  Created by 이준혁 on 2022/10/25.
@@ -12,7 +12,7 @@ import RxCocoa
 
 import Firebase
 
-final class FindPasswdView: UIViewController {
+final class FindPasswdViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     let db = Firestore.firestore()
@@ -97,7 +97,7 @@ final class FindPasswdView: UIViewController {
     }
 }
 
-extension FindPasswdView: UITextFieldDelegate {
+extension FindPasswdViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -108,7 +108,7 @@ extension FindPasswdView: UITextFieldDelegate {
     }
 }
 
-private extension FindPasswdView {
+private extension FindPasswdViewController {
     func bind() {
         emailTextField.rx.text
             .subscribe(onNext: { [weak self] changeText in

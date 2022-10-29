@@ -1,5 +1,5 @@
 //
-//  ProfileUpdateView.swift
+//  ProfileUpdateViewController.swift
 //  Pill_Information_Application_mk2
 //
 //  Created by 이준혁 on 2022/10/25.
@@ -10,7 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class ProfileUpdateView: UIViewController {
+final class ProfileUpdateViewController: UIViewController {
     
     
     private lazy var backgroundView: UIView = {
@@ -299,11 +299,11 @@ final class ProfileUpdateView: UIViewController {
     }
 }
 
-extension ProfileUpdateView: UITextFieldDelegate {
+extension ProfileUpdateViewController: UITextFieldDelegate {
     
 }
 
-private extension ProfileUpdateView {
+private extension ProfileUpdateViewController {
     func bind() {
         
     }
