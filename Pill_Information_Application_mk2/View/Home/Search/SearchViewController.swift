@@ -105,7 +105,8 @@ private extension SearchViewController {
     }
     
     @objc func searchLogDeleteButtonTapped() {
-        
+        let vc = ResultViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func setupLayout() {

@@ -35,14 +35,12 @@ final class AlarmViewController: UIViewController {
     }()
     
     private lazy var timerBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem()
-        barButtonItem.title = "타이머"
+        let barButtonItem = UIBarButtonItem(title: "타이머", style: UIBarButtonItem.Style.plain, target: self, action: #selector(timerBarButtonItemTapped))
         return barButtonItem
     }()
     
     private lazy var alramBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem()
-        barButtonItem.title = "알람 추가"
+        let barButtonItem = UIBarButtonItem(title: "알람 추가", style: UIBarButtonItem.Style.plain, target: self, action: #selector(alramBarButtonItemTapped))
         return barButtonItem
     }()
     
@@ -73,6 +71,16 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
 private extension AlarmViewController {
     func bind() {
         
+    }
+    
+    @objc func timerBarButtonItemTapped() {
+        let vc = TimerViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func alramBarButtonItemTapped() {
+        let vc = AddAlarmViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func attribute() {

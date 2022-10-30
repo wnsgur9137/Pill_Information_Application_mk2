@@ -63,7 +63,7 @@ final class ProfileUpdateViewController: UIViewController {
     private lazy var changeNicknameButton: UIButton = {
         let button = UIButton()
         button.setTitle("닉네임 변경", for: .normal)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
         button.addTarget(self, action: #selector(changeNicknameButtonTapped), for: .touchUpInside)
         return button
@@ -154,7 +154,7 @@ final class ProfileUpdateViewController: UIViewController {
     private lazy var changePasswdButton: UIButton = {
         let button = UIButton()
         button.setTitle("비밀번호 변경", for: .normal)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
         button.addTarget(self, action: #selector(changePasswdButtonTapped), for: .touchUpInside)
         return button
@@ -196,7 +196,7 @@ final class ProfileUpdateViewController: UIViewController {
     private lazy var withdrawButton: UIButton = {
         let button = UIButton()
         button.setTitle("회원 탈퇴", for: .normal)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
         button.addTarget(self, action: #selector(withdrawButtonTapped), for: .touchUpInside)
         return button
@@ -269,8 +269,8 @@ final class ProfileUpdateViewController: UIViewController {
         
         let stackView = UIStackView(arrangedSubviews: [
             nowPasswdStackView,
-            newPasswdStackView,
-            newPasswdCheckStackView,
+//            newPasswdStackView,
+//            newPasswdCheckStackView,
         ])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -292,7 +292,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Profile Update"
+        self.title = "내 정보 변경"
         
         bind()
         setupLayout()
@@ -382,7 +382,7 @@ private extension ProfileUpdateViewController {
             $0.top.equalTo(passwdChangeLabel.snp.bottom).offset(10)
             $0.leading.equalTo(myInfoLabel.snp.leading)
             $0.trailing.equalTo(userInfoStackView.snp.trailing)
-            $0.height.equalTo(130)
+            $0.height.equalTo(34)
         }
         
         warningChangePasswdLabel.snp.makeConstraints {

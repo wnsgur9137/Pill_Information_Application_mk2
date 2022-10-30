@@ -37,7 +37,7 @@ final class ProfileViewController: UIViewController {
     private lazy var userUpdateButton: UIButton = {
         let button = UIButton()
         button.setTitle("회원 정보 변경", for: .normal)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(userUpdateButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -45,7 +45,7 @@ final class ProfileViewController: UIViewController {
     private lazy var logoutButton: UIButton = {
         let button = UIButton()
         button.setTitle("로그아웃", for: .normal)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -62,7 +62,7 @@ final class ProfileViewController: UIViewController {
     private lazy var resetBookmarkButton: UIButton = {
         let button = UIButton()
         button.setTitle("즐겨찾기 초기화", for: .normal)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .regular)
         button.addTarget(self, action: #selector(resetBookmarkButtonTapped), for: .touchUpInside)
         return button
@@ -113,7 +113,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Profile"
+        self.navigationItem.title = "내 정보"
         self.bookmarkTableView.delegate = self
         self.bookmarkTableView.dataSource = self
         setupLayout()
@@ -153,7 +153,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        return
+        let vc = DetailViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
