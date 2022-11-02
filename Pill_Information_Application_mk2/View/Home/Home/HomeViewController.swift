@@ -37,10 +37,18 @@ final class HomeViewController: UIViewController {
     
     private lazy var noticeTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .systemCyan
+//        tableView.backgroundColor = .systemCyan
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
+    }()
+    
+    private lazy var addNoticeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(systemName: "plus.app")
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(addNoticeButtonTapped), for: .touchUpInside)
+        return button
     }()
     
     override func viewDidLoad() {
@@ -48,6 +56,9 @@ final class HomeViewController: UIViewController {
         self.navigationItem.title = "PillSoGood"
         bind()
         setupLayout()
+        if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" {
+            setupAddNoticeButton()
+        }
     }
 }
 
@@ -61,7 +72,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = noticeDetailViewController()
+        let vc = NoticeDetailViewController()
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -72,6 +83,12 @@ private extension HomeViewController {
     func bind() {
         
     }
+    
+    @objc func addNoticeButtonTapped() {
+        let vc = AddNoticeViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func setupLayout() {
         [
             backgroundView,
@@ -99,7 +116,7 @@ private extension HomeViewController {
         
         noticeLabel.snp.makeConstraints {
             $0.top.equalTo(imageView.snp.bottom).offset(60)
-            $0.leading.equalToSuperview().offset(10)
+            $0.leading.equalToSuperview().offset(20)
         }
         
         noticeTableView.snp.makeConstraints {
@@ -107,6 +124,17 @@ private extension HomeViewController {
             $0.leading.equalTo(noticeLabel.snp.leading)
             $0.trailing.equalToSuperview().inset(10)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+        }
+    }
+    
+    func setupAddNoticeButton() {
+        
+        view.addSubview(addNoticeButton)
+        
+        addNoticeButton.snp.makeConstraints {
+            $0.top.equalTo(noticeLabel.snp.top)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.height.equalTo(24)
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  noticeDetailViewController.swift
+//  NoticeDetailViewController.swift
 //  Pill_Information_Application_mk2
 //
 //  Created by 이준혁 on 2022/10/29.
@@ -10,7 +10,9 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-final class noticeDetailViewController: UIViewController {
+final class NoticeDetailViewController: UIViewController {
+    
+    let disposeBag = DisposeBag()
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -28,6 +30,7 @@ final class noticeDetailViewController: UIViewController {
     
     private lazy var contentTextView: UITextView = {
         let textView = UITextView()
+        textView.isEditable = false
         textView.text = "Content"
         textView.textColor = .black
         textView.font = .systemFont(ofSize: 14.0, weight: .regular)
@@ -51,16 +54,47 @@ final class noticeDetailViewController: UIViewController {
         return label
     }()
     
+    private lazy var updateButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("수정", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
+        return button
+    }()
+    
+    private lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("삭제", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "공지사항"
         bind()
         setupLayout()
+        
+        if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" {
+            addAdminLayout()
+        }
     }
 }
 
-private extension noticeDetailViewController {
+private extension NoticeDetailViewController {
     func bind() {
+        updateButton.rx.tap
+            .bind(onNext: {
+                
+            })
+            .disposed(by: disposeBag)
         
+        deleteButton.rx.tap
+            .bind(onNext: {
+                
+            })
+            .disposed(by: disposeBag)
     }
     
     func setupLayout() {
@@ -98,6 +132,23 @@ private extension noticeDetailViewController {
             $0.top.equalTo(helpLabel.snp.bottom).offset(10)
             $0.leading.equalTo(titleLabel.snp.leading)
             $0.trailing.equalTo(helpLabel.snp.trailing)
+        }
+    }
+    
+    func addAdminLayout() {
+        [
+            updateButton,
+            deleteButton
+        ].forEach { view.addSubview($0) }
+        
+        updateButton.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.top)
+            $0.trailing.equalTo(deleteButton.snp.leading).offset(-10)
+        }
+        
+        deleteButton.snp.makeConstraints {
+            $0.top.equalTo(updateButton.snp.top)
+            $0.trailing.equalToSuperview().inset(20)
         }
     }
 }

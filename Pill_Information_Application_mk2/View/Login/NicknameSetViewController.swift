@@ -9,15 +9,16 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Alamofire
 
 import Firebase
 import FirebaseAuth
-import FirebaseFirestore
+//import FirebaseFirestore
 
 final class NicknameSetViewController: UIViewController {
     
     let disposeBag = DisposeBag()
-    let db = Firestore.firestore()
+//    let db = Firestore.firestore()
     var email: String? = ""
     var passwd: String? = ""
     var nickNameBool: Bool = false
@@ -86,9 +87,12 @@ private extension NicknameSetViewController {
             .bind(onNext: { [weak self] changeText in
                 guard let self = self else { return }
                 if changeText != "" {
+                    print(String(changeText!).count)
                     if String(changeText!).count >= 2 && String(changeText!).count <= 8 {
                         self.warningLabel.text = ""
+                        self.nickNameBool = true
                     } else {
+                        self.nickNameBool = false
                         self.warningLabel.text = "닉네임은 2자 이상, 8자 이하로 설정해주세요."
                     }
                 }
@@ -105,37 +109,115 @@ private extension NicknameSetViewController {
             present(alertCon, animated: true)
             return
         }
-        // 이메일 중복체크
-        let userDB = self.db.collection("USER")
-        let query = userDB.whereField("NickName", isEqualTo: self.nicknameTextField.text!)
-        query.getDocuments { (qs, err) in
-            if qs!.documents.isEmpty {
-                Auth.auth().createUser(withEmail: self.email!, password: self.passwd!) {
-                    [self]authResult, error in
-                    if let _ = error {  // 유저 생성에 실패할 경우
-                        let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+        
+        let nicknameCheckparam = "?nickname=\(nicknameTextField.text ?? "")"
+        let nicknameCheckurl = "\(useAPI.host + useAPI.path)/getNicknameCheck/\(nicknameCheckparam)"
+        
+        AF.request(nicknameCheckurl, method: .get)
+            .response(completionHandler: { [weak self] response in
+                guard let self = self else { return }
+                switch response.result {
+                case let .success(data):
+                    print("success: \(String(describing: data))")
+                    do {
+                        let decoder = JSONDecoder()
+                        let result = try decoder.decode(GetUserInfoOverview.self, from: data!)
+                        if self.nicknameTextField.text ?? "" == result.nickname {
+                            let alertCon = UIAlertController(title: "경고", message: "중복된 닉네임입니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            alertCon.addAction(alertAct)
+                            self.present(alertCon, animated: true, completion: nil)
+                        } else {
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                            let current_date_string = formatter.string(from: Date())
+                            
+                            var urlEmail = self.email?.replacingOccurrences(of: "@", with: "%40")
+                            urlEmail = urlEmail?.replacingOccurrences(of: ".", with: "%2E")
+                            
+                            var urlTime = current_date_string.replacingOccurrences(of: "-", with: "%2D")
+                            urlTime = urlTime.replacingOccurrences(of: " ", with: "%20")
+                            urlTime = urlTime.replacingOccurrences(of: ":", with: "%3A")
+                            
+                            let param = "?email=\(urlEmail!)&nickname=\(self.nicknameTextField.text ?? "")&updateDate=\(urlTime)"
+                            
+                            let url = "\(useAPI.host + useAPI.path)/setUserInfo/\(param)"
+                            
+                            AF.request(url, method: .post, encoding: URLEncoding.httpBody)
+                                .response(completionHandler: { response in
+                                    switch response.result {
+                                    case let .success(data):
+                                        print("success: \(String(describing: data))")
+                                    case let .failure(error):
+                                        print("failure: \(error)")
+                                    }
+                                })
+                            
+                            print(url)
+                            print("param: \(param)")
+                            
+                            Auth.auth().createUser(withEmail: self.email!, password: self.passwd!) {
+                                [self]authResult, error in
+                                if let _ = error {  // 유저 생성에 실패할 경우
+                                    let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+                                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                                    alertCon.addAction(alertAct)
+                                    self.present(alertCon, animated: true, completion: nil)
+                                } else {    // 유저 생성에 성공할 경우
+                                    // Firestore에 데이터 생성
+                    //                self.db.collection("USER").document(self.nicknameTextField.text!).setData([
+                    //                    "Email": self.email!,
+                    //                    "NickName": self.nicknameTextField.text!
+                    //                ])
+                                    // 회원가입시 자동 로그인
+                                    self.autoLogin()
+                                }
+                            }
+                        }
+                    } catch {
+                        let alertCon = UIAlertController(title: "경고", message: "중복된 닉네임입니다.", preferredStyle: UIAlertController.Style.alert)
                         let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                         alertCon.addAction(alertAct)
                         self.present(alertCon, animated: true, completion: nil)
-                    } else {    // 유저 생성에 성공할 경우
-                        
-                        // Firestore에 데이터 생성
-                        self.db.collection("USER").document(self.nicknameTextField.text!).setData([
-                            "Email": self.email!,
-                            "NickName": self.nicknameTextField.text!
-                        ])
-                        // 회원가입시 자동 로그인
-                        autoLogin()
                     }
+                case let .failure(error):
+                    print("error: \(error)")
                 }
-            } else {
-                // 이메일이 중복된 경우
-                let alertCon = UIAlertController(title: "경고", message: "중복된 닉네임입니다.", preferredStyle: UIAlertController.Style.alert)
-                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
-                alertCon.addAction(alertAct)
-                self.present(alertCon, animated: true, completion: nil)
-            }
-        }
+            })
+        
+        
+//        // 이메일 중복체크 (FirebaseStorege를 사용할 경우 현재 미사용)
+//        let userDB = self.db.collection("USER")
+//        let query = userDB.whereField("NickName", isEqualTo: self.nicknameTextField.text!)
+//        query.getDocuments { (qs, err) in
+//            if qs!.documents.isEmpty {
+//                Auth.auth().createUser(withEmail: self.email!, password: self.passwd!) {
+//                    [self]authResult, error in
+//                    if let _ = error {  // 유저 생성에 실패할 경우
+//                        let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+//                        let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+//                        alertCon.addAction(alertAct)
+//                        self.present(alertCon, animated: true, completion: nil)
+//                    } else {    // 유저 생성에 성공할 경우
+//
+//                        // Firestore에 데이터 생성
+//                        self.db.collection("USER").document(self.nicknameTextField.text!).setData([
+//                            "Email": self.email!,
+//                            "NickName": self.nicknameTextField.text!
+//                        ])
+//                        // 회원가입시 자동 로그인
+//                        autoLogin()
+//                    }
+//                }
+//            } else {
+//                // 이메일이 중복된 경우
+//                let alertCon = UIAlertController(title: "경고", message: "중복된 닉네임입니다.", preferredStyle: UIAlertController.Style.alert)
+//                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+//                alertCon.addAction(alertAct)
+//                self.present(alertCon, animated: true, completion: nil)
+//            }
+//        }
+        
     }
     
     func autoLogin() {

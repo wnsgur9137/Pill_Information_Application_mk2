@@ -21,6 +21,14 @@ final class SearchBar: UISearchBar {
         return button
     }()
     
+    private lazy var photoButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("사진", for: .normal)
+        button.setImage(UIImage(named: "photo"), for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        return button
+    }()
+    
     // SearchBar Button Tapped Event
     // 탭 이벤트만 전달되기에 Void로 설정
     let searchButtonTapped = PublishRelay<Void>()
@@ -31,7 +39,6 @@ final class SearchBar: UISearchBar {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        bind()
         attribute()
         setupLayout()
     }
@@ -40,20 +47,39 @@ final class SearchBar: UISearchBar {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func bind(_ viewModel: SearchBarViewModel) {
+        self.rx.text
+            .bind(to: viewModel.queryText)
+            .disposed(by: disposeBag)
+        
+        Observable
+            .merge(
+                self.rx.searchButtonClicked.asObservable(),
+                searchButton.rx.tap.asObservable()
+            )
+            .bind(to: viewModel.searchButtonTapped)
+            .disposed(by: disposeBag)
+        
+        viewModel.searchButtonTapped
+            .asSignal()
+            .emit(to: self.rx.endEditing)
+            .disposed(by: disposeBag)
+    }
+    
 }
 
 private extension SearchBar {
-    
-    func bind() {
-        
-    }
     
     func attribute() {
         
     }
     
     func setupLayout() {
-        addSubview(searchButton)
+//        addSubview(searchButton)
+        [
+            searchButton,
+            photoButton
+        ].forEach{ addSubview($0) }
         
         searchTextField.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(12)
@@ -62,6 +88,12 @@ private extension SearchBar {
         }
         
         searchButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+//            $0.trailing.equalToSuperview().inset(36)
+            $0.trailing.equalTo(photoButton.snp.leading).offset(-12)
+        }
+        
+        photoButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(12)
         }

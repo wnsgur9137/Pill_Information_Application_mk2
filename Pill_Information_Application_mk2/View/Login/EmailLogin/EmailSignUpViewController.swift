@@ -9,10 +9,11 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Alamofire
 
 import Firebase
 import FirebaseAuth
-import FirebaseFirestore
+//import FirebaseFirestore
 
 final class EmailSignUpViewController: UIViewController {
     
@@ -21,7 +22,7 @@ final class EmailSignUpViewController: UIViewController {
     var pwdTypeBool = false
     var pwdCheckBool = false
     
-    let db = Firestore.firestore()
+//    let db = Firestore.firestore()
     
     
     private lazy var backgroundView: UIView = {
@@ -311,24 +312,65 @@ private extension EmailSignUpViewController {
     @objc func signupButtonTapped() {
         if self.emailBool && self.pwdCheckBool && self.pwdCheckBool {
             
+            let urlEmail = emailTextField.text ?? ""
+            
+            let param = "?email=\(urlEmail)"
+            
+            let url = "\(useAPI.host + useAPI.path)/getUserInfo/\(param)"
+            
+            AF.request(url, method: .get)
+                .response(completionHandler: { [weak self] response in
+                    guard let self = self else { return }
+                    switch response.result {
+                    case let .success(data):
+                        print("success: \(String(describing: data))")
+                        do {
+                            let decoder = JSONDecoder()
+                            let result = try decoder.decode(GetUserInfoOverview.self, from: data!)
+                            if result.nickname == "" {
+                                // 사용 가능한 이메일일 경우
+                                let vc = NicknameSetViewController()
+                                vc.email = self.emailTextField.text!
+                                vc.passwd = self.passwdTextField.text!
+                                self.navigationController?.pushViewController(vc, animated: true)
+                            } else {
+                                let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+                                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                                alertCon.addAction(alertAct)
+                                self.present(alertCon, animated: true, completion: nil)
+                            }
+                        } catch {
+                            print("catch")
+                            let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            alertCon.addAction(alertAct)
+                            self.present(alertCon, animated: true, completion: nil)
+                        }
+                    case let .failure(error):
+                        print("error: \(error)")
+                    }
+                })
+            
+            
+            // FirebaseStore 사용할 시 (현재 사용하지 않음)
             // 이메일 중복체크
-            let userDB = self.db.collection("USER")
-            let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
-            query.getDocuments { (qs, err) in
-                if qs!.documents.isEmpty {
-                    // 사용 가능한 이메일일 경우
-                    let vc = NicknameSetViewController()
-                    vc.email = self.emailTextField.text!
-                    vc.passwd = self.passwdTextField.text!
-                    self.navigationController?.pushViewController(vc, animated: true)
-                } else {
-                    // 이메일이 중복된 경우
-                    let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
-                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
-                    alertCon.addAction(alertAct)
-                    self.present(alertCon, animated: true, completion: nil)
-                }
-            }
+//            let userDB = self.db.collection("USER")
+//            let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
+//            query.getDocuments { (qs, err) in
+//                if qs!.documents.isEmpty {
+//                    // 사용 가능한 이메일일 경우
+//                    let vc = NicknameSetViewController()
+//                    vc.email = self.emailTextField.text!
+//                    vc.passwd = self.passwdTextField.text!
+//                    self.navigationController?.pushViewController(vc, animated: true)
+//                } else {
+//                    // 이메일이 중복된 경우
+//                    let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+//                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+//                    alertCon.addAction(alertAct)
+//                    self.present(alertCon, animated: true, completion: nil)
+//                }
+//            }
         } else {
             let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
