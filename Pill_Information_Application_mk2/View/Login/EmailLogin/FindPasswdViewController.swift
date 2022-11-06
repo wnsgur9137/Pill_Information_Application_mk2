@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 
 import Firebase
+import FirebaseAuth
 
 final class FindPasswdViewController: UIViewController {
     
@@ -57,6 +58,7 @@ final class FindPasswdViewController: UIViewController {
         let textField = UITextField()
         textField.backgroundColor = .systemGray
         textField.delegate = self
+        textField.autocapitalizationType = .none
         return textField
     }()
     
@@ -122,6 +124,32 @@ private extension FindPasswdViewController {
                         self.warningEmailTypeLabel.text = ""
                         self.emailBool = true
                     }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        findPasswdButton.rx.tap
+            .bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                if self.emailBool {
+                    Auth.auth().sendPasswordReset(withEmail: self.emailTextField.text!) { (error) in
+                        if error != nil {
+                            let alertCon = UIAlertController(title: "경고", message: "이메일이 존재하지 않습니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            alertCon.addAction(alertAct)
+                            self.present(alertCon, animated: true, completion: nil)
+                        } else {
+                            let alertCon = UIAlertController(title: "확인", message: "비밀번호 재설정 이메일을 전송했습니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            alertCon.addAction(alertAct)
+                            self.present(alertCon, animated: true, completion: nil)
+                        }
+                    }
+                } else {
+                    let alertCon = UIAlertController(title: "경고", message: "이메일 형식을 맞춰주세요.", preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
                 }
             })
             .disposed(by: disposeBag)
