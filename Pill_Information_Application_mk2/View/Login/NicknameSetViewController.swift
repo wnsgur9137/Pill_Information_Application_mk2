@@ -121,7 +121,7 @@ private extension NicknameSetViewController {
                     print("success: \(String(describing: data))")
                     do {
                         let decoder = JSONDecoder()
-                        let result = try decoder.decode(GetUserInfoOverview.self, from: data!)
+                        let result = try decoder.decode(UserInfoOverview.self, from: data!)
                         if self.nicknameTextField.text ?? "" == result.nickname {
                             let alertCon = UIAlertController(title: "경고", message: "중복된 닉네임입니다.", preferredStyle: UIAlertController.Style.alert)
                             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)

@@ -326,7 +326,7 @@ private extension EmailSignUpViewController {
                         print("success: \(String(describing: data))")
                         do {
                             let decoder = JSONDecoder()
-                            let result = try decoder.decode(GetUserInfoOverview.self, from: data!)
+                            let result = try decoder.decode(UserInfoOverview.self, from: data!)
                             if result.nickname == "" {
                                 // 사용 가능한 이메일일 경우
                                 let vc = NicknameSetViewController()

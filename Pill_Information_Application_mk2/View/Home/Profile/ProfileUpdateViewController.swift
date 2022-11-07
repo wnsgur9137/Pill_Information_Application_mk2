@@ -10,8 +10,14 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+import Alamofire
+import FirebaseAuth
+
 final class ProfileUpdateViewController: UIViewController {
     
+    let disposeBag = DisposeBag()
+    var passwdChack = false
+    var nicknameLengthCheck = false
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -65,7 +71,6 @@ final class ProfileUpdateViewController: UIViewController {
         button.setTitle("닉네임 변경", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
-        button.addTarget(self, action: #selector(changeNicknameButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -156,7 +161,6 @@ final class ProfileUpdateViewController: UIViewController {
         button.setTitle("비밀번호 변경", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
-        button.addTarget(self, action: #selector(changePasswdButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -198,7 +202,6 @@ final class ProfileUpdateViewController: UIViewController {
         button.setTitle("회원 탈퇴", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
-        button.addTarget(self, action: #selector(withdrawButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -306,19 +309,201 @@ extension ProfileUpdateViewController: UITextFieldDelegate {
 private extension ProfileUpdateViewController {
     func bind() {
         
+        nicknameTextField.rx.text
+            .bind(onNext: { [weak self] changeText in
+                guard let self = self else { return }
+                if changeText != "" {
+                    if String(changeText!).count >= 2 && String(changeText!).count <= 8 {
+                        self.nicknameLengthCheck = true
+                    } else {
+                        self.nicknameLengthCheck = false
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        changeNicknameButton.rx.tap
+            .bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                
+                let checkDate = false
+                let checkNickname = false
+                
+                var param = "?email=\(UserDefaults.standard.string(forKey: "email")!)"
+                param = param.replacingOccurrences(of: "@", with: "%40")
+                param = param.replacingOccurrences(of: ".", with: "%2E")
+                let url = "\(useAPI.host + useAPI.path)/getUserInfo/\(param)"
+                
+                AF.request(url, method: .get)
+                    .response(completionHandler: { response in
+                        switch response.result {
+                        case let .success(data):
+                            print("success: \(String(describing: data))")
+                            do {
+                                let decoder = JSONDecoder()
+                                let result = try decoder.decode(UserInfoOverview.self, from: data!)
+                                
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                let currentDateString = formatter.string(from: Date())
+                                print("datedate\ndatedate\ndatedate\n")
+                                print(result.updateDate!)
+                                print(currentDateString)
+                            } catch {
+                                let alertCon = UIAlertController(title: "경고", message: "닉네임은 한 달에 한 번 변경할 수 있습니다.", preferredStyle: UIAlertController.Style.alert)
+                                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                                alertCon.addAction(alertAct)
+                                self.present(alertCon, animated: true, completion: nil)
+                            }
+                        case let .failure(error):
+                            print("error: \(error)")
+                        }
+                    })
+                
+                if !self.nicknameLengthCheck {
+                    let alertCon = UIAlertController(title: "경고", message: "닉네임은 2글자 이상, 8자 이하로 설정해 주세요.", preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
+                } else {
+//                    self.updateUser()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        nowPasswdTextField.rx.text
+            .bind(onNext: { [weak self] changeText in
+                guard let self = self else { return }
+                
+                if changeText != "" {
+                    let nowPasswd = UserDefaults.standard.string(forKey: "passwd")!
+                    if nowPasswd != self.nowPasswdTextField.text ?? "" {
+                        self.passwdChack = false
+                    } else {
+                        self.passwdChack = true
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        changePasswdButton.rx.tap
+            .bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                if self.passwdChack {
+                    let alertCon = UIAlertController(title: "확인", message: "비밀번호 재설정 이메일을 전송했습니다.", preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
+                } else {
+                    let alertCon = UIAlertController(title: "경고", message: "비밀번호가 일치하지 않습니다.", preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        withdrawButton.rx.tap
+            .bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                let alertCon = UIAlertController(title: "경고", message: "정말로 탈퇴하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+                let alertActYes = UIAlertAction(title: "예", style: UIAlertAction.Style.cancel, handler: { _ in self.withdrawUser()} )
+                let alertActNo = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+                [
+                    alertActYes,
+                    alertActNo
+                ].forEach { alertCon.addAction($0) }
+                self.present(alertCon, animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
     }
     
-    @objc func changeNicknameButtonTapped() {
+    func updateUser() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let currentDateString = formatter.string(from: Date())
+        var emailParam = "?email=\(String(describing: UserDefaults.standard.string(forKey: "email")!))"
+        emailParam = emailParam.replacingOccurrences(of: "@", with: "%40")
+        emailParam = emailParam.replacingOccurrences(of: ".", with: "%2E")
+        let nicknameParam = "&nickname=\(self.nicknameTextField.text ?? "")"
+        var updateDateParam = "&updateDate=\(currentDateString)"
+        updateDateParam = updateDateParam.replacingOccurrences(of: " ", with: "%20")
+        updateDateParam = updateDateParam.replacingOccurrences(of: ":", with: "%3A")
         
+        let param = "\(emailParam)\(nicknameParam)\(updateDateParam)"
+        
+        let url = "\(useAPI.host + useAPI.path)/updateUserInfo/\(param)"
+        AF.request(url, method: .post, encoding: URLEncoding.httpBody)
+            .response(completionHandler: { response in
+                switch response.result {
+                case let .success(data):
+                    print("success: \(String(describing: data))")
+                    let alertCon = UIAlertController(title: "확인", message: "닉네임은 변경했습니다.", preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
+                case let .failure(error):
+                    print("failure: \(error)")
+                    let alertCon = UIAlertController(title: "오류", message: "닉네임 재설정에 실패했습니다.", preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
+                }
+            })
     }
     
-    @objc func changePasswdButtonTapped() {
+    func withdrawUser() {
         
+        var userDefaultCheck = false
+        var dbCheck = false
+        var authCheck = false
+        
+        let param = "?email=\(UserDefaults.standard.removeObject(forKey: "email"))"
+        let url = "\(useAPI.host + useAPI.path)/deleteUserInfo/\(param)"
+        
+        UserDefaults.standard.removeObject(forKey: "email")
+        UserDefaults.standard.removeObject(forKey: "passwd")
+        UserDefaults.standard.removeObject(forKey: "nickname")
+        userDefaultCheck = true
+        
+        AF.request(url, method: .post, encoding: URLEncoding.httpBody)
+            .response(completionHandler: { response in
+                switch response.result {
+                case let .success(data):
+                    dbCheck = true
+                    print("success: \(String(describing: data))")
+                case let .failure(error):
+                    dbCheck = false
+                    print("failure: \(error)")
+                }
+            })
+        
+        let user = Auth.auth().currentUser
+        user?.delete { error in
+          if let error = error {
+              print("error: \(error)")
+              authCheck = false
+          } else {
+              authCheck = true
+          }
+        }
+        
+        if userDefaultCheck && dbCheck && authCheck {
+            
+            let alertCon = UIAlertController(title: "성공", message: "회원 탈퇴가 완료되었습니다.", preferredStyle: UIAlertController.Style.alert)
+            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: { _ in
+                
+            })
+            alertCon.addAction(alertAct)
+            self.present(alertCon, animated: true, completion: nil)
+        } else {
+            let alertCon = UIAlertController(title: "오류", message: "회원 탈퇴에 실패했습니다. 고객문의를 부탁드립니다.", preferredStyle: UIAlertController.Style.alert)
+            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            alertCon.addAction(alertAct)
+            self.present(alertCon, animated: true, completion: nil)
+        }
     }
     
-    @objc func withdrawButtonTapped() {
-        
-    }
     
     func setupLayout() {
         [

@@ -87,8 +87,18 @@ private extension AddNoticeViewController {
                         switch response.result {
                         case let .success(data):
                             print("success: \(String(describing: data))")
+                            let alertCon = UIAlertController(title: "성공", message: "공지사항 작성 완료", preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: { _ in
+                                self.dismiss(animated: true)
+                            })
+                            alertCon.addAction(alertAct)
+                            self.present(alertCon, animated: true, completion: nil)
                         case let .failure(error):
                             print("failure: \(error)")
+                            let alertCon = UIAlertController(title: "오류", message: "공지사항 작성에 실패하였습니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            alertCon.addAction(alertAct)
+                            self.present(alertCon, animated: true)
                         }
                     })
                 

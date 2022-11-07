@@ -13,6 +13,7 @@ import RxCocoa
 final class HomeViewController: UIViewController {
     
     let searchBar = SearchBar()
+    var noticeList: [NoticeOverview] = []
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -59,12 +60,13 @@ final class HomeViewController: UIViewController {
         if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" {
             setupAddNoticeButton()
         }
+        getNotice()
     }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return noticeList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -87,6 +89,10 @@ private extension HomeViewController {
     @objc func addNoticeButtonTapped() {
         let vc = AddNoticeViewController()
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func getNotice() {
+        
     }
     
     func setupLayout() {
