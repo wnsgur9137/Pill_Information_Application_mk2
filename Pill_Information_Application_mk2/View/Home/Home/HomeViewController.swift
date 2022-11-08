@@ -10,10 +10,15 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+import Alamofire
+
 final class HomeViewController: UIViewController {
     
+    let disposeBag = DisposeBag()
     let searchBar = SearchBar()
     var noticeList: [NoticeOverview] = []
+    
+    // tableView = NoticeTableView()
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -92,7 +97,17 @@ private extension HomeViewController {
     }
     
     func getNotice() {
+        let url = "\(useAPI.host + useAPI.path)/getNotice"
         
+        AF.request(url, method: .get)
+            .response(completionHandler: { response in
+                switch response.result {
+                case let .success(data):
+                    print("success: \(data)")
+                case let .failure(error):
+                    print("failure: \(error)")
+                }
+            })
     }
     
     func setupLayout() {
