@@ -11,14 +11,15 @@ import RxSwift
 import RxCocoa
 
 import Alamofire
+import SwiftyJSON
 
 final class HomeViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     let searchBar = SearchBar()
-    var noticeList: [NoticeOverview] = []
+    var tableNoticeList: [NoticeOverview] = []
     
-    // tableView = NoticeTableView()
+//    private lazy var noticeTableView = NoticeTableView()
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -43,9 +44,9 @@ final class HomeViewController: UIViewController {
     
     private lazy var noticeTableView: UITableView = {
         let tableView = UITableView()
-//        tableView.backgroundColor = .systemCyan
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(NoticeTableViewCell.self, forCellReuseIdentifier: "NoticeTableViewCell")
         return tableView
     }()
     
@@ -57,6 +58,29 @@ final class HomeViewController: UIViewController {
         return button
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableNoticeList = []
+        self.getNotice(completionHandler: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(result):
+                if result.noticeList.count > 0 {
+                    for ind in 0...(result.noticeList.count - 1) {
+                        self.tableNoticeList.append(result.noticeList[ind])
+                    }
+                    print("\n\nSUCCESS:")
+                    debugPrint("success \(result)")
+                    DispatchQueue.main.async {
+                        self.noticeTableView.reloadData()
+                    }
+                }
+            case let .failure(error):
+                debugPrint("FAILURE: \(error)")
+            }
+        })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "PillSoGood"
@@ -65,17 +89,22 @@ final class HomeViewController: UIViewController {
         if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" {
             setupAddNoticeButton()
         }
-        getNotice()
     }
 }
 
+
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return noticeList.count
+        return tableNoticeList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        if tableNoticeList.count == 0 {
+            return UITableViewCell()
+        }
+        guard let cell = noticeTableView.dequeueReusableCell(withIdentifier: "NoticeTableViewCell", for: indexPath) as? NoticeTableViewCell else { return UITableViewCell() }
+        cell.setData("\(String(describing: tableNoticeList[indexPath.row].title ?? ""))")
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -96,16 +125,27 @@ private extension HomeViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func getNotice() {
-        let url = "\(useAPI.host + useAPI.path)/getNotice"
+    func getNotice(completionHandler: @escaping (Result<NoticeListOverview, Error>) -> Void) {
+        let url = "\(FastAPI.host + FastAPI.path)/getAllNotices"
         
         AF.request(url, method: .get)
             .response(completionHandler: { response in
                 switch response.result {
                 case let .success(data):
-                    print("success: \(data)")
+                    print("success: \(String(describing: data))")
+                    do {
+                        let decoder = JSONDecoder()
+                        let result = try decoder.decode(NoticeListOverview.self, from: data!)
+                        print("result: \(result)")
+                        completionHandler(.success(result))
+                    } catch {
+                        print("failure: \(error)")
+                        completionHandler(.failure(error))
+                    }
+
                 case let .failure(error):
                     print("failure: \(error)")
+                    completionHandler(.failure(error))
                 }
             })
     }

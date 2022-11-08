@@ -111,7 +111,7 @@ private extension NicknameSetViewController {
         }
         
         let nicknameCheckparam = "?nickname=\(nicknameTextField.text ?? "")"
-        let nicknameCheckurl = "\(useAPI.host + useAPI.path)/getNicknameCheck/\(nicknameCheckparam)"
+        let nicknameCheckurl = "\(FastAPI.host + FastAPI.path)/getNicknameCheck/\(nicknameCheckparam)"
         
         AF.request(nicknameCheckurl, method: .get)
             .response(completionHandler: { [weak self] response in
@@ -141,7 +141,7 @@ private extension NicknameSetViewController {
                             
                             let param = "?email=\(urlEmail!)&nickname=\(self.nicknameTextField.text ?? "")&updateDate=\(urlTime)"
                             
-                            let url = "\(useAPI.host + useAPI.path)/setUserInfo/\(param)"
+                            let url = "\(FastAPI.host + FastAPI.path)/setUserInfo/\(param)"
                             
                             AF.request(url, method: .post, encoding: URLEncoding.httpBody)
                                 .response(completionHandler: { response in

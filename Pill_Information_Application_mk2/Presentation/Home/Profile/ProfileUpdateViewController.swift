@@ -332,7 +332,7 @@ private extension ProfileUpdateViewController {
                 var param = "?email=\(UserDefaults.standard.string(forKey: "email")!)"
                 param = param.replacingOccurrences(of: "@", with: "%40")
                 param = param.replacingOccurrences(of: ".", with: "%2E")
-                let url = "\(useAPI.host + useAPI.path)/getUserInfo/\(param)"
+                let url = "\(FastAPI.host + FastAPI.path)/getUserInfo/\(param)"
                 
                 AF.request(url, method: .get)
                     .response(completionHandler: { response in
@@ -432,7 +432,7 @@ private extension ProfileUpdateViewController {
         
         let param = "\(emailParam)\(nicknameParam)\(updateDateParam)"
         
-        let url = "\(useAPI.host + useAPI.path)/updateUserInfo/\(param)"
+        let url = "\(FastAPI.host + FastAPI.path)/updateUserInfo/\(param)"
         AF.request(url, method: .post, encoding: URLEncoding.httpBody)
             .response(completionHandler: { response in
                 switch response.result {
@@ -459,7 +459,7 @@ private extension ProfileUpdateViewController {
         var authCheck = false
         
         let param = "?email=\(UserDefaults.standard.removeObject(forKey: "email"))"
-        let url = "\(useAPI.host + useAPI.path)/deleteUserInfo/\(param)"
+        let url = "\(FastAPI.host + FastAPI.path)/deleteUserInfo/\(param)"
         
         UserDefaults.standard.removeObject(forKey: "email")
         UserDefaults.standard.removeObject(forKey: "passwd")

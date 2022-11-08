@@ -80,7 +80,7 @@ private extension AddNoticeViewController {
                 
                 let param = "?title=\(urlTitle)&writer=\(urlWriter)&content=\(urlContent)"
                 
-                let url = "\(useAPI.host + useAPI.path)/setNotice/\(param)"
+                let url = "\(FastAPI.host + FastAPI.path)/setNotice/\(param)"
                 
                 AF.request(url, method: .post, encoding: URLEncoding.httpBody)
                     .response(completionHandler: { response in

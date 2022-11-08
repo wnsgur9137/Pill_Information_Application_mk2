@@ -29,7 +29,7 @@ final class NoticeTableViewCell: UITableViewCell {
         }
     }
     
-    func setData(_ data: NoticeOverview) {
-        titleLabel.text = data.title
+    func setData(_ title: String) {
+        titleLabel.text = title
     }
 }
