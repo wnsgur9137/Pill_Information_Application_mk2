@@ -37,6 +37,8 @@
 		6661AFCE291B6305003F18B0 /* MedicineDataOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCD291B6305003F18B0 /* MedicineDataOverview.swift */; };
 		6661AFD0291B66FB003F18B0 /* MedicineInfoOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCF291B66FB003F18B0 /* MedicineInfoOverview.swift */; };
 		6661AFD2291B74A1003F18B0 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFD1291B74A1003F18B0 /* Network.swift */; };
+		6661AFDA291B8ABA003F18B0 /* ResultTableViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFD9291B8ABA003F18B0 /* ResultTableViewCellData.swift */; };
+		6661AFDC291B8F76003F18B0 /* BlogListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFDB291B8F76003F18B0 /* BlogListCell.swift */; };
 		66ABD626290369490050D048 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66ABD625290369490050D048 /* GoogleService-Info.plist */; };
 		66ABD62A29036E3A0050D048 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62929036E3A0050D048 /* HomeTabBarController.swift */; };
 		66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62B29038EB30050D048 /* SearchViewController.swift */; };
@@ -98,6 +100,8 @@
 		6661AFCD291B6305003F18B0 /* MedicineDataOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineDataOverview.swift; sourceTree = "<group>"; };
 		6661AFCF291B66FB003F18B0 /* MedicineInfoOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineInfoOverview.swift; sourceTree = "<group>"; };
 		6661AFD1291B74A1003F18B0 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		6661AFD9291B8ABA003F18B0 /* ResultTableViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCellData.swift; sourceTree = "<group>"; };
+		6661AFDB291B8F76003F18B0 /* BlogListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogListCell.swift; sourceTree = "<group>"; };
 		66ABD625290369490050D048 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66ABD62929036E3A0050D048 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		66ABD62B29038EB30050D048 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -268,6 +272,8 @@
 			children = (
 				6661AFBB291A6506003F18B0 /* ResultTableView.swift */,
 				6661AFBD291A6515003F18B0 /* ResultTableViewCell.swift */,
+				6661AFDB291B8F76003F18B0 /* BlogListCell.swift */,
+				6661AFD9291B8ABA003F18B0 /* ResultTableViewCellData.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -541,6 +547,7 @@
 				66ABD63029038EC70050D048 /* ProfileViewController.swift in Sources */,
 				66ABD63C290394E60050D048 /* NicknameSetViewController.swift in Sources */,
 				6661AFCC291B3CBE003F18B0 /* UpdateNoticeViewController.swift in Sources */,
+				6661AFDA291B8ABA003F18B0 /* ResultTableViewCellData.swift in Sources */,
 				66FBD3DA2910BA47008615C5 /* APIInfo.swift in Sources */,
 				6661AFC1291A6536003F18B0 /* BoardTableView.swift in Sources */,
 				6661AFCE291B6305003F18B0 /* MedicineDataOverview.swift in Sources */,
@@ -566,6 +573,7 @@
 				6657ACDB2907EC6D0004BD11 /* PasswdCheckViewController.swift in Sources */,
 				66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */,
 				66FBD3C6290D5F55008615C5 /* NoticeDetailViewController.swift in Sources */,
+				6661AFDC291B8F76003F18B0 /* BlogListCell.swift in Sources */,
 				665E929228F7C3370090B51F /* LoginNavigationController.swift in Sources */,
 				665E929B28F88D360090B51F /* EmailSignUpViewController.swift in Sources */,
 			);

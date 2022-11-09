@@ -102,6 +102,38 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 private extension SearchViewController {
     func bind() {
         
+        let medicineResult = searchBar.shouldLoadResult
+            .flatMapLatest { query in
+                MedicineAPINetwork().getMedicineAPI(query: query)
+            }
+            .share()
+        
+        let medicineValue = medicineResult
+            .compactMap { data -> MedicineOverview? in
+                guard case .success(let value) = data else { return nil }
+                return value
+            }
+        
+        // 에러를 String 타입으로 반환
+        let medicineError = medicineResult
+            .compactMap { data -> String? in
+                guard case .failure(let error) = data else { return nil }
+                return error.localizedDescription
+            }
+        
+        // 네트워크를 통해 가져온 값을 cellData로 반환
+        let cellData = medicineValue
+            .map { medicine -> [ResultTableViewCellData] in
+                return medicine.body[0].items
+                    .map { item in
+                        return ResultTableViewCellData(
+                            medicineName: item.medicineName,
+                            medicineImage: item.medicineImage,
+                            className: item.className,
+                            etcOtcName: item.etcOtcName
+                        )
+                    }
+            }
     }
     
     @objc func searchLogDeleteButtonTapped() {
