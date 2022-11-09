@@ -10,9 +10,12 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+import Alamofire
+
 final class NoticeDetailViewController: UIViewController {
     
     let disposeBag = DisposeBag()
+    var noticeId: Int? = nil
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -22,9 +25,18 @@ final class NoticeDetailViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Title"
+        label.text = "작성자: Title"
         label.textColor = .label
         label.font = .systemFont(ofSize: 30.0, weight: .bold)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var writerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Admin"
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 20.0, weight: .regular)
         return label
     }()
     
@@ -33,7 +45,7 @@ final class NoticeDetailViewController: UIViewController {
         textView.isEditable = false
         textView.text = "Content"
         textView.textColor = .black
-        textView.font = .systemFont(ofSize: 14.0, weight: .regular)
+        textView.font = .systemFont(ofSize: 18.0, weight: .regular)
         textView.backgroundColor = UIColor(named: "paperColor")
         return textView
     }()
@@ -80,6 +92,13 @@ final class NoticeDetailViewController: UIViewController {
             addAdminLayout()
         }
     }
+    
+    func setData(id: Int, title: String, writer: String, content: String) {
+        noticeId = id
+        titleLabel.text = title
+        writerLabel.text = "작성자: \(writer)"
+        contentTextView.text = content
+    }
 }
 
 private extension NoticeDetailViewController {
@@ -91,16 +110,43 @@ private extension NoticeDetailViewController {
             .disposed(by: disposeBag)
         
         deleteButton.rx.tap
-            .bind(onNext: {
-                
+            .bind(onNext: { [weak self] in
+                let alertCon = UIAlertController(title: "경고", message: "공지사항을 삭제하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+                let alertAcc = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+                let alertCancel = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
+                    self?.deleteNotice()
+                })
+                alertCon.addAction(alertAcc)
+                alertCon.addAction(alertCancel)
+                self?.present(alertCon, animated: true)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func updateNotice() {
+        
+    }
+    
+    func deleteNotice() {
+        let url = "\(FastAPI.host + FastAPI.path)/deleteNotice/?id=\(String(describing: noticeId!))"
+        
+        AF.request(url, method: .post)
+            .response(completionHandler: { [weak self] response in
+                switch response.result {
+                case let .success(data):
+                    print("success: \(String(describing: data))")
+                    self?.dismiss(animated: true)
+                case let .failure(error):
+                    print("failure: \(error)")
+                }
+            })
     }
     
     func setupLayout() {
         [
             backgroundView,
             titleLabel,
+            writerLabel,
             contentTextView,
             helpLabel,
             helpEmail
@@ -113,10 +159,17 @@ private extension NoticeDetailViewController {
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.leading.equalToSuperview().offset(10)
+            $0.trailing.equalToSuperview().inset(100)
+        }
+        
+        writerLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(titleLabel.snp.leading)
+            $0.trailing.equalToSuperview().inset(10)
         }
         
         contentTextView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
+            $0.top.equalTo(writerLabel.snp.bottom).offset(20)
             $0.leading.equalTo(titleLabel.snp.leading)
             $0.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(120)

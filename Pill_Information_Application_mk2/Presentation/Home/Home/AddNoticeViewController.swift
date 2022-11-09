@@ -74,15 +74,15 @@ private extension AddNoticeViewController {
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
                 
-                let urlTitle = self.titleTextField.text ?? ""
-                let urlWriter = UserDefaults.standard.string(forKey: "nickname")!
-                let urlContent = (self.contentTextView.text ?? "").replacingOccurrences(of: "\n", with: "%5Cn")
+                let urlTitle = (self.titleTextField.text ?? "").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                let urlWriter = (UserDefaults.standard.string(forKey: "nickname")!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+                let urlContent = (self.contentTextView.text ?? "").replacingOccurrences(of: "\n", with: "%5Cn").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 
                 let param = "?title=\(urlTitle)&writer=\(urlWriter)&content=\(urlContent)"
                 
                 let url = "\(FastAPI.host + FastAPI.path)/setNotice/\(param)"
                 
-                AF.request(url, method: .post, encoding: URLEncoding.httpBody)
+                AF.request(url, method: .post)
                     .response(completionHandler: { response in
                         switch response.result {
                         case let .success(data):

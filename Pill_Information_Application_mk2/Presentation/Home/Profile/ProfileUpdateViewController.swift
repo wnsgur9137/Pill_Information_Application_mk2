@@ -303,7 +303,15 @@ final class ProfileUpdateViewController: UIViewController {
 }
 
 extension ProfileUpdateViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.view.endEditing(true)
+    }
 }
 
 private extension ProfileUpdateViewController {

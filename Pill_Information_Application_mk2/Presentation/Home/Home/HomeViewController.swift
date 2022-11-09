@@ -109,7 +109,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = NoticeDetailViewController()
-        
+        vc.setData(
+            id: tableNoticeList[indexPath.row].id!,
+            title: tableNoticeList[indexPath.row].title!,
+            writer: tableNoticeList[indexPath.row].writer!,
+            content: tableNoticeList[indexPath.row].content!)
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
