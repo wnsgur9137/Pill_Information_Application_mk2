@@ -34,6 +34,9 @@
 		6661AFC1291A6536003F18B0 /* BoardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFC0291A6536003F18B0 /* BoardTableView.swift */; };
 		6661AFC3291A653C003F18B0 /* BoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFC2291A653C003F18B0 /* BoardTableViewCell.swift */; };
 		6661AFCC291B3CBE003F18B0 /* UpdateNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCB291B3CBE003F18B0 /* UpdateNoticeViewController.swift */; };
+		6661AFCE291B6305003F18B0 /* MedicineDataOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCD291B6305003F18B0 /* MedicineDataOverview.swift */; };
+		6661AFD0291B66FB003F18B0 /* MedicineInfoOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCF291B66FB003F18B0 /* MedicineInfoOverview.swift */; };
+		6661AFD2291B74A1003F18B0 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFD1291B74A1003F18B0 /* Network.swift */; };
 		66ABD626290369490050D048 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66ABD625290369490050D048 /* GoogleService-Info.plist */; };
 		66ABD62A29036E3A0050D048 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62929036E3A0050D048 /* HomeTabBarController.swift */; };
 		66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62B29038EB30050D048 /* SearchViewController.swift */; };
@@ -57,7 +60,7 @@
 		66FBD3D2290EDA1B008615C5 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBD3D1290EDA1B008615C5 /* DirectionViewController.swift */; };
 		66FBD3D4290EDDF6008615C5 /* PictureSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBD3D3290EDDF6008615C5 /* PictureSearchViewController.swift */; };
 		66FBD3D6290FEF9F008615C5 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBD3D5290FEF9F008615C5 /* SearchViewModel.swift */; };
-		66FBD3DA2910BA47008615C5 /* ServerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBD3D92910BA47008615C5 /* ServerInfo.swift */; };
+		66FBD3DA2910BA47008615C5 /* APIInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBD3D92910BA47008615C5 /* APIInfo.swift */; };
 		66FBD3DC2911F463008615C5 /* AddNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBD3DB2911F463008615C5 /* AddNoticeViewController.swift */; };
 		66FBD3DE291239C3008615C5 /* UserInfoOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBD3DD291239C3008615C5 /* UserInfoOverview.swift */; };
 		FAF84EF6533F95FEE7D41139 /* Pods_Pill_Information_Application_mk2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68D438C26E4B56F26F14109D /* Pods_Pill_Information_Application_mk2.framework */; };
@@ -92,6 +95,9 @@
 		6661AFC0291A6536003F18B0 /* BoardTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTableView.swift; sourceTree = "<group>"; };
 		6661AFC2291A653C003F18B0 /* BoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTableViewCell.swift; sourceTree = "<group>"; };
 		6661AFCB291B3CBE003F18B0 /* UpdateNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateNoticeViewController.swift; sourceTree = "<group>"; };
+		6661AFCD291B6305003F18B0 /* MedicineDataOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineDataOverview.swift; sourceTree = "<group>"; };
+		6661AFCF291B66FB003F18B0 /* MedicineInfoOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineInfoOverview.swift; sourceTree = "<group>"; };
+		6661AFD1291B74A1003F18B0 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		66ABD625290369490050D048 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66ABD62929036E3A0050D048 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		66ABD62B29038EB30050D048 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -109,7 +115,7 @@
 		66FBD3D1290EDA1B008615C5 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		66FBD3D3290EDDF6008615C5 /* PictureSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureSearchViewController.swift; sourceTree = "<group>"; };
 		66FBD3D5290FEF9F008615C5 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		66FBD3D92910BA47008615C5 /* ServerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfo.swift; sourceTree = "<group>"; };
+		66FBD3D92910BA47008615C5 /* APIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInfo.swift; sourceTree = "<group>"; };
 		66FBD3DB2911F463008615C5 /* AddNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoticeViewController.swift; sourceTree = "<group>"; };
 		66FBD3DD291239C3008615C5 /* UserInfoOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoOverview.swift; sourceTree = "<group>"; };
 		68D438C26E4B56F26F14109D /* Pods_Pill_Information_Application_mk2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pill_Information_Application_mk2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -280,6 +286,8 @@
 			children = (
 				66FBD3DD291239C3008615C5 /* UserInfoOverview.swift */,
 				6661AF6629178E5B003F18B0 /* NoticeListOverview.swift */,
+				6661AFCD291B6305003F18B0 /* MedicineDataOverview.swift */,
+				6661AFCF291B66FB003F18B0 /* MedicineInfoOverview.swift */,
 			);
 			path = Overview;
 			sourceTree = "<group>";
@@ -295,7 +303,8 @@
 		6661AFC7291A65C4003F18B0 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				66FBD3D92910BA47008615C5 /* ServerInfo.swift */,
+				66FBD3D92910BA47008615C5 /* APIInfo.swift */,
+				6661AFD1291B74A1003F18B0 /* Network.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -515,6 +524,7 @@
 			files = (
 				6661AFB4291A648A003F18B0 /* BookmarkTableViewCell.swift in Sources */,
 				665E929428F83BF10090B51F /* UIButton+.swift in Sources */,
+				6661AFD0291B66FB003F18B0 /* MedicineInfoOverview.swift in Sources */,
 				6657ACD329070C4B0004BD11 /* FindEmailViewController.swift in Sources */,
 				6661AFB6291A64AF003F18B0 /* AlarmTableView.swift in Sources */,
 				66FBD3DC2911F463008615C5 /* AddNoticeViewController.swift in Sources */,
@@ -531,8 +541,10 @@
 				66ABD63029038EC70050D048 /* ProfileViewController.swift in Sources */,
 				66ABD63C290394E60050D048 /* NicknameSetViewController.swift in Sources */,
 				6661AFCC291B3CBE003F18B0 /* UpdateNoticeViewController.swift in Sources */,
-				66FBD3DA2910BA47008615C5 /* ServerInfo.swift in Sources */,
+				66FBD3DA2910BA47008615C5 /* APIInfo.swift in Sources */,
 				6661AFC1291A6536003F18B0 /* BoardTableView.swift in Sources */,
+				6661AFCE291B6305003F18B0 /* MedicineDataOverview.swift in Sources */,
+				6661AFD2291B74A1003F18B0 /* Network.swift in Sources */,
 				66FBD3CA290D7993008615C5 /* TiemrViewController.swift in Sources */,
 				6661AFAC291A63D3003F18B0 /* NoticeTableView.swift in Sources */,
 				66ABD63629038F760050D048 /* HomeViewController.swift in Sources */,
@@ -707,7 +719,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.junhyeok.Pill-Information-Application-mk2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -736,7 +748,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.junhyeok.Pill-Information-Application-mk2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

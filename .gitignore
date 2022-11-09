@@ -2,5 +2,5 @@ Pods
 Pods/
 
 Pill_Information_Application_mk2/GoogleService-Info.plist
-Pill_Information_Application_mk2/ServerInfo.swift
+Pill_Information_Application_mk2/Network/APIInfo.swift
 Pill_Information_Application_mk2/Info.plist
