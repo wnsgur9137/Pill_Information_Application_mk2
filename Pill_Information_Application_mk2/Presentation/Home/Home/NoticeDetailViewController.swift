@@ -47,6 +47,7 @@ final class NoticeDetailViewController: UIViewController {
         textView.textColor = .black
         textView.font = .systemFont(ofSize: 18.0, weight: .regular)
         textView.backgroundColor = UIColor(named: "paperColor")
+        
         return textView
     }()
     
@@ -95,17 +96,20 @@ final class NoticeDetailViewController: UIViewController {
     
     func setData(id: Int, title: String, writer: String, content: String) {
         noticeId = id
-        titleLabel.text = title
-        writerLabel.text = "작성자: \(writer)"
-        contentTextView.text = content
+        titleLabel.text = title.removingPercentEncoding
+        writerLabel.text = "작성자: \(String(describing: writer.removingPercentEncoding ?? "Admin"))"
+        contentTextView.text = content.removingPercentEncoding?.replacingOccurrences(of: "\\n", with: "\n")
     }
 }
 
 private extension NoticeDetailViewController {
     func bind() {
         updateButton.rx.tap
-            .bind(onNext: {
-                
+            .bind(onNext: { [weak self] in
+                guard let self = self else { return }
+                let vc = UpdateNoticeViewController()
+                vc.setData(id: self.noticeId!, title: self.titleLabel.text!, content: self.contentTextView.text!)
+                self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
