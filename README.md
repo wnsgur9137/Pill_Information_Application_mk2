@@ -9,3 +9,7 @@ GoogleSignInt
 Alamofire
 SwiftyJSON
 GoogleMLKit/TextRecognition
+
+
+
+프로젝트 목표
