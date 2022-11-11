@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import Alamofire
 
 enum NetworkError: Error {
     case invalidURL
@@ -33,14 +34,14 @@ class MedicineAPINetwork {
     }
     
     func getMedicineAPI(query: String) -> Single<Result<MedicineOverview, NetworkError>> {
+        print(api.getMedicineAPI(query: query).url)
         guard let url = api.getMedicineAPI(query: query).url else {
             return .just(.failure(.invalidURL))
         }
-        
+
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("", forHTTPHeaderField: "Authorization")
-        
+//        request.setValue(MedicineAPI.apiKey, forHTTPHeaderField: "serviceKey")
         return session.rx.data(request: request as URLRequest)
             .map { data in
                 do {
@@ -72,7 +73,7 @@ class MedicineInfoAPINetwork {
         
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("", forHTTPHeaderField: "Authorization")
+        request.setValue(MedicineInfoAPI.apiKey, forHTTPHeaderField: "serviceKey")
         
         return session.rx.data(request: request as URLRequest)
             .map { data in

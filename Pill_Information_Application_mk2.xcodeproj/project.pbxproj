@@ -38,6 +38,8 @@
 		6661AFD0291B66FB003F18B0 /* MedicineInfoOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCF291B66FB003F18B0 /* MedicineInfoOverview.swift */; };
 		6661AFD2291B74A1003F18B0 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFD1291B74A1003F18B0 /* Network.swift */; };
 		6661AFDA291B8ABA003F18B0 /* ResultTableViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFD9291B8ABA003F18B0 /* ResultTableViewCellData.swift */; };
+		6661AFE4291E1C20003F18B0 /* ResultTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFE3291E1C20003F18B0 /* ResultTableViewHeader.swift */; };
+		6661AFE8291E1E39003F18B0 /* AlertActionConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFE7291E1E39003F18B0 /* AlertActionConvertible.swift */; };
 		66ABD626290369490050D048 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66ABD625290369490050D048 /* GoogleService-Info.plist */; };
 		66ABD62A29036E3A0050D048 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62929036E3A0050D048 /* HomeTabBarController.swift */; };
 		66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62B29038EB30050D048 /* SearchViewController.swift */; };
@@ -100,6 +102,8 @@
 		6661AFCF291B66FB003F18B0 /* MedicineInfoOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineInfoOverview.swift; sourceTree = "<group>"; };
 		6661AFD1291B74A1003F18B0 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		6661AFD9291B8ABA003F18B0 /* ResultTableViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCellData.swift; sourceTree = "<group>"; };
+		6661AFE3291E1C20003F18B0 /* ResultTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewHeader.swift; sourceTree = "<group>"; };
+		6661AFE7291E1E39003F18B0 /* AlertActionConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionConvertible.swift; sourceTree = "<group>"; };
 		66ABD625290369490050D048 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66ABD62929036E3A0050D048 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		66ABD62B29038EB30050D048 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +275,7 @@
 				6661AFBB291A6506003F18B0 /* ResultTableView.swift */,
 				6661AFBD291A6515003F18B0 /* ResultTableViewCell.swift */,
 				6661AFD9291B8ABA003F18B0 /* ResultTableViewCellData.swift */,
+				6661AFE3291E1C20003F18B0 /* ResultTableViewHeader.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -315,10 +320,19 @@
 		6661AFC8291A65F9003F18B0 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				6661AFE9291E1E49003F18B0 /* Convertible */,
 				6661AFC5291A659E003F18B0 /* Overview */,
 				6661AFC6291A65AF003F18B0 /* UI */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		6661AFE9291E1E49003F18B0 /* Convertible */ = {
+			isa = PBXGroup;
+			children = (
+				6661AFE7291E1E39003F18B0 /* AlertActionConvertible.swift */,
+			);
+			path = Convertible;
 			sourceTree = "<group>";
 		};
 		66ABD63129038ECD0050D048 /* Search */ = {
@@ -527,6 +541,7 @@
 			files = (
 				6661AFB4291A648A003F18B0 /* BookmarkTableViewCell.swift in Sources */,
 				665E929428F83BF10090B51F /* UIButton+.swift in Sources */,
+				6661AFE8291E1E39003F18B0 /* AlertActionConvertible.swift in Sources */,
 				6661AFD0291B66FB003F18B0 /* MedicineInfoOverview.swift in Sources */,
 				6657ACD329070C4B0004BD11 /* FindEmailViewController.swift in Sources */,
 				6661AFB6291A64AF003F18B0 /* AlarmTableView.swift in Sources */,
@@ -552,6 +567,7 @@
 				66FBD3CA290D7993008615C5 /* TiemrViewController.swift in Sources */,
 				6661AFAC291A63D3003F18B0 /* NoticeTableView.swift in Sources */,
 				66ABD63629038F760050D048 /* HomeViewController.swift in Sources */,
+				6661AFE4291E1C20003F18B0 /* ResultTableViewHeader.swift in Sources */,
 				6657ACD929077E0C0004BD11 /* ProfileUpdateViewController.swift in Sources */,
 				66FBD3CC290D79A1008615C5 /* AddAlarmViewController.swift in Sources */,
 				665E927728F7BD130090B51F /* AppDelegate.swift in Sources */,

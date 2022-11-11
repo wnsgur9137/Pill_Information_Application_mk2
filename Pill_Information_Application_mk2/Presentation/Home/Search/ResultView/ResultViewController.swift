@@ -15,17 +15,12 @@ final class ResultViewController: UIViewController {
     
     let searchBar = SearchBar()
     
+    let tableView = ResultTableView()
+    
     private lazy var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
         return view
-    }()
-    
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
-        return tableView
     }()
     
     override func viewDidLoad() {
@@ -36,24 +31,24 @@ final class ResultViewController: UIViewController {
     }
 }
 
-extension ResultViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = DetailViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-}
+//extension ResultViewController: UITableViewDelegate, UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return 10
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        return UITableViewCell()
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 80.0
+//    }
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let vc = DetailViewController()
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
+//}
 
 
 private extension ResultViewController {

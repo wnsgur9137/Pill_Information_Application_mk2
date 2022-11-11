@@ -12,8 +12,10 @@ import RxCocoa
 
 final class SearchViewController: UIViewController {
     let disposeBag = DisposeBag()
-    
     let searchBar = SearchBar()
+    let resultTableView = ResultTableView()
+    
+    let alertActionTapped = PublishRelay<AlertAction>()
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -63,6 +65,8 @@ final class SearchViewController: UIViewController {
         ])
         stackView.axis = .horizontal
         stackView.distribution = .fill
+        stackView.layer.borderWidth = 1.0
+        stackView.layer.borderColor = CGColor(gray: 100, alpha: 80)
         return stackView
     }()
     
@@ -134,6 +138,69 @@ private extension SearchViewController {
                         )
                     }
             }
+        
+        // 정렬 버튼을 누를 경우 나오는 alert
+        let sortedType = alertActionTapped
+            .filter {
+                switch $0 {
+                case .medicineName, .className:
+                    return true
+                default:
+                    return false
+                }
+            }
+            .startWith(.medicineName)
+        
+        // SearchViewController -> ResultTableView
+        Observable
+            .combineLatest(
+                sortedType,
+                cellData
+            ) { type, data -> [ResultTableViewCellData] in
+                switch type {
+                case .medicineName:
+                    return data.sorted { $0.medicineName ?? "" < $1.medicineName ?? ""}
+                case .className:
+                    return data.sorted { $0.className ?? "" < $1.className ?? ""}
+                default:
+                    return data
+                }
+            }
+            .bind(to: resultTableView.cellData)
+            .disposed(by: disposeBag)
+        
+        let alertForErrorMessage = medicineError
+            .map { message -> Alert in
+                return (
+                    title: "오류",
+                    message: "예상치 못한 오류가 발생했습니다. 잠시후 다시 시도해주십시오.\n\(message)",
+                    actions: [.confirm],
+                    style: .alert
+                )
+            }
+        
+        let alertSheetForSorting = resultTableView.headerView.sortButtonTapped
+            .map { _ -> Alert in
+                return (
+                    title: nil,
+                    message: nil,
+                    actions: [.medicineName, .className, .cancel],
+                    style: .actionSheet
+                )
+            }
+        
+        Observable
+            .merge(
+                alertSheetForSorting,
+                alertForErrorMessage
+            )
+            .asSignal(onErrorSignalWith: .empty())
+            .flatMapLatest { alert -> Signal<AlertAction> in
+                let alertController = UIAlertController(title: alert.title, message: alert.message, preferredStyle: alert.style)
+                return self.presentAlertController(alertController, actions: alert.actions)
+            }
+            .emit(to: alertActionTapped)
+            .disposed(by: disposeBag)
     }
     
     @objc func searchLogDeleteButtonTapped() {
@@ -148,6 +215,7 @@ private extension SearchViewController {
             searchLogStackView,
 //            searchLogCollectionView,
             searchImageButton,
+            resultTableView,
             imageView
         ].forEach{ view.addSubview($0) }
         
@@ -171,6 +239,13 @@ private extension SearchViewController {
             }
         }
         
+        resultTableView.snp.makeConstraints {
+            $0.top.equalTo(searchLogStackView.snp.bottom).offset(30.0)
+            $0.leading.equalTo(searchLogStackView.snp.leading)
+            $0.trailing.equalTo(searchLogStackView.snp.trailing)
+            $0.height.equalTo(300)
+        }
+        
 //        searchLogCollectionView.snp.makeConstraints {
 //            $0.top.equalTo(searchLogStackView.snp.bottom).offset(10)
 //            $0.leading.equalTo(searchLogStackView.snp.leading)
@@ -185,5 +260,64 @@ private extension SearchViewController {
         }
         
         
+    }
+}
+
+
+// Alert
+extension SearchViewController {
+    typealias Alert = (title: String?, message: String?, actions: [AlertAction], style: UIAlertController.Style)
+    
+    enum AlertAction: AlertActionConvertible {
+        case medicineName, className, cancel
+        case confirm
+        
+        var title: String {
+            switch self {
+            case .medicineName:
+                return "MedicineName"
+            case .className:
+                return "ClassName"
+            case .cancel:
+                return "취소"
+            case .confirm:
+                return "확인"
+            }
+        }
+        
+        var style: UIAlertAction.Style {
+            switch self {
+            case .medicineName, .className:
+                return .default
+            case .cancel, .confirm:
+                return .cancel
+            }
+        }
+    }
+    
+    func presentAlertController<Action: AlertActionConvertible>(_ alertController: UIAlertController, actions: [Action]) -> Signal<Action> {
+        if actions.isEmpty { return .empty() }
+        return Observable
+            .create {[weak self] observer in
+                guard let self = self else { return Disposables.create() }
+                for action in actions {
+                    alertController.addAction(
+                        UIAlertAction(
+                            title: action.title,
+                            style: action.style,
+                            handler: { _ in
+                                observer.onNext(action)
+                                observer.onCompleted()
+                            }
+                        )
+                    )
+                }
+                self.present(alertController, animated: true, completion: nil)
+                
+                return Disposables.create {
+                    alertController.dismiss(animated: true, completion: nil)
+                }
+            }
+            .asSignal(onErrorSignalWith: .empty())
     }
 }
