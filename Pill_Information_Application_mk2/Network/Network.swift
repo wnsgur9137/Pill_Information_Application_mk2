@@ -55,6 +55,7 @@ class MedicineAPINetwork {
                     .just(.failure(.networkError))
             }
             .asSingle()
+        
     }
 }
 
