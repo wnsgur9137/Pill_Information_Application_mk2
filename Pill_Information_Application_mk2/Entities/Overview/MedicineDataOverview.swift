@@ -8,7 +8,18 @@
 import Foundation
 
 struct MedicineOverview: Decodable {
-    let body: [MedicineBody]
+    let header: MedicineHeader
+    let body: MedicineBody
+    
+//    let pageNo: Int?
+//    let totalCount: Int?
+//    let numOfRows: Int?
+//    let items: [MedicineItem]
+}
+
+struct MedicineHeader: Decodable {
+    let resultCode: String?
+    let resultMsg: String?
 }
 
 struct MedicineBody: Decodable {

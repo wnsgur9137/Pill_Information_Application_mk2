@@ -16,7 +16,7 @@ final class ResultTableViewCell: UITableViewCell {
     
     private lazy var medicineImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         imageView.backgroundColor = .lightGray
         return imageView
     }()
@@ -81,32 +81,34 @@ private extension ResultTableViewCell {
         medicineImageView.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(8.0)
             $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(80.0)
+            $0.width.equalTo(80.0)
+            
         }
         
         clickImageView.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-8.0)
-            $0.height.equalTo(40.0)
+            $0.height.equalTo(25.0)
             $0.width.equalTo(10.0)
         }
         
         classNameLabel.snp.makeConstraints {
             $0.top.equalTo(medicineImageView.snp.top)
             $0.leading.equalTo(medicineImageView.snp.trailing).offset(10.0)
+            $0.trailing.equalTo(etcOtcNameLabel.snp.leading).offset(-10.0)
         }
         
         etcOtcNameLabel.snp.makeConstraints {
             $0.top.equalTo(medicineImageView.snp.top)
             $0.trailing.equalTo(clickImageView).offset(-8.0)
-            $0.width.equalTo(100.0)
+//            $0.width.equalTo(80.0)
         }
         
         medicineNameLabel.snp.makeConstraints {
             $0.top.equalTo(classNameLabel.snp.bottom).offset(5.0)
             $0.leading.equalTo(classNameLabel.snp.leading)
             $0.trailing.equalTo(clickImageView).offset(-8.0)
-            $0.width.equalTo(300.0)
+//            $0.width.equalTo(300.0)
         }
     }
 }

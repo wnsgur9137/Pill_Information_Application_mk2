@@ -15,6 +15,8 @@ import Kingfisher
 final class DetailViewController: UIViewController {
     let disposeBag = DisposeBag()
     
+    let medicineData = PublishSubject<[ResultTableViewCellData]>()
+    
     private lazy var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -67,6 +69,12 @@ final class DetailViewController: UIViewController {
         self.navigationItem.title = "알약 정보"
         bind()
         setupLayout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
     }
 }
 

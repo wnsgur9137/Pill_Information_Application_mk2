@@ -48,12 +48,18 @@ private extension ResultTableView {
                 return cell
             }
             .disposed(by: disposeBag)
+        
+        self.rx.itemSelected
+            .subscribe(onNext: { item in
+                
+            })
+            .disposed(by: disposeBag)
     }
     
     func attribute() {
         self.backgroundColor = .systemBackground
         self.register(ResultTableViewCell.self, forCellReuseIdentifier: "ResultTableViewCell")
         self.separatorStyle = .singleLine
-        self.rowHeight = 100.0
+        self.rowHeight = 70.0
     }
 }

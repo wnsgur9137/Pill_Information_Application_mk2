@@ -35,7 +35,6 @@ final class SearchViewController: UIViewController {
         let button = UIButton()
         button.setTitle("검색 기록 삭제", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
-        button.addTarget(self, action: #selector(searchLogDeleteButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -128,7 +127,7 @@ private extension SearchViewController {
         // 네트워크를 통해 가져온 값을 cellData로 반환
         let cellData = medicineValue
             .map { medicine -> [ResultTableViewCellData] in
-                return medicine.body[0].items
+                return medicine.body.items
                     .map { item in
                         return ResultTableViewCellData(
                             medicineName: item.medicineName,
@@ -201,11 +200,14 @@ private extension SearchViewController {
             }
             .emit(to: alertActionTapped)
             .disposed(by: disposeBag)
-    }
-    
-    @objc func searchLogDeleteButtonTapped() {
-        let vc = ResultViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        searchLogDeleteButton.rx.tap
+            .subscribe(onNext: {
+                UserDefaults.standard.removeObject(forKey: "searchHistoryArray")
+                let historyArray = UserDefaults.standard.array(forKey: "searchHistoryArray")
+                print("UserDefaults.standard.removeObject(forKey: searchHistoryArray): \(historyArray)")
+            })
+            .disposed(by: disposeBag)
     }
     
     func setupLayout() {
@@ -229,13 +231,13 @@ private extension SearchViewController {
         }
         
         searchLogStackView.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(searchBar.snp.bottom).offset(10.0)
+            $0.leading.equalToSuperview().offset(20.0)
+            $0.trailing.equalToSuperview().inset(20.0)
             
             searchLogDeleteButton.snp.makeConstraints {
 //                $0.leading.equalToSuperview()
-                $0.width.equalTo(130)
+                $0.width.equalTo(130.0)
             }
         }
         
@@ -243,7 +245,7 @@ private extension SearchViewController {
             $0.top.equalTo(searchLogStackView.snp.bottom).offset(30.0)
             $0.leading.equalTo(searchLogStackView.snp.leading)
             $0.trailing.equalTo(searchLogStackView.snp.trailing)
-            $0.height.equalTo(300)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30.0)
         }
         
 //        searchLogCollectionView.snp.makeConstraints {

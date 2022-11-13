@@ -62,6 +62,19 @@ final class SearchBar: UISearchBar {
             .emit(to: self.rx.endEditing)
             .disposed(by: disposeBag)
         
+        searchButtonTapped
+            .subscribe(onNext: {
+                var searchHistoryArray = UserDefaults.standard.array(forKey: "searchHistoryArray")
+                if searchHistoryArray == nil {
+                    UserDefaults.standard.set([], forKey:"searchHistoryArray")
+                    searchHistoryArray = UserDefaults.standard.array(forKey: "searchHistoryArray")
+                }
+                searchHistoryArray!.append(self.text!)
+                UserDefaults.standard.set(searchHistoryArray, forKey: "searchHistoryArray")
+//                print("searchHistoryArray: \(String(describing: searchHistoryArray!))")
+            })
+            .disposed(by: disposeBag)
+        
         self.shouldLoadResult = searchButtonTapped
             .withLatestFrom(self.rx.text) { $1 ?? ""}
             .filter { !$0.isEmpty }

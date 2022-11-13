@@ -8,7 +8,7 @@
 import Foundation
 
 struct MedicineInfoOverview: Decodable {
-    let body: [MedicineInfoBody]
+    let body: MedicineInfoBody
 }
 
 struct MedicineInfoBody: Decodable {
