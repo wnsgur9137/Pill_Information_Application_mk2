@@ -16,6 +16,8 @@ final class ResultTableView: UITableView {
     // SearchViewController -> ResultTableView
     let cellData = PublishSubject<[ResultTableViewCellData]>()
     
+    var itemSelectedObservable = Observable<Int>.of(0)
+    
     let headerView = ResultTableViewHeader(
         frame: CGRect(
             origin: .zero,
@@ -47,12 +49,6 @@ private extension ResultTableView {
                 cell.setData(data: data)
                 return cell
             }
-            .disposed(by: disposeBag)
-        
-        self.rx.itemSelected
-            .subscribe(onNext: { item in
-                
-            })
             .disposed(by: disposeBag)
     }
     

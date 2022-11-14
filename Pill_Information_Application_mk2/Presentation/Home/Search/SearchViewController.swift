@@ -16,6 +16,7 @@ final class SearchViewController: UIViewController {
     let resultTableView = ResultTableView()
     
     let alertActionTapped = PublishRelay<AlertAction>()
+    var medicineArray: MedicineOverview? = nil
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -74,6 +75,7 @@ final class SearchViewController: UIViewController {
         self.navigationItem.title = "알약 검색"
         bind()
         setupLayout()
+        resultTableView.delegate = self
     }
 }
 
@@ -102,6 +104,14 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
 }
 
+extension SearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.medicine = medicineArray!.body.items[indexPath[1]]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
 private extension SearchViewController {
     func bind() {
         
@@ -126,14 +136,45 @@ private extension SearchViewController {
         
         // 네트워크를 통해 가져온 값을 cellData로 반환
         let cellData = medicineValue
-            .map { medicine -> [ResultTableViewCellData] in
+            .map { [weak self] medicine -> [ResultTableViewCellData] in
+                self?.medicineArray = medicine
                 return medicine.body.items
                     .map { item in
                         return ResultTableViewCellData(
+                            medicineSeq: item.medicineSeq,
                             medicineName: item.medicineName,
+                            entpSeq: item.entpSeq, entpName: item.entpName,
+                            chart: item.chart,
                             medicineImage: item.medicineImage,
+                            printFront: item.printFront,
+                            printBack: item.printBack,
+                            medicineShape: item.medicineShape,
+                            colorClass1: item.colorClass1,
+                            colorClass2: item.colorClass2,
+                            lineFront: item.lineFront,
+                            lineBack: item.lineBack,
+                            lenLong: item.lenLong,
+                            lenShort: item.lenShort,
+                            thick: item.thick,
+                            imgRegistTs: item.imgRegistTs,
+                            classNo: item.classNo,
                             className: item.className,
-                            etcOtcName: item.etcOtcName
+                            etcOtcName: item.etcOtcName,
+                            medicinePermitDate: item.medicinePermitDate,
+                            formCodeName: item.formCodeName,
+                            markCodeFrontAnal: item.markCodeFrontAnal,
+                            markCodeBackAnal: item.markCodeBackAnal,
+                            markCodeFrontImage: item.markCodeFrontImage,
+                            markCodeBackImage: item.markCodeBackImage,
+                            medicineEngName: item.medicineEngName,
+                            updateDate: item.updateDate, markCodeFront: item.markCodeFront,
+                            markCodeBack: item.markCodeBack,
+                            ediCode: item.ediCode
+//
+//                            medicineName: item.medicineName,
+//                            medicineImage: item.medicineImage,
+//                            className: item.className,
+//                            etcOtcName: item.etcOtcName
                         )
                     }
             }
@@ -157,10 +198,10 @@ private extension SearchViewController {
                 cellData
             ) { type, data -> [ResultTableViewCellData] in
                 switch type {
-                case .medicineName:
-                    return data.sorted { $0.medicineName ?? "" < $1.medicineName ?? ""}
-                case .className:
-                    return data.sorted { $0.className ?? "" < $1.className ?? ""}
+//                case .medicineName:
+//                    return data.sorted { $0.medicineName ?? "" < $1.medicineName ?? ""}
+//                case .className:
+//                    return data.sorted { $0.className ?? "" < $1.className ?? ""}
                 default:
                     return data
                 }
@@ -204,10 +245,14 @@ private extension SearchViewController {
         searchLogDeleteButton.rx.tap
             .subscribe(onNext: {
                 UserDefaults.standard.removeObject(forKey: "searchHistoryArray")
-                let historyArray = UserDefaults.standard.array(forKey: "searchHistoryArray")
-                print("UserDefaults.standard.removeObject(forKey: searchHistoryArray): \(historyArray)")
             })
             .disposed(by: disposeBag)
+        
+        resultTableView.rx.itemSelected
+            .bind(to: { index in
+                print("2341243124: \(index)")
+            })
+
     }
     
     func setupLayout() {
