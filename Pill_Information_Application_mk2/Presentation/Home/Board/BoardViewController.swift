@@ -11,5 +11,8 @@ import RxSwift
 import RxCocoa
 
 final class BoardViewController: UIViewController {
-    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
 }

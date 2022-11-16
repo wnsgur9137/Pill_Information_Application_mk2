@@ -7,11 +7,18 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 import Firebase
 import FirebaseAuth
+import Alamofire
 
 final class ProfileViewController: UIViewController {
+    
+    let disposeBag = DisposeBag()
+    var starList: Array = [[String]]()
+    var starMedicineData: MedicineItem?
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -38,7 +45,7 @@ final class ProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitle("회원 정보 변경", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
-        button.addTarget(self, action: #selector(userUpdateButtonTapped), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(userUpdateButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -46,7 +53,7 @@ final class ProfileViewController: UIViewController {
         let button = UIButton()
         button.setTitle("로그아웃", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
-        button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -64,7 +71,7 @@ final class ProfileViewController: UIViewController {
         button.setTitle("즐겨찾기 초기화", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .regular)
-        button.addTarget(self, action: #selector(resetBookmarkButtonTapped), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(resetBookmarkButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -112,15 +119,16 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.navigationItem.title = "내 정보"
+        self.bookmarkTableView.register(BookmarkTableViewCell.self, forCellReuseIdentifier: "BookmarkTableViewCell")
         self.bookmarkTableView.delegate = self
         self.bookmarkTableView.dataSource = self
+        bind()
         setupLayout()
         setupLayoutInfo()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         attribute()
@@ -129,29 +137,18 @@ final class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if bookmarkList.count == 0 {
-//            emptyView.isHidden = false
-//        } else {
-//            emptyView.isHidden = true
-//        }
-//        return bookmarkList.count
-        return 10
+        if starList == [[]] {
+            return 0
+        }
+        return starList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if pillList.count == 0 {
-//            self.resetStarList(self.resetStarListButton)
-//            return UITableViewCell()
-//        }
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PillListCell", for: indexPath) as? PillListCell else { return UITableViewCell() }
-//        cell.nameLabel.text = "\(String(describing: pillList[indexPath.row].medicineName ?? ""))"
-//        cell.etcLabel.text = "\(String(describing: pillList[indexPath.row].etcOtcName ?? ""))"
-//        cell.classLabel.text = "\(String(describing: pillList[indexPath.row].className ?? ""))"
-//        let imageURL = URL(string: pillList[indexPath.row].medicineImage ?? "")
-//        cell.pillImageView.kf.setImage(with: imageURL)
-//        return cell
-        
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BookmarkTableViewCell", for: indexPath) as? BookmarkTableViewCell else { return UITableViewCell() }
+        if starList != [[] ] {
+            cell.setData(starList[indexPath.row][0], starList[indexPath.row][1], starList[indexPath.row][2], starList[indexPath.row][3])
+        }
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -159,27 +156,124 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = DetailViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        getStarMedicineData(medicineName: starList[indexPath.row][0], completionHandler: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(result):
+                print("----success----")
+                self.starMedicineData = result.body.items[0]
+                let vc = DetailViewController()
+                vc.medicine = self.starMedicineData
+                self.navigationController?.pushViewController(vc, animated: true)
+            case let .failure(error):
+                print("----failure----")
+                let alertCon = UIAlertController(title: "오류", message: "해당 정보를 찾을 수 없습니다.\n잠시후 다시 시도해주십시오.\n\(error)", preferredStyle: UIAlertController.Style.alert)
+                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                alertCon.addAction(alertAct)
+                self.present(alertCon, animated: true)
+            }
+        })
     }
 }
 
 private extension ProfileViewController {
     
-    @objc func logoutButtonTapped() {
-        let alertCon = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
-        let alertActCancel = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
-        let alertActSure = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { [weak self] _ in
-            self?.logout()
-        })
-        alertCon.addAction(alertActCancel)
-        alertCon.addAction(alertActSure)
-        present(alertCon, animated: true)
+    func bind() {
+        resetBookmarkButton.rx.tap
+            .bind(onNext: { [weak self] in
+                let alertCon = UIAlertController(title: "경고", message: "즐겨찾기를 초기화하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+                let alertActYes = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
+                    UserDefaults.standard.removeObject(forKey: "starList")
+                    DispatchQueue.main.async {
+                        self?.bookmarkTableView.reloadData()
+                    }
+                })
+                let alertActNo = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+                alertCon.addAction(alertActYes)
+                alertCon.addAction(alertActNo)
+                self?.present(alertCon, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        logoutButton.rx.tap
+            .bind(onNext: { [weak self] _ in
+                let alertCon = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+                let alertActCancel = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+                let alertActSure = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { [weak self] _ in
+                    self?.logout()
+                })
+                alertCon.addAction(alertActCancel)
+                alertCon.addAction(alertActSure)
+                self?.present(alertCon, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        userUpdateButton.rx.tap
+            .bind(onNext: { [weak self] in
+                let vc = ProfileUpdateViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
-    @objc func userUpdateButtonTapped() {
-        let vc = ProfileUpdateViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+//    @objc func logoutButtonTapped() {
+//        let alertCon = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+//        let alertActCancel = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+//        let alertActSure = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { [weak self] _ in
+//            self?.logout()
+//        })
+//        alertCon.addAction(alertActCancel)
+//        alertCon.addAction(alertActSure)
+//        present(alertCon, animated: true)
+//    }
+    
+//    @objc func userUpdateButtonTapped() {
+//        let vc = ProfileUpdateViewController()
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
+    
+//    @objc func resetBookmarkButtonTapped() {
+//        let alertCon = UIAlertController(title: "경고", message: "즐겨찾기를 초기화하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+//        let alertActYes = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
+//            UserDefaults.standard.removeObject(forKey: "starList")
+//        })
+//        let alertActNo = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+//        alertCon.addAction(alertActYes)
+//        alertCon.addAction(alertActNo)
+//        self.present(alertCon, animated: true)
+//    }
+    
+    func getStarMedicineData(medicineName: String, completionHandler: @escaping (Result<MedicineOverview, Error>) -> Void) {
+        
+        let url = "\(MedicineAPI.scheme)://\(MedicineAPI.host + MedicineAPI.path)?serviceKey=\(MedicineAPI.apiKeyEncoding)&item_name=\(String(describing: medicineName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!))&type=json"
+        
+        let param = [
+            "serviceKey": MedicineAPI.apiKeyEncoding,
+            "item_name": medicineName,
+            "type": "json"
+        ]
+        
+        print(url)
+        
+        AF.request(url, method: .get)
+            .response(completionHandler: { response in
+                switch response.result {
+                case let .success(data):
+                    print("success: \(String(describing: data))")
+                    do {
+                        let medicineData = try JSONDecoder().decode(MedicineOverview.self, from: data!)
+                        print(medicineData)
+                        completionHandler(.success(medicineData))
+                    } catch {
+                        print("jsonError: \(error)")
+                        completionHandler(.failure(error))
+                    }
+                case let .failure(error):
+                    print("failure: \(error)")
+                    completionHandler(.failure(error))
+                }
+            })
     }
     
     func logout() {
@@ -200,12 +294,13 @@ private extension ProfileViewController {
         }
     }
     
-    @objc func resetBookmarkButtonTapped() {
-        UserDefaults.standard.removeObject(forKey: "starList")
-    }
-    
     func attribute() {
         print(UserDefaults.standard.array(forKey: "starList"))
+        self.starList = (UserDefaults.standard.array(forKey: "starList") as? [[String]]) ?? [[]]
+        self.bookmarkTableView.reloadData()
+//        DispatchQueue.main.async {
+//            self.bookmarkTableView.reloadData()
+//        }
     }
     
     func setupLayoutInfo() {

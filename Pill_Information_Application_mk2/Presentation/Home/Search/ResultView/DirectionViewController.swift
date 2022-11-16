@@ -13,9 +13,13 @@ import RxCocoa
 final class DirectionViewController: UIViewController {
     let disposeBag = DisposeBag()
     
-    var medicineImageURL: String = ""
     var medicineInfo: MedicineInfoItem? = nil
     var medicineInfoList: Array = [[String]]()
+    
+    var medicineName: String = ""
+    var medicineImageURL: String = ""
+    var className: String = ""
+    var etcOtcName: String = ""
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -88,6 +92,10 @@ extension DirectionViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("123")
+    }
+    
     
 }
 
@@ -102,36 +110,58 @@ private extension DirectionViewController {
         let pillImageURL = URL(string: self.medicineImageURL)
         self.pillImageView.kf.setImage(with: pillImageURL)
         
-        let starList = UserDefaults.standard.array(forKey: "starList") as? [String]
+        let starList = UserDefaults.standard.array(forKey: "starList") as? [[String]]
 
-        if starList != nil {
-            if starList!.contains(medicineInfo!.medicineName!) {
-                self.starButton
-                    .image = UIImage(systemName: "star.fill")
-            } else {
-                self.starButton.image = UIImage(systemName: "star")
-            }
-        } else {
+        if starList == nil || starList == [] {
             self.starButton.image = UIImage(systemName: "star")
+        } else {
+            for index in 0..<starList!.count {
+                if starList![index][0].contains(medicineName) {
+                    self.starButton
+                        .image = UIImage(systemName: "star.fill")
+                    break
+                } else {
+                    self.starButton.image = UIImage(systemName: "star")
+                }
+            }
         }
     }
     
     @objc func starButtonTapped() {
-        let medicineName = self.medicineInfo?.medicineName ?? ""
-        var starList = UserDefaults.standard.array(forKey: "starList") as? [String]
+        let medicineName = self.medicineName
+        let medicineImage = self.medicineImageURL
+        let className = self.className
+        let etcOtcname = self.etcOtcName
+        var starList = UserDefaults.standard.array(forKey: "starList") as? [[String]]
         
-        if starList == nil {
-            UserDefaults.standard.set([medicineName], forKey: "starList")
-            starList = UserDefaults.standard.array(forKey: "starList") as? [String]
+        var starListCheck = false
+        
+        if starList == nil  || starList == [] {
+            UserDefaults.standard.set([[medicineName, medicineImage, className, etcOtcname]], forKey: "starList")
+            starList = UserDefaults.standard.array(forKey: "starList") as? [[String]]
             self.starButton.image = UIImage(systemName: "star.fill")
-        } else if let index = starList!.firstIndex(of: medicineName) {
-            starList?.remove(at: index)
-            UserDefaults.standard.set(starList, forKey: "starList")
-            self.starButton.image = UIImage(systemName: "star")
         } else {
-            starList?.append(medicineName)
-            UserDefaults.standard.set(starList, forKey: "starList")
-            self.starButton.image = UIImage(systemName: "star.fill")
+            for i in 0..<starList!.count {
+                if starList![i][0].contains(medicineName) {
+                    starList?.remove(at: i)
+                    UserDefaults.standard.set(starList, forKey: "starList")
+                    self.starButton.image = UIImage(systemName: "star")
+                    starListCheck = true
+                    break
+//                    if let index = starList![0].firstIndex(of: medicineName) {
+//                        starList?.remove(at: index)
+//                        UserDefaults.standard.set(starList, forKey: "starList")
+//                        self.starButton.image = UIImage(systemName: "star")
+//                        starListCheck = true
+//                        break
+//                    }
+                }
+            }
+            if !starListCheck {
+                starList?.append([medicineName, medicineImage, className, etcOtcname])
+                UserDefaults.standard.set(starList, forKey: "starList")
+                self.starButton.image = UIImage(systemName: "star.fill")
+            }
         }
     }
     
