@@ -76,6 +76,21 @@ final class SearchViewController: UIViewController {
         bind()
         setupLayout()
         resultTableView.delegate = self
+        keyboardAtrribute()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        self.view.endEditing(true)
+    }
+    
+    func keyboardAtrribute() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = true
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
     }
 }
 

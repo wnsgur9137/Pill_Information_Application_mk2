@@ -89,6 +89,21 @@ final class HomeViewController: UIViewController {
         if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" {
             setupAddNoticeButton()
         }
+        keyboardAtrribute()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        self.view.endEditing(true)
+    }
+    
+    func keyboardAtrribute() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = true
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
     }
 }
 

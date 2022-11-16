@@ -154,8 +154,6 @@ private extension DetailViewController {
         // TEST CODE
 //        UserDefaults.standard.removeObject(forKey: "starList")
         let starList = UserDefaults.standard.array(forKey: "starList") as? [[String]]
-
-        print(starList)
         
         if starList == nil || starList == [] {
             self.starButton.image = UIImage(systemName: "star")
