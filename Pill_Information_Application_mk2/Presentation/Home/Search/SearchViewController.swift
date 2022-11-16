@@ -65,8 +65,8 @@ final class SearchViewController: UIViewController {
         ])
         stackView.axis = .horizontal
         stackView.distribution = .fill
-        stackView.layer.borderWidth = 1.0
-        stackView.layer.borderColor = CGColor(gray: 100, alpha: 80)
+//        stackView.layer.borderWidth = 1.0
+//        stackView.layer.borderColor = CGColor(gray: 100, alpha: 80)
         return stackView
     }()
     

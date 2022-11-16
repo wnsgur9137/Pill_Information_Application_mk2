@@ -107,7 +107,7 @@ class MedicineInfoAPINetwork {
         
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue(MedicineInfoAPI.apiKey, forHTTPHeaderField: "serviceKey")
+        request.setValue(MedicineInfoAPI.apiKeyDecoding, forHTTPHeaderField: "serviceKey")
         
         return session.rx.data(request: request as URLRequest)
             .map { data in

@@ -119,6 +119,12 @@ final class ProfileViewController: UIViewController {
         setupLayout()
         setupLayoutInfo()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        attribute()
+    }
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -195,7 +201,11 @@ private extension ProfileViewController {
     }
     
     @objc func resetBookmarkButtonTapped() {
-        
+        UserDefaults.standard.removeObject(forKey: "starList")
+    }
+    
+    func attribute() {
+        print(UserDefaults.standard.array(forKey: "starList"))
     }
     
     func setupLayoutInfo() {
@@ -236,10 +246,6 @@ private extension ProfileViewController {
             $0.trailing.equalToSuperview().inset(20)
 //            $0.centerX.equalToSuperview()
             $0.height.equalTo(40)
-        }
-        
-        bookmarkLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
         }
         
         resetBookmarkButton.snp.makeConstraints {

@@ -101,7 +101,7 @@ private extension ResultTableViewCell {
         etcOtcNameLabel.snp.makeConstraints {
             $0.top.equalTo(medicineImageView.snp.top)
             $0.trailing.equalTo(clickImageView).offset(-8.0)
-//            $0.width.equalTo(80.0)
+            $0.width.equalTo(80.0)
         }
         
         medicineNameLabel.snp.makeConstraints {

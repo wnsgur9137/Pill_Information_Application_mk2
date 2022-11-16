@@ -11,17 +11,26 @@ import RxSwift
 import RxCocoa
 
 import Kingfisher
+import Alamofire
 
 final class DetailViewController: UIViewController {
     let disposeBag = DisposeBag()
     
     var medicine: MedicineItem? = nil
     var medicineList: Array = [[String]]()
+    var medicineInfoCheck = false
+    var medicineInfo: MedicineInfoItem? = nil
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
         return view
+    }()
+    
+    private lazy var starButton: UIBarButtonItem = {
+        var barButtonItem = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(starButtonTapped))
+        barButtonItem.tintColor = .orange
+        return barButtonItem
     }()
     
     private lazy var titleLabel: UILabel = {
@@ -46,15 +55,12 @@ final class DetailViewController: UIViewController {
         let button = UIButton()
         button.setTitle("복용 방법", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
-        button.addTarget(self, action: #selector(directionButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var pillImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .systemGray
-        // KingFisher
-//        imageView.image =
         return imageView
     }()
     
@@ -69,14 +75,31 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "알약 정보"
+        self.navigationItem.rightBarButtonItem = self.starButton
         bind()
         setData(data: medicine!)
+        LoadingView.show()
+        self.getMedicineInfoData(completionHandler: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(result):
+                print("----success----")
+                self.medicineInfo = result.body.items[0]
+                self.medicineInfoCheck = true
+                self.medicineInfoAttribute()
+            case .failure(_):
+                print("----failure----")
+                self.medicineInfoCheck = false
+                self.medicineInfoAttribute()
+            }
+        })
         setupLayout()
-        print("medicineList: \(medicineList)")
+        LoadingView.hide()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        attribute()
     }
 }
 
@@ -101,12 +124,64 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
 
 private extension DetailViewController {
     func bind() {
-        
+        directionButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                print("directionButton is Tapped")
+                let vc = DirectionViewController()
+                
+                vc.medicineImageURL = (self.medicine?.medicineImage) ?? ""
+                vc.medicineInfo = self.medicineInfo
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
-    @objc func directionButtonTapped() {
-        let vc = DirectionViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+    func medicineInfoAttribute() {
+        print("medicineInfoCheck: \(medicineInfoCheck)")
+        directionButton.isEnabled = medicineInfoCheck
+        if !medicineInfoCheck {
+            directionButton.setTitleColor(.systemGray, for: .normal)
+        } else {
+            directionButton.setTitleColor(.systemBlue, for: .normal)
+        }
+    }
+    
+    func attribute() {
+        // TEST CODE
+//        UserDefaults.standard.removeObject(forKey: "starList")
+        
+        let starList = UserDefaults.standard.array(forKey: "starList") as? [String]
+
+        if starList != nil {
+            if starList!.contains(medicine!.medicineName!) {
+                self.starButton
+                    .image = UIImage(systemName: "star.fill")
+            } else {
+                self.starButton.image = UIImage(systemName: "star")
+            }
+        } else {
+            self.starButton.image = UIImage(systemName: "star")
+        }
+    }
+    
+    @objc func starButtonTapped() {
+        let medicineName = self.medicine?.medicineName ?? ""
+        var starList = UserDefaults.standard.array(forKey: "starList") as? [String]
+        
+        if starList == nil {
+            UserDefaults.standard.set([medicineName], forKey: "starList")
+            starList = UserDefaults.standard.array(forKey: "starList") as? [String]
+            self.starButton.image = UIImage(systemName: "star.fill")
+        } else if let index = starList!.firstIndex(of: medicineName) {
+            starList?.remove(at: index)
+            UserDefaults.standard.set(starList, forKey: "starList")
+            self.starButton.image = UIImage(systemName: "star")
+        } else {
+            starList?.append(medicineName)
+            UserDefaults.standard.set(starList, forKey: "starList")
+            self.starButton.image = UIImage(systemName: "star.fill")
+        }
     }
     
     func setData(data: MedicineItem) {
@@ -115,6 +190,38 @@ private extension DetailViewController {
         pillImageView.kf.setImage(with: pillImageURL)
         titleLabel.text = data.medicineName
         classLabel.text = data.className
+    }
+    
+    func getMedicineInfoData(completionHandler: @escaping (Result<MedicineInfoOverview, Error>) -> Void) {
+//        let url = "\(MedicineInfoAPI.scheme)://\(MedicineInfoAPI.host + MedicineInfoAPI.path)"
+        let url = "\(MedicineInfoAPI.scheme)://\(MedicineInfoAPI.host + MedicineInfoAPI.path)?serviceKey=\(MedicineInfoAPI.apiKeyEncoding)&itemName=\(String(describing: medicine!.medicineName!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!))&type=json"
+        
+        let param = [
+            "serviceKey": MedicineInfoAPI.apiKeyEncoding,
+            "itemName": medicine!.medicineName!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
+            "type": "json"
+        ]
+        
+        print("url: \(url)")
+        print("param: \(param)")
+        
+        AF.request(url, method: .get)
+            .response(completionHandler: { response in
+                switch response.result {
+                case let .success(data):
+                    print("success: \(String(describing: data))")
+                    do {
+                        let medicineInfoData = try JSONDecoder().decode(MedicineInfoOverview.self, from: data!)
+                        completionHandler(.success(medicineInfoData))
+                    } catch {
+                        print("jsonError: \(error)")
+                        completionHandler(.failure(error))
+                    }
+                case let .failure(error):
+                    print("failure: \(error)")
+                    completionHandler(.failure(error))
+                }
+            })
     }
     
     func setMedicineList(data: MedicineItem) {
@@ -187,7 +294,7 @@ private extension DetailViewController {
             $0.top.equalTo(classLabel.snp.bottom).offset(20.0)
             $0.leading.equalTo(titleLabel.snp.leading)
             $0.trailing.equalTo(titleLabel.snp.trailing)
-            $0.height.equalTo(200.0)
+            $0.height.equalTo(180.0)
         }
         
         contentTableView.snp.makeConstraints {
