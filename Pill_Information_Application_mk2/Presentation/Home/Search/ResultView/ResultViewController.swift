@@ -10,12 +10,16 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+import Alamofire
+
 final class ResultViewController: UIViewController {
     let disposeBag = DisposeBag()
     
-    let searchBar = SearchBar()
+//    let searchBar = SearchBar()
     
     let tableView = ResultTableView()
+    
+    var searchMedicineData: Dictionary<String, String>?
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -26,8 +30,11 @@ final class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "알약 검색 결과"
+        LoadingView.show()
         bind()
+        attribute()
         setupLayout()
+        LoadingView.hide()
     }
 }
 
@@ -56,10 +63,17 @@ private extension ResultViewController {
         
     }
     
+    func attribute() {
+        var url = "\(MedicineAPI.scheme)://\(MedicineAPI.host + MedicineAPI.path)"
+        url += "?serviceKey=\(MedicineAPI.apiKeyEncoding)"
+        url += "?DRUG_SHAPE"
+        
+    }
+    
     func setupLayout() {
         [
             backgroundView,
-            searchBar,
+//            searchBar,
             tableView
         ].forEach{ view.addSubview($0) }
         
@@ -67,13 +81,13 @@ private extension ResultViewController {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        searchBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
-        }
+//        searchBar.snp.makeConstraints {
+//            $0.top.equalTo(view.safeAreaLayoutGuide)
+//            $0.leading.trailing.equalToSuperview()
+//        }
         
         tableView.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }

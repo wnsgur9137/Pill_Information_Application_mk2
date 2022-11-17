@@ -31,10 +31,13 @@ final class SearchBar: UISearchBar {
     
     // SearchBar Button Tapped Event
     // 탭 이벤트만 전달되기에 Void로 설정
-    let searchButtonTapped = PublishRelay<Void>()
+    var searchButtonTapped = PublishRelay<Void>()
+    var photoButtonTapped = PublishRelay<Void>()
     
     // SearchBar 외부로 내보낼 Event
     var shouldLoadResult = Observable<String>.of("")
+    var photoButtonTappedResult = Observable<String>.of("")
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -79,6 +82,15 @@ final class SearchBar: UISearchBar {
             .withLatestFrom(self.rx.text) { $1 ?? ""}
             .filter { !$0.isEmpty }
             .distinctUntilChanged()
+        
+        photoButton.rx.tap
+            .bind(to: photoButtonTapped)
+            .disposed(by: disposeBag)
+        
+        self.photoButtonTappedResult = photoButtonTapped
+            .withLatestFrom(self.rx.text) { $1 ?? ""}
+        
+        
     }
     
 }

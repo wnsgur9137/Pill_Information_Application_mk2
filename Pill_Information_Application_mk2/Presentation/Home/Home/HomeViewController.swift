@@ -136,7 +136,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 private extension HomeViewController {
     func bind() {
-        
     }
     
     @objc func addNoticeButtonTapped() {
@@ -172,7 +171,7 @@ private extension HomeViewController {
     func setupLayout() {
         [
             backgroundView,
-            searchBar,
+//            searchBar,
             imageView,
             noticeLabel,
             noticeTableView
@@ -182,13 +181,14 @@ private extension HomeViewController {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        searchBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview()
-        }
+//        searchBar.snp.makeConstraints {
+//            $0.top.equalTo(view.safeAreaLayoutGuide)
+//            $0.leading.trailing.equalToSuperview()
+//        }
         
         imageView.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(40)
+//            $0.top.equalTo(searchBar.snp.bottom).offset(40)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(40)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(80)
             $0.width.equalTo(340)

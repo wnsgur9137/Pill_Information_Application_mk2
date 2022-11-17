@@ -268,6 +268,13 @@ private extension SearchViewController {
                 print("2341243124: \(index)")
             })
 
+        searchBar.photoButtonTappedResult
+            .bind(onNext: { [weak self] _ in
+                let vc = PictureSearchViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+            
     }
     
     func setupLayout() {
