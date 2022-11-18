@@ -54,7 +54,8 @@ final class DetailViewController: UIViewController {
     private lazy var directionButton: UIButton = {
         let button = UIButton()
         button.setTitle("복용 방법", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(.systemGray, for: .normal)
+        button.isEnabled = false
         return button
     }()
     

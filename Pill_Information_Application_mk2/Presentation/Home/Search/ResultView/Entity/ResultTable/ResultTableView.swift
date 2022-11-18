@@ -16,7 +16,7 @@ final class ResultTableView: UITableView {
     // SearchViewController -> ResultTableView
     let cellData = PublishSubject<[ResultTableViewCellData]>()
     
-    var itemSelectedObservable = Observable<Int>.of(0)
+//    var itemSelectedObservable = Observable<Int>.of(0)ß
     
     let headerView = ResultTableViewHeader(
         frame: CGRect(

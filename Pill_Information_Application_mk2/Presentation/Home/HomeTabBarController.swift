@@ -12,35 +12,54 @@ final class HomeTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.selectedIndex = 2
         self.delegate = self
+        self.tabBar.barTintColor = .label
+        self.tabBar.tintColor = .label
+//        self.tabBar.backgroundColor = .systemBackground
+        UITabBar.clearShadow()
+        tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let boardTab = UINavigationController(rootViewController: BoardViewController())
-        let boardTabItem = UITabBarItem(title: "게시판", image: UIImage(named: "board"), selectedImage: UIImage(named: "board.fill"))
-        boardTab.tabBarItem = boardTabItem
+//        let boardTab = UINavigationController(rootViewController: BoardViewController())
+//        let boardTabItem = UITabBarItem(title: nil, image: UIImage(systemName: "board"), selectedImage: UIImage(systemName: "board.fill"))
+//        boardTab.tabBarItem = boardTabItem
         
         let searchTab = UINavigationController(rootViewController: SearchViewController())
-        let searchTabItem = UITabBarItem(title: "약 검색", image: UIImage(named: "pills"), selectedImage: UIImage(named: "pills.fill"))
+        let searchTabItem = UITabBarItem(
+            title: nil,
+            image: UIImage(systemName: "pills"),
+            selectedImage: UIImage(systemName: "pills.fill")
+        )
+        searchTabItem.badgeColor = .white
         searchTab.tabBarItem = searchTabItem
         
 //        let homeTab = UINavigationController(rootViewController: HomeView())
         let homeTab = UINavigationController(rootViewController: HomeViewController())
-        let homeTabItem = UITabBarItem(title: "홈", image: UIImage(named: "house"), selectedImage: UIImage(named: "house.fill"))
+        let homeTabItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         homeTab.tabBarItem = homeTabItem
         
         let alarmTab = UINavigationController(rootViewController: AlarmViewController())
-        let alarmTabItem = UITabBarItem(title: "알람", image: UIImage(named: "alarm"), selectedImage: UIImage(named: "alarm.fill"))
+        let alarmTabItem = UITabBarItem(
+            title: nil,
+            image: UIImage(systemName: "alarm"),
+            selectedImage: UIImage(systemName: "alarm.fill")
+        )
         alarmTab.tabBarItem = alarmTabItem
         
         let profileTab = UINavigationController(rootViewController: ProfileViewController())
-        let profileTabItem = UITabBarItem(title: "내정보", image: UIImage(named: "persion.crop.circle"), selectedImage: UIImage(named: "person.crop.circle.fill"))
+        let profileTabItem = UITabBarItem(
+            title: nil,
+            image: UIImage(systemName: "person.circle"),
+            selectedImage: UIImage(systemName: "person.circle.fill")
+        )
         profileTab.tabBarItem = profileTabItem
         
-        self.viewControllers = [boardTab, searchTab, homeTab, alarmTab, profileTab]
+        self.viewControllers = [searchTab, homeTab, alarmTab, profileTab]
+        
+        self.selectedIndex = 1
     }
 }
 

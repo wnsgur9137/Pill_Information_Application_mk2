@@ -55,7 +55,7 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var emailLabel: UILabel = {
         let emailLabel = UILabel()
-        emailLabel.text = "Email"
+        emailLabel.text = "이메일"
         emailLabel.textColor = .label
         emailLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         emailLabel.textAlignment = .center
@@ -84,7 +84,7 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var passwdLabel: UILabel = {
         let passwdLabel = UILabel()
-        passwdLabel.text = "Password"
+        passwdLabel.text = "비밀번호"
         passwdLabel.textColor = .label
         passwdLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         passwdLabel.textAlignment = .center
@@ -113,7 +113,7 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var passwdCheckLabel: UILabel = {
         let passwdCheckLabel = UILabel()
-        passwdCheckLabel.text = "pwdCheck"
+        passwdCheckLabel.text = "비밀번호 확인"
         passwdCheckLabel.textColor = .label
         passwdCheckLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         passwdCheckLabel.textAlignment = .center
@@ -141,7 +141,7 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var signupButton: UIButton = {
         let button = UIButton()
-        button.setTitle("SignUp", for: .normal)
+        button.setTitle("회원가입", for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         button.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
@@ -231,7 +231,7 @@ final class EmailSignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "SignUp"
+        self.title = "회원가입"
         
         bind()
         setupLayout()

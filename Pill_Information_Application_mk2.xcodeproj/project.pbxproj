@@ -42,6 +42,7 @@
 		6661AFE8291E1E39003F18B0 /* AlertActionConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFE7291E1E39003F18B0 /* AlertActionConvertible.swift */; };
 		6661AFEE2921C692003F18B0 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFED2921C692003F18B0 /* DetailTableViewCell.swift */; };
 		6661AFF1292319D8003F18B0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFF0292319D8003F18B0 /* LoadingView.swift */; };
+		6661AFF529274EA8003F18B0 /* TabBarShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFF429274EA8003F18B0 /* TabBarShadow.swift */; };
 		66ABD626290369490050D048 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66ABD625290369490050D048 /* GoogleService-Info.plist */; };
 		66ABD62A29036E3A0050D048 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62929036E3A0050D048 /* HomeTabBarController.swift */; };
 		66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62B29038EB30050D048 /* SearchViewController.swift */; };
@@ -108,6 +109,7 @@
 		6661AFE7291E1E39003F18B0 /* AlertActionConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertActionConvertible.swift; sourceTree = "<group>"; };
 		6661AFED2921C692003F18B0 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		6661AFF0292319D8003F18B0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		6661AFF429274EA8003F18B0 /* TabBarShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarShadow.swift; sourceTree = "<group>"; };
 		66ABD625290369490050D048 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66ABD62929036E3A0050D048 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		66ABD62B29038EB30050D048 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 			children = (
 				6661AFF0292319D8003F18B0 /* LoadingView.swift */,
 				665E929328F83BF10090B51F /* UIButton+.swift */,
+				6661AFF429274EA8003F18B0 /* TabBarShadow.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				66FBD3C8290D6906008615C5 /* SearchBar.swift in Sources */,
 				66ABD62E29038EC10050D048 /* AlarmViewController.swift in Sources */,
 				66FBD3D6290FEF9F008615C5 /* SearchViewModel.swift in Sources */,
+				6661AFF529274EA8003F18B0 /* TabBarShadow.swift in Sources */,
 				6661AF6929188EE2003F18B0 /* NoticeTableViewCell.swift in Sources */,
 				6661AFC3291A653C003F18B0 /* BoardTableViewCell.swift in Sources */,
 				66FBD3DE291239C3008615C5 /* UserInfoOverview.swift in Sources */,

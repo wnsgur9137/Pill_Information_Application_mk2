@@ -54,7 +54,7 @@ final class NicknameSetViewController: UIViewController {
     
     private lazy var signUpButton: UIButton = {
         let button = UIButton()
-        button.setTitle("SignUp", for: .normal)
+        button.setTitle("회원가입", for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)

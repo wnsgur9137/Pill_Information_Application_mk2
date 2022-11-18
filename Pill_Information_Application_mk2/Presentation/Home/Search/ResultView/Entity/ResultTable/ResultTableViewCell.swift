@@ -52,7 +52,7 @@ final class ResultTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        self.selectionStyle = .none
         setupLayout()
     }
     

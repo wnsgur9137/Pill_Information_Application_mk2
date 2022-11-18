@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // TabBar 배경색
         UITabBarAppearance().configureWithOpaqueBackground()
-        UITabBar.appearance().backgroundColor = UIColor.lightGray
+        UITabBar.appearance().backgroundColor = .systemBackground
         
         return true
     }

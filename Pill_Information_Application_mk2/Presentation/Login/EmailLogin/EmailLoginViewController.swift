@@ -47,7 +47,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var emailLabel: UILabel = {
         let emailLabel = UILabel()
-        emailLabel.text = "Email"
+        emailLabel.text = "이메일"
         emailLabel.textColor = .label
         emailLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         emailLabel.textAlignment = .center
@@ -66,7 +66,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var passwdLabel: UILabel = {
         let passwdLabel = UILabel()
-        passwdLabel.text = "Password"
+        passwdLabel.text = "비밀번호"
         passwdLabel.textColor = .label
         passwdLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         passwdLabel.textAlignment = .center
@@ -84,7 +84,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var signinButton: UIButton = {
         let signinButton = UIButton()
-        signinButton.setTitle("Signin", for: .normal)
+        signinButton.setTitle("로그인", for: .normal)
         signinButton.setTitleColor(.label, for: .normal)
         signinButton.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         signinButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
@@ -111,7 +111,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var signupButton: UIButton = {
         let signupButton = UIButton()
-        signupButton.setTitle("SignUp", for: .normal)
+        signupButton.setTitle("회원가입", for: .normal)
         signupButton.setTitleColor(.label, for: .normal)
         signupButton.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         signupButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)

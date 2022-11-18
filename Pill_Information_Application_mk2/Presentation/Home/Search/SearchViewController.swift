@@ -84,9 +84,9 @@ final class SearchViewController: UIViewController {
     }
     
     func keyboardAtrribute() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        tapGesture.cancelsTouchesInView = true
-        self.view.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+////        tapGesture.cancelsTouchesInView = true
+//        self.view.addGestureRecognizer(tapGesture)
     }
     
     @objc func hideKeyboard() {
@@ -263,10 +263,6 @@ private extension SearchViewController {
             })
             .disposed(by: disposeBag)
         
-        resultTableView.rx.itemSelected
-            .bind(to: { index in
-                print("2341243124: \(index)")
-            })
 
         searchBar.photoButtonTappedResult
             .bind(onNext: { [weak self] _ in

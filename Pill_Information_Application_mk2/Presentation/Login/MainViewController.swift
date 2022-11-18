@@ -34,7 +34,10 @@ private extension MainViewController {
             
         } else {
             print("자동로그인 실패")
-            let rootController = UINavigationController(rootViewController: LoginViewController())
+            // 로그인 방법이 여러개일 경우
+//            let rootController = UINavigationController(rootViewController: LoginViewController())
+            // 이메일 로그인만 있을 경우
+            let rootController = UINavigationController(rootViewController: EmailLoginViewController())
             rootController.modalPresentationStyle = .fullScreen
             self.present(rootController, animated: true, completion: nil)
         }
