@@ -146,6 +146,7 @@ private extension HomeViewController {
     func getNotice(completionHandler: @escaping (Result<NoticeListOverview, Error>) -> Void) {
         let url = "\(FastAPI.host + FastAPI.path)/getAllNotices"
         
+        // 우분투 서버로 수정
         AF.request(url, method: .get)
             .response(completionHandler: { response in
                 switch response.result {
