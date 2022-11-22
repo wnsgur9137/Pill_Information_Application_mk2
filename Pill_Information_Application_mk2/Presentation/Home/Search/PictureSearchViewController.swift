@@ -233,6 +233,25 @@ extension PictureSearchViewController: UIPickerViewDelegate, UIPickerViewDataSou
    }
 }
 
+extension PictureSearchViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            pictureImageView.image = image
+//            recognitionText(image: image)
+        }
+
+        // 비디오인 경우
+//        guard let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
+//            picker.dismiss(animated: true, completion: nil)
+//            return
+//        }
+//        let video = AVAsset(url: url)
+        
+        dismiss(animated: true, completion: nil)
+    }
+}
+
 
 private extension PictureSearchViewController {
     func bind() {
@@ -274,18 +293,13 @@ private extension PictureSearchViewController {
     }
     
     func actionCamera() {
+//        #if targetEnvironment(simulator)
+//        fatalError()
+//        #endif
+        
         switch PHPhotoLibrary.authorizationStatus() {
         case .denied:
-            if let appName = Bundle.main.infoDictionary!["CFBundleName"] as? String {
-                let alert = UIAlertController(title: "설정", message: "\(appName)이(가) 카메라 접근 허용되어 있지 않습니다. 설정 화면으로 이동하시겠습니까?", preferredStyle: .alert)
-                let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-                let confirmAction = UIAlertAction(title: "확인", style: .default) { (action) in
-                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                }
-                alert.addAction(cancelAction)
-                alert.addAction(confirmAction)
-                self.present(alert, animated: true, completion: nil)
-            }
+            self.showAlertGoToSetting()
         case .restricted:
             break
         case .authorized:
@@ -296,10 +310,12 @@ private extension PictureSearchViewController {
         case .notDetermined:
             PHPhotoLibrary.requestAuthorization({ state in
                 if state == .authorized {
-                    self.imagePickerController.sourceType = .camera
-                    self.imagePickerController.allowsEditing = true
-                    self.imagePickerController.cameraFlashMode = .auto
-                    self.present(self.imagePickerController, animated: true, completion: nil)
+                    DispatchQueue.main.async {
+                        self.imagePickerController.sourceType = .camera
+                        self.imagePickerController.allowsEditing = true
+                        self.imagePickerController.cameraFlashMode = .auto
+                        self.present(self.imagePickerController, animated: true, completion: nil)
+                    }
                 } else {
                     self.dismiss(animated: true, completion: nil)
                 }
@@ -307,7 +323,53 @@ private extension PictureSearchViewController {
         default:
             break
         }
-
+        
+//        AVCaptureDevice.requestAccess(for: .video) { [weak self] isAuthorized in
+//            guard let self = self else { return }
+//            guard isAuthorized else {
+//                self.showAlertGoToSetting()
+//                return
+//            }
+//
+//            // 카메라 열기
+//            DispatchQueue.main.async {
+//                let pickerController = UIImagePickerController()
+//                pickerController.sourceType = .camera
+//                pickerController.allowsEditing = false
+//                pickerController.mediaTypes = ["public.image"]
+//                // 비디오를 사용할 경우 (이 프로젝트에선 크게 필요 없음)
+////                pickerController.mediaTypes = ["public.movie"]
+////                pickerController.videoQuality = .typeHigh
+//                pickerController.delegate = self
+//                self.present(pickerController, animated: true)
+//            }
+//        }
+    }
+    
+    func showAlertGoToSetting() {
+        let alertCon = UIAlertController(
+            title: "현재 카메라 사용에 대한 접근 권한이 없습니다.",
+            message: "설정 -> {앱 이름}탭에서 접근을 활성화 할 수 있습니다.",
+            preferredStyle: .alert
+        )
+        let cancelAct = UIAlertAction(
+            title: "취소",
+            style: .cancel
+        ) { _ in
+            alertCon.dismiss(animated: true, completion: nil)
+        }
+        let gotoSettingAct = UIAlertAction(
+            title: "설정으로 이동하기",
+            style: .default
+        ) { _ in
+            guard let settingURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingURL) else { return }
+            UIApplication.shared.open(settingURL, options: [:])
+        }
+        
+        [cancelAct, gotoSettingAct].forEach(alertCon.addAction(_:))
+        DispatchQueue.main.async {
+            self.present(alertCon, animated: true)
+        }
     }
     
     func actionLibrary() {

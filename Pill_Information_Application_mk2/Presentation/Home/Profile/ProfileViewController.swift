@@ -28,8 +28,9 @@ final class ProfileViewController: UIViewController {
     
     private lazy var userImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "person")
-        image.backgroundColor = .gray
+        image.image = UIImage(systemName: "person")
+        image.tintColor = .label
+        image.backgroundColor = .lightGray
         return image
     }()
     

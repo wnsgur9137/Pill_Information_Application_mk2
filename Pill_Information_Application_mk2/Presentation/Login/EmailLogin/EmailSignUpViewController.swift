@@ -316,7 +316,8 @@ private extension EmailSignUpViewController {
             
             let param = "?email=\(urlEmail)"
             
-            let url = "\(FastAPI.host + FastAPI.path)/getUserInfo/\(param)"
+//            let url = "\(FastAPI.host + FastAPI.path)/getUserInfo/\(param)"
+            let url = "\(ubuntuServer.host + ubuntuServer.path)/getUserInfo/\(param)"
             
             AF.request(url, method: .get)
                 .response(completionHandler: { [weak self] response in

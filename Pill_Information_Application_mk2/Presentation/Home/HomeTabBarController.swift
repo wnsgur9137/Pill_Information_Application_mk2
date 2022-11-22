@@ -24,12 +24,16 @@ final class HomeTabBarController: UITabBarController {
         super.viewDidAppear(animated)
         
 //        let boardTab = UINavigationController(rootViewController: BoardViewController())
-//        let boardTabItem = UITabBarItem(title: nil, image: UIImage(systemName: "board"), selectedImage: UIImage(systemName: "board.fill"))
+//        let boardTabItem = UITabBarItem(
+//            title: "게시판",
+//            image: UIImage(systemName: "board"),
+//            selectedImage: UIImage(systemName: "board.fill")
+//        )
 //        boardTab.tabBarItem = boardTabItem
         
         let searchTab = UINavigationController(rootViewController: SearchViewController())
         let searchTabItem = UITabBarItem(
-            title: nil,
+            title: "약 검색",
             image: UIImage(systemName: "pills"),
             selectedImage: UIImage(systemName: "pills.fill")
         )
@@ -38,12 +42,16 @@ final class HomeTabBarController: UITabBarController {
         
 //        let homeTab = UINavigationController(rootViewController: HomeView())
         let homeTab = UINavigationController(rootViewController: HomeViewController())
-        let homeTabItem = UITabBarItem(title: nil, image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
+        let homeTabItem = UITabBarItem(
+            title: "홈",
+            image: UIImage(systemName: "house"),
+            selectedImage: UIImage(systemName: "house.fill")
+        )
         homeTab.tabBarItem = homeTabItem
         
         let alarmTab = UINavigationController(rootViewController: AlarmViewController())
         let alarmTabItem = UITabBarItem(
-            title: nil,
+            title: "알람/타이머",
             image: UIImage(systemName: "alarm"),
             selectedImage: UIImage(systemName: "alarm.fill")
         )
@@ -51,7 +59,7 @@ final class HomeTabBarController: UITabBarController {
         
         let profileTab = UINavigationController(rootViewController: ProfileViewController())
         let profileTabItem = UITabBarItem(
-            title: nil,
+            title: "내 정보",
             image: UIImage(systemName: "person.circle"),
             selectedImage: UIImage(systemName: "person.circle.fill")
         )

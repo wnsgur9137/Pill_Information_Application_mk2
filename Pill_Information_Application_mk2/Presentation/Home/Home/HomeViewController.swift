@@ -89,7 +89,7 @@ final class HomeViewController: UIViewController {
         if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" {
             setupAddNoticeButton()
         }
-        keyboardAtrribute()
+//        keyboardAtrribute()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
@@ -144,7 +144,8 @@ private extension HomeViewController {
     }
     
     func getNotice(completionHandler: @escaping (Result<NoticeListOverview, Error>) -> Void) {
-        let url = "\(FastAPI.host + FastAPI.path)/getAllNotices"
+//        let url = "\(FastAPI.host + FastAPI.path)/getAllNotices"
+        let url = "\(ubuntuServer.host + ubuntuServer.path)/getAllNotices"
         
         // 우분투 서버로 수정
         AF.request(url, method: .get)

@@ -87,7 +87,8 @@ private extension UpdateNoticeViewController {
                 
                 let param = "?id=\(self.noticeId!)&title=\(urlTitle)&content=\(urlContent)"
                 
-                let url = "\(FastAPI.host + FastAPI.path)/updateNotice/\(param)"
+//                let url = "\(FastAPI.host + FastAPI.path)/updateNotice/\(param)"
+                let url = "\(ubuntuServer.host + ubuntuServer.path)/updateNotice/\(param)"
                 
                 AF.request(url, method: .post)
                     .response(completionHandler: { response in

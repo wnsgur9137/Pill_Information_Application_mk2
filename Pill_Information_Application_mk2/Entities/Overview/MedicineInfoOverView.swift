@@ -1,9 +1,10 @@
 //
-//  MedicineInfoOverview.swift
+//  MedicineInfoDataAPIOverView.swift
 //  Pill_Information_Application_mk2
 //
-//  Created by 이준혁 on 2022/11/09.
+//  Created by 이준혁 on 2022/11/21.
 //
+
 
 import Foundation
 

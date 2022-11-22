@@ -12,6 +12,7 @@ import RxCocoa
 
 final class AddAlarmViewController: UIViewController {
     let disposeBag = DisposeBag()
+    var pickedDate: ((_ date: Date) -> Void)?
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -34,8 +35,9 @@ final class AddAlarmViewController: UIViewController {
         return label
     }()
     
-    private lazy var pillNameTextField: UITextField = {
+    lazy var pillNameTextField: UITextField = {
         let textField = UITextField()
+        textField.delegate = self
         return textField
     }()
     
@@ -44,6 +46,7 @@ final class AddAlarmViewController: UIViewController {
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .time
         datePicker.minuteInterval = 1
+        datePicker.locale = Locale(identifier: "ko_KR")
         return datePicker
     }()
     
@@ -51,6 +54,7 @@ final class AddAlarmViewController: UIViewController {
         let button = UIButton()
         button.setTitle("알람 설정", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(setAlramButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -69,11 +73,27 @@ final class AddAlarmViewController: UIViewController {
         bind()
         setupLayout()
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+}
+
+extension AddAlarmViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 private extension AddAlarmViewController {
     func bind() {
         
+    }
+    
+    @objc func setAlramButtonTapped() {
+        pickedDate?(datePicker.date)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func setupLayout() {

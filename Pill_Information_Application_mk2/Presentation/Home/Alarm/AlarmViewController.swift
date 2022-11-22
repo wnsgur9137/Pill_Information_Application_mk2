@@ -12,6 +12,8 @@ import RxCocoa
 
 final class AlarmViewController: UIViewController {
     let disposeBag = DisposeBag()
+    var alarms: [Alarm] = []
+    let userNotificationCenter = UNUserNotificationCenter.current()
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -31,6 +33,7 @@ final class AlarmViewController: UIViewController {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(AlarmCell.self, forCellReuseIdentifier: "AlarmCell")
         return tableView
     }()
     
@@ -51,19 +54,82 @@ final class AlarmViewController: UIViewController {
         attribute()
         setupLayout()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        alarms = alarmList()
+    }
 }
 
 extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return alarms.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "💊 약 먹을 시간"
+        default :
+            return nil
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmCell", for: indexPath) as? AlarmCell else { return UITableViewCell() }
+        print("111111111111")
+        print(alarms)
+        cell.alarmSwitch.isOn = alarms[indexPath.row].isOn
+        cell.timeLabel.text = alarms[indexPath.row].time
+        cell.meridiemLabel.text = alarms[indexPath.row].meridiem
+        cell.pillNameLabel.text = alarms[indexPath.row].pillName
+        cell.alarmSwitch.tag = indexPath.row
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 80
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete :
+            userNotificationCenter.removePendingNotificationRequests(withIdentifiers: [alarms[indexPath.row].id])
+            self.alarms.remove(at: indexPath.row)
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(self.alarms), forKey: "alarms")
+            
+            self.tableView.reloadData()
+            return
+        
+        default :
+            break
+        }
+    }
+    
+    // cell 선택 시 시간 및 약 이름 변경하는 메서드
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let addAlarmViewController = AddAlarmViewController()
+        addAlarmViewController.pickedDate = { [weak self] date in
+            guard let self = self else { return }
+            let pillName = addAlarmViewController.pillNameTextField.text
+            var alarmList = self.alarmList()
+            let newAlarm = Alarm(date: date, isOn: true, pillName: pillName ?? "")
+            alarmList.remove(at: indexPath.row)
+            alarmList.append(newAlarm)
+            alarmList.sort {$0.date < $1.date}
+            self.alarms = alarmList
+            //UserDefaults에 저장
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(self.alarms), forKey: "alarms")
+            self.userNotificationCenter.addNotificationRequest(by: newAlarm)
+            self.tableView.reloadData()
+        }
+        self.navigationController?.pushViewController(addAlarmViewController, animated: true)
     }
     
 }
@@ -79,8 +145,29 @@ private extension AlarmViewController {
     }
     
     @objc func alramBarButtonItemTapped() {
-        let vc = AddAlarmViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let addAlarmViewController = AddAlarmViewController()
+        addAlarmViewController.pickedDate = { [weak self] date in
+            guard let self = self else { return }
+            let pillName = addAlarmViewController.pillNameTextField.text
+            var alarmList = self.alarmList()
+            let newAlarm = Alarm(date: date, isOn: true, pillName: pillName ?? "")
+            alarmList.append(newAlarm)
+            alarmList.sort {$0.date < $1.date}  // 시간 순으로 정렬
+            self.alarms = alarmList
+            //UserDefaults에 저장
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(self.alarms), forKey: "alarms")
+            self.userNotificationCenter.addNotificationRequest(by: newAlarm)
+            self.tableView.reloadData()
+        }
+        self.navigationController?.pushViewController(addAlarmViewController, animated: true)
+    }
+    
+    func alarmList() -> [Alarm] {
+        guard let data = UserDefaults.standard.value(forKey: "alarms") as? Data,
+              let alarms = try? PropertyListDecoder().decode([Alarm].self, from: data) else {
+            return []
+        }
+        return alarms
     }
     
     func attribute() {

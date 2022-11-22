@@ -132,7 +132,8 @@ private extension NoticeDetailViewController {
     }
     
     func deleteNotice() {
-        let url = "\(FastAPI.host + FastAPI.path)/deleteNotice/?id=\(String(describing: noticeId!))"
+//        let url = "\(FastAPI.host + FastAPI.path)/deleteNotice/?id=\(String(describing: noticeId!))"
+        let url = "\(ubuntuServer.host + ubuntuServer.path)/deleteNotice/?id=\(String(describing: noticeId!))"
         
         AF.request(url, method: .post)
             .response(completionHandler: { [weak self] response in

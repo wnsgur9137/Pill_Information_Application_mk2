@@ -76,7 +76,7 @@ final class SearchViewController: UIViewController {
         bind()
         setupLayout()
         resultTableView.delegate = self
-        keyboardAtrribute()
+//        keyboardAtrribute()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){

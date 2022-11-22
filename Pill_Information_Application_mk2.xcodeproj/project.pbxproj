@@ -27,15 +27,13 @@
 		6661AFAC291A63D3003F18B0 /* NoticeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFAB291A63D3003F18B0 /* NoticeTableView.swift */; };
 		6661AFB0291A644E003F18B0 /* BookmarkTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFAF291A644E003F18B0 /* BookmarkTableView.swift */; };
 		6661AFB4291A648A003F18B0 /* BookmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFB3291A648A003F18B0 /* BookmarkTableViewCell.swift */; };
-		6661AFB6291A64AF003F18B0 /* AlarmTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFB5291A64AF003F18B0 /* AlarmTableView.swift */; };
-		6661AFB8291A64BF003F18B0 /* AlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFB7291A64BF003F18B0 /* AlarmTableViewCell.swift */; };
 		6661AFBC291A6506003F18B0 /* ResultTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFBB291A6506003F18B0 /* ResultTableView.swift */; };
 		6661AFBE291A6515003F18B0 /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFBD291A6515003F18B0 /* ResultTableViewCell.swift */; };
 		6661AFC1291A6536003F18B0 /* BoardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFC0291A6536003F18B0 /* BoardTableView.swift */; };
 		6661AFC3291A653C003F18B0 /* BoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFC2291A653C003F18B0 /* BoardTableViewCell.swift */; };
 		6661AFCC291B3CBE003F18B0 /* UpdateNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCB291B3CBE003F18B0 /* UpdateNoticeViewController.swift */; };
-		6661AFCE291B6305003F18B0 /* MedicineDataOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCD291B6305003F18B0 /* MedicineDataOverview.swift */; };
-		6661AFD0291B66FB003F18B0 /* MedicineInfoOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCF291B66FB003F18B0 /* MedicineInfoOverview.swift */; };
+		6661AFCE291B6305003F18B0 /* MedicineFastAPIOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCD291B6305003F18B0 /* MedicineFastAPIOverview.swift */; };
+		6661AFD0291B66FB003F18B0 /* MedicineInfoFastAPIOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFCF291B66FB003F18B0 /* MedicineInfoFastAPIOverview.swift */; };
 		6661AFD2291B74A1003F18B0 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFD1291B74A1003F18B0 /* Network.swift */; };
 		6661AFDA291B8ABA003F18B0 /* ResultTableViewCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFD9291B8ABA003F18B0 /* ResultTableViewCellData.swift */; };
 		6661AFE4291E1C20003F18B0 /* ResultTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFE3291E1C20003F18B0 /* ResultTableViewHeader.swift */; };
@@ -43,6 +41,11 @@
 		6661AFEE2921C692003F18B0 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFED2921C692003F18B0 /* DetailTableViewCell.swift */; };
 		6661AFF1292319D8003F18B0 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFF0292319D8003F18B0 /* LoadingView.swift */; };
 		6661AFF529274EA8003F18B0 /* TabBarShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFF429274EA8003F18B0 /* TabBarShadow.swift */; };
+		6661AFF7292B19FF003F18B0 /* MedicineOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFF6292B19FF003F18B0 /* MedicineOverview.swift */; };
+		6661AFF9292B1A20003F18B0 /* MedicineInfoOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661AFF8292B1A20003F18B0 /* MedicineInfoOverView.swift */; };
+		6661B002292BA4F8003F18B0 /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B001292BA4F8003F18B0 /* AlarmCell.swift */; };
+		6661B006292BA784003F18B0 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B005292BA784003F18B0 /* Alarm.swift */; };
+		6661B008292BA79D003F18B0 /* UNNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B007292BA79D003F18B0 /* UNNotificationCenter.swift */; };
 		66ABD626290369490050D048 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66ABD625290369490050D048 /* GoogleService-Info.plist */; };
 		66ABD62A29036E3A0050D048 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62929036E3A0050D048 /* HomeTabBarController.swift */; };
 		66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62B29038EB30050D048 /* SearchViewController.swift */; };
@@ -94,15 +97,13 @@
 		6661AFAB291A63D3003F18B0 /* NoticeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableView.swift; sourceTree = "<group>"; };
 		6661AFAF291A644E003F18B0 /* BookmarkTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableView.swift; sourceTree = "<group>"; };
 		6661AFB3291A648A003F18B0 /* BookmarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewCell.swift; sourceTree = "<group>"; };
-		6661AFB5291A64AF003F18B0 /* AlarmTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTableView.swift; sourceTree = "<group>"; };
-		6661AFB7291A64BF003F18B0 /* AlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTableViewCell.swift; sourceTree = "<group>"; };
 		6661AFBB291A6506003F18B0 /* ResultTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableView.swift; sourceTree = "<group>"; };
 		6661AFBD291A6515003F18B0 /* ResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
 		6661AFC0291A6536003F18B0 /* BoardTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTableView.swift; sourceTree = "<group>"; };
 		6661AFC2291A653C003F18B0 /* BoardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardTableViewCell.swift; sourceTree = "<group>"; };
 		6661AFCB291B3CBE003F18B0 /* UpdateNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateNoticeViewController.swift; sourceTree = "<group>"; };
-		6661AFCD291B6305003F18B0 /* MedicineDataOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineDataOverview.swift; sourceTree = "<group>"; };
-		6661AFCF291B66FB003F18B0 /* MedicineInfoOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineInfoOverview.swift; sourceTree = "<group>"; };
+		6661AFCD291B6305003F18B0 /* MedicineFastAPIOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineFastAPIOverview.swift; sourceTree = "<group>"; };
+		6661AFCF291B66FB003F18B0 /* MedicineInfoFastAPIOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineInfoFastAPIOverview.swift; sourceTree = "<group>"; };
 		6661AFD1291B74A1003F18B0 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		6661AFD9291B8ABA003F18B0 /* ResultTableViewCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewCellData.swift; sourceTree = "<group>"; };
 		6661AFE3291E1C20003F18B0 /* ResultTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewHeader.swift; sourceTree = "<group>"; };
@@ -110,6 +111,12 @@
 		6661AFED2921C692003F18B0 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		6661AFF0292319D8003F18B0 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		6661AFF429274EA8003F18B0 /* TabBarShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarShadow.swift; sourceTree = "<group>"; };
+		6661AFF6292B19FF003F18B0 /* MedicineOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineOverview.swift; sourceTree = "<group>"; };
+		6661AFF8292B1A20003F18B0 /* MedicineInfoOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineInfoOverView.swift; sourceTree = "<group>"; };
+		6661AFFA292B5467003F18B0 /* ko-KR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ko-KR"; path = "ko-KR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		6661B001292BA4F8003F18B0 /* AlarmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlarmCell.swift; path = ../AlarmCell.swift; sourceTree = "<group>"; };
+		6661B005292BA784003F18B0 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
+		6661B007292BA79D003F18B0 /* UNNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNNotificationCenter.swift; sourceTree = "<group>"; };
 		66ABD625290369490050D048 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66ABD62929036E3A0050D048 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		66ABD62B29038EB30050D048 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -258,8 +265,9 @@
 		6661AFB9291A64CB003F18B0 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				6661AFB5291A64AF003F18B0 /* AlarmTableView.swift */,
-				6661AFB7291A64BF003F18B0 /* AlarmTableViewCell.swift */,
+				6661B001292BA4F8003F18B0 /* AlarmCell.swift */,
+				6661B005292BA784003F18B0 /* Alarm.swift */,
+				6661B007292BA79D003F18B0 /* UNNotificationCenter.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -298,8 +306,10 @@
 			children = (
 				66FBD3DD291239C3008615C5 /* UserInfoOverview.swift */,
 				6661AF6629178E5B003F18B0 /* NoticeListOverview.swift */,
-				6661AFCD291B6305003F18B0 /* MedicineDataOverview.swift */,
-				6661AFCF291B66FB003F18B0 /* MedicineInfoOverview.swift */,
+				6661AFCD291B6305003F18B0 /* MedicineFastAPIOverview.swift */,
+				6661AFF6292B19FF003F18B0 /* MedicineOverview.swift */,
+				6661AFCF291B66FB003F18B0 /* MedicineInfoFastAPIOverview.swift */,
+				6661AFF8292B1A20003F18B0 /* MedicineInfoOverView.swift */,
 			);
 			path = Overview;
 			sourceTree = "<group>";
@@ -489,6 +499,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"ko-KR",
 			);
 			mainGroup = 665E926A28F7BD130090B51F;
 			packageReferences = (
@@ -567,17 +578,16 @@
 				6661AFB4291A648A003F18B0 /* BookmarkTableViewCell.swift in Sources */,
 				665E929428F83BF10090B51F /* UIButton+.swift in Sources */,
 				6661AFE8291E1E39003F18B0 /* AlertActionConvertible.swift in Sources */,
-				6661AFD0291B66FB003F18B0 /* MedicineInfoOverview.swift in Sources */,
+				6661AFD0291B66FB003F18B0 /* MedicineInfoFastAPIOverview.swift in Sources */,
 				6657ACD329070C4B0004BD11 /* FindEmailViewController.swift in Sources */,
-				6661AFB6291A64AF003F18B0 /* AlarmTableView.swift in Sources */,
 				66FBD3DC2911F463008615C5 /* AddNoticeViewController.swift in Sources */,
 				66FBD3D2290EDA1B008615C5 /* DirectionViewController.swift in Sources */,
+				6661AFF7292B19FF003F18B0 /* MedicineOverview.swift in Sources */,
 				66FBD3D0290ED9E1008615C5 /* DetailViewController.swift in Sources */,
 				665E928B28F7BD660090B51F /* MainViewController.swift in Sources */,
 				66FBD3CE290ED8B7008615C5 /* ResultViewController.swift in Sources */,
 				6657ACD529070C540004BD11 /* FindPasswdViewController.swift in Sources */,
 				6661AF6729178E5B003F18B0 /* NoticeListOverview.swift in Sources */,
-				6661AFB8291A64BF003F18B0 /* AlarmTableViewCell.swift in Sources */,
 				6657ACD7290767750004BD11 /* FindEmailResultViewController.swift in Sources */,
 				66ABD639290394560050D048 /* BoardViewController.swift in Sources */,
 				6661AFBE291A6515003F18B0 /* ResultTableViewCell.swift in Sources */,
@@ -588,8 +598,10 @@
 				6661AFDA291B8ABA003F18B0 /* ResultTableViewCellData.swift in Sources */,
 				66FBD3DA2910BA47008615C5 /* APIInfo.swift in Sources */,
 				6661AFC1291A6536003F18B0 /* BoardTableView.swift in Sources */,
-				6661AFCE291B6305003F18B0 /* MedicineDataOverview.swift in Sources */,
+				6661AFCE291B6305003F18B0 /* MedicineFastAPIOverview.swift in Sources */,
+				6661B002292BA4F8003F18B0 /* AlarmCell.swift in Sources */,
 				6661AFD2291B74A1003F18B0 /* Network.swift in Sources */,
+				6661AFF9292B1A20003F18B0 /* MedicineInfoOverView.swift in Sources */,
 				66FBD3CA290D7993008615C5 /* TiemrViewController.swift in Sources */,
 				6661AFAC291A63D3003F18B0 /* NoticeTableView.swift in Sources */,
 				66ABD63629038F760050D048 /* HomeViewController.swift in Sources */,
@@ -610,7 +622,9 @@
 				6661AFF529274EA8003F18B0 /* TabBarShadow.swift in Sources */,
 				6661AF6929188EE2003F18B0 /* NoticeTableViewCell.swift in Sources */,
 				6661AFC3291A653C003F18B0 /* BoardTableViewCell.swift in Sources */,
+				6661B006292BA784003F18B0 /* Alarm.swift in Sources */,
 				66FBD3DE291239C3008615C5 /* UserInfoOverview.swift in Sources */,
+				6661B008292BA79D003F18B0 /* UNNotificationCenter.swift in Sources */,
 				6657ACDB2907EC6D0004BD11 /* PasswdCheckViewController.swift in Sources */,
 				66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */,
 				66FBD3C6290D5F55008615C5 /* NoticeDetailViewController.swift in Sources */,
@@ -626,6 +640,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				665E928228F7BD140090B51F /* Base */,
+				6661AFFA292B5467003F18B0 /* ko-KR */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -637,6 +652,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -697,6 +713,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -758,6 +775,9 @@
 				DEVELOPMENT_TEAM = VW2UR5Y845;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pill_Information_Application_mk2/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "카메라를 사용하기 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -787,6 +807,9 @@
 				DEVELOPMENT_TEAM = VW2UR5Y845;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pill_Information_Application_mk2/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "카메라를 사용하기 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
