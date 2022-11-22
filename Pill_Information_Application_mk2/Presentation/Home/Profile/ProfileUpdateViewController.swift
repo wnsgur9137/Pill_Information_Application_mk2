@@ -334,8 +334,8 @@ private extension ProfileUpdateViewController {
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
                 
-                let checkDate = false
-                let checkNickname = false
+//                let checkDate = false
+//                let checkNickname = false
                 
                 var param = "?email=\(UserDefaults.standard.string(forKey: "email")!)"
                 param = param.replacingOccurrences(of: "@", with: "%40")

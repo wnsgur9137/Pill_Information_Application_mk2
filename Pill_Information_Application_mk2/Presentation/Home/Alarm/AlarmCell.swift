@@ -7,34 +7,47 @@
 
 import UIKit
 import UserNotifications
+import SnapKit
 
 class AlarmCell: UITableViewCell {
     let userNotificationCenter = UNUserNotificationCenter.current()
     
     lazy var meridiemLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14.0, weight: .bold)
+        label.text = "오전"
+        label.font = .systemFont(ofSize: 30.0, weight: .regular)
         label.textColor = .label
         return label
     }()
     
     lazy var timeLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14.0, weight: .bold)
+        label.text = "17:00"
+        label.font = .systemFont(ofSize: 40.0, weight: .bold)
         label.textColor = .label
         return label
     }()
     
     lazy var alarmSwitch: UISwitch = {
         let uiSwitch = UISwitch()
-        uiSwitch.addTarget(self, action: #selector(alarmSwitchValueChanged), for: .valueChanged)
+        uiSwitch.addTarget(self, action: #selector(alarmSwitchValueChanged(sender:)), for: .valueChanged)
+        
         return uiSwitch
     }()
     
     lazy var pillNameLabel: UILabel = {
         let label = UILabel()
+        label.text = "탁센"
+        label.font = .systemFont(ofSize: 14.0, weight: .regular)
+        label.textColor = .label
         return label
     }()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.selectionStyle = .none
+        setupLayout()
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,7 +58,7 @@ class AlarmCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    @objc func alarmSwitchValueChanged(_ sender: UISwitch) {
+    @objc func alarmSwitchValueChanged(sender: UISwitch) {
         guard let data = UserDefaults.standard.value(forKey: "alarms") as? Data,
               var alarms = try? PropertyListDecoder().decode([Alarm].self, from: data) else { return }
         
@@ -56,6 +69,37 @@ class AlarmCell: UITableViewCell {
             userNotificationCenter.addNotificationRequest(by: alarms[alarmSwitch.tag])
         } else {
             userNotificationCenter.removePendingNotificationRequests(withIdentifiers: [alarms[alarmSwitch.tag].id])
+        }
+    }
+}
+
+private extension AlarmCell {
+    func setupLayout() {
+        [
+            meridiemLabel,
+            timeLabel,
+            pillNameLabel,
+            alarmSwitch
+        ].forEach{ addSubview($0) }
+        
+        meridiemLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(10.0)
+        }
+        
+        timeLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(meridiemLabel.snp.trailing).offset(10.0)
+        }
+        
+        pillNameLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(timeLabel.snp.trailing).offset(20.0)
+        }
+        
+        alarmSwitch.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-10.0)
         }
     }
 }

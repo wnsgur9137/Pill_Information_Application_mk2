@@ -249,11 +249,11 @@ private extension ProfileViewController {
         
         let url = "\(MedicineAPI.scheme)://\(MedicineAPI.host + MedicineAPI.path)?serviceKey=\(MedicineAPI.apiKeyEncoding)&item_name=\(String(describing: medicineName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!))&type=json"
         
-        let param = [
-            "serviceKey": MedicineAPI.apiKeyEncoding,
-            "item_name": medicineName,
-            "type": "json"
-        ]
+//        let param = [
+//            "serviceKey": MedicineAPI.apiKeyEncoding,
+//            "item_name": medicineName,
+//            "type": "json"
+//        ]
         
         print(url)
         
@@ -296,7 +296,7 @@ private extension ProfileViewController {
     }
     
     func attribute() {
-        print(UserDefaults.standard.array(forKey: "starList"))
+//        print(UserDefaults.standard.array(forKey: "starList"))
         self.starList = (UserDefaults.standard.array(forKey: "starList") as? [[String]]) ?? [[]]
         self.bookmarkTableView.reloadData()
 //        DispatchQueue.main.async {
