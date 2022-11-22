@@ -52,8 +52,8 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var nicknameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = UserDefaults.standard.string(forKey: "nickname")
         textField.backgroundColor = .systemGray
+        textField.autocapitalizationType = .none
         return textField
     }()
     
@@ -296,9 +296,13 @@ final class ProfileUpdateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "내 정보 변경"
-        
         bind()
         setupLayout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        nicknameTextField.placeholder = UserDefaults.standard.string(forKey: "nickname")
     }
 }
 
@@ -317,6 +321,30 @@ extension ProfileUpdateViewController: UITextFieldDelegate {
 private extension ProfileUpdateViewController {
     func bind() {
         
+//        self.rx.viewDidLoad
+//            .subscribe(onNext: { [weak self] in
+//                guard let self = self else { return }
+//                self.getUserInfo(completionHandler: { [weak self] result in
+//                    guard let self = self else { return }
+//                    switch result {
+//                    case let .success(result):
+//                        if result.noticeList.count > 0 {
+//                            for ind in 0...(result.noticeList.count - 1) {
+//                                self.tableNoticeList.append(result.noticeList[ind])
+//                            }
+//                            print("\n\nSUCCESS:")
+//                            debugPrint("success \(result)")
+//                            DispatchQueue.main.async {
+//                                self.noticeTableView.reloadData()
+//                            }
+//                        }
+//                    case let .failure(error):
+//                        debugPrint("FAILURE: \(error)")
+//                    }
+//                })
+//            })
+//            .disposed(by: disposeBag)
+        
         nicknameTextField.rx.text
             .bind(onNext: { [weak self] changeText in
                 guard let self = self else { return }
@@ -334,8 +362,35 @@ private extension ProfileUpdateViewController {
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
                 
-//                let checkDate = false
-//                let checkNickname = false
+                if !self.nicknameLengthCheck {
+                    let alertCon = UIAlertController(
+                        title: "경고",
+                        message: "닉네임은 2글자 이상, 8자 이하로 설정해 주세요.",
+                        preferredStyle: UIAlertController.Style.alert
+                    )
+                    let alertAct = UIAlertAction(
+                        title: "확인",
+                        style: UIAlertAction.Style.default,
+                        handler: { _ in return }
+                    )
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
+                }
+                
+                if self.nicknameTextField.text! == UserDefaults.standard.string(forKey: "nickname") {
+                    let alertCon = UIAlertController(
+                        title: "경고",
+                        message: "현재 닉네임과 동일합니다.",
+                        preferredStyle: UIAlertController.Style.alert
+                    )
+                    let alertAct = UIAlertAction(
+                        title: "확인",
+                        style: UIAlertAction.Style.default,
+                        handler: { _ in return }
+                    )
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
+                }
                 
                 var param = "?email=\(UserDefaults.standard.string(forKey: "email")!)"
                 param = param.replacingOccurrences(of: "@", with: "%40")
@@ -353,14 +408,35 @@ private extension ProfileUpdateViewController {
                                 let result = try decoder.decode(UserInfoOverview.self, from: data!)
                                 
                                 let formatter = DateFormatter()
+                                formatter.locale = Locale(identifier: "ko")
                                 formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                let currentDateString = formatter.string(from: Date())
-                                print("datedate\ndatedate\ndatedate\n")
-                                print(result.updateDate!)
-                                print(currentDateString)
+                                
+                                let updateDate = formatter.date(from: result.updateDate!)
+                                
+                                let interval = Date().timeIntervalSince(updateDate!)
+                                let days = Int(interval / 86400)
+                                if days >= 30 {
+                                    self.changeNickname()
+                                } else {
+//                                    self.changeNickname() // test code
+                                    let alertCon = UIAlertController(
+                                        title: "경고",
+                                        message: "닉네임은 한 달에 한 번 변경할 수 있습니다.\n\(30-days)일 남았습니다.",
+                                        preferredStyle: UIAlertController.Style.alert)
+                                    let alertAct = UIAlertAction(
+                                        title: "확인",
+                                        style: UIAlertAction.Style.default)
+                                    alertCon.addAction(alertAct)
+                                    self.present(alertCon, animated: true, completion: nil)
+                                }
                             } catch {
-                                let alertCon = UIAlertController(title: "경고", message: "닉네임은 한 달에 한 번 변경할 수 있습니다.", preferredStyle: UIAlertController.Style.alert)
-                                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                                let alertCon = UIAlertController(
+                                    title: "경고",
+                                    message: "닉네임은 한 달에 한 번 변경할 수 있습니다.",
+                                    preferredStyle: UIAlertController.Style.alert)
+                                let alertAct = UIAlertAction(
+                                    title: "확인",
+                                    style: UIAlertAction.Style.default)
                                 alertCon.addAction(alertAct)
                                 self.present(alertCon, animated: true, completion: nil)
                             }
@@ -368,15 +444,6 @@ private extension ProfileUpdateViewController {
                             print("error: \(error)")
                         }
                     })
-                
-                if !self.nicknameLengthCheck {
-                    let alertCon = UIAlertController(title: "경고", message: "닉네임은 2글자 이상, 8자 이하로 설정해 주세요.", preferredStyle: UIAlertController.Style.alert)
-                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
-                    alertCon.addAction(alertAct)
-                    self.present(alertCon, animated: true, completion: nil)
-                } else {
-//                    self.updateUser()
-                }
             })
             .disposed(by: disposeBag)
         
@@ -399,13 +466,32 @@ private extension ProfileUpdateViewController {
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
                 if self.passwdChack {
-                    let alertCon = UIAlertController(title: "확인", message: "비밀번호 재설정 이메일을 전송했습니다.", preferredStyle: UIAlertController.Style.alert)
-                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
-                    alertCon.addAction(alertAct)
-                    self.present(alertCon, animated: true, completion: nil)
+                    Auth.auth().sendPasswordReset(withEmail: UserDefaults.standard.string(forKey: "email")!) { error in
+                        if let error = error {
+                            let alertCon = UIAlertController(
+                                title: "확인",
+                                message: "비밀번호 재설정 이메일을 전송에 실패했습니다.\n이메일 확인 및 고객지원 연락 부탁드립니다.\n\(error)",
+                                preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(
+                                title: "확인",
+                                style: UIAlertAction.Style.default)
+                            alertCon.addAction(alertAct)
+                            self.present(alertCon, animated: true, completion: nil)
+                        } else {
+                            let alertCon = UIAlertController(title: "확인", message: "비밀번호 재설정 이메일을 전송했습니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            alertCon.addAction(alertAct)
+                            self.present(alertCon, animated: true, completion: nil)
+                        }
+                    }
                 } else {
-                    let alertCon = UIAlertController(title: "경고", message: "비밀번호가 일치하지 않습니다.", preferredStyle: UIAlertController.Style.alert)
-                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
+                    let alertCon = UIAlertController(
+                        title: "경고",
+                        message: "비밀번호가 일치하지 않습니다.",
+                        preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(
+                        title: "확인",
+                        style: UIAlertAction.Style.cancel)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
                 }
@@ -415,8 +501,14 @@ private extension ProfileUpdateViewController {
         withdrawButton.rx.tap
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
-                let alertCon = UIAlertController(title: "경고", message: "정말로 탈퇴하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
-                let alertActYes = UIAlertAction(title: "예", style: UIAlertAction.Style.cancel, handler: { _ in self.withdrawUser()} )
+                let alertCon = UIAlertController(
+                    title: "경고",
+                    message: "정말로 탈퇴하시겠습니까?",
+                    preferredStyle: UIAlertController.Style.alert)
+                let alertActYes = UIAlertAction(
+                    title: "예",
+                    style: UIAlertAction.Style.cancel,
+                    handler: { _ in self.withdrawUser()} )
                 let alertActNo = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
                 [
                     alertActYes,
@@ -427,34 +519,62 @@ private extension ProfileUpdateViewController {
             .disposed(by: disposeBag)
     }
     
-    func updateUser() {
+//    func getUserInfo(completionHandler: @escaping (Result<UserInfoOverview, Error>) -> Void) {
+//        let url = "\(ubuntuServer.host + ubuntuServer.path)/getUserInfo"
+//
+//        AF.request(url, method: .get)
+//            .response(completionHandler: { response in
+//                switch response.result {
+//                case let .success(data):
+//                    do {
+//                        let result = try JSONDecoder().decode(UserInfoOverview.self, from: data!)
+//                        completionHandler(.success(result))
+//                    } catch {
+//                        print("failure: JSON Decoding Error")
+//                        completionHandler(.failure(error))
+//                    }
+//                case let .failure(error):
+//                    print("failure: \(error)")
+//                    completionHandler(.failure(error))
+//                }
+//            })
+//    }
+    
+    func changeNickname() {
+        let email = UserDefaults.standard.string(forKey: "email")
+//        email = email?.replacingCharacters(in: "@", with: "%40")
+//        email = email?.replacingCharacters(in: ".", with: "%2E")
+        
+        let nickname = nicknameTextField.text!
+        
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko")
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let currentDateString = formatter.string(from: Date())
-        var emailParam = "?email=\(String(describing: UserDefaults.standard.string(forKey: "email")!))"
-        emailParam = emailParam.replacingOccurrences(of: "@", with: "%40")
-        emailParam = emailParam.replacingOccurrences(of: ".", with: "%2E")
-        let nicknameParam = "&nickname=\(self.nicknameTextField.text ?? "")"
-        var updateDateParam = "&updateDate=\(currentDateString)"
-        updateDateParam = updateDateParam.replacingOccurrences(of: " ", with: "%20")
-        updateDateParam = updateDateParam.replacingOccurrences(of: ":", with: "%3A")
+        let today = formatter.string(from: Date())
+//        today = today.replacingCharacters(in: "-", with: "%2D")
+//        today = today.replacingCharacters(in: " ", with: "%20")
+//        today = today.replacingCharacters(in: ":", with: "%3A")
         
-        let param = "\(emailParam)\(nicknameParam)\(updateDateParam)"
-        
-//        let url = "\(FastAPI.host + FastAPI.path)/updateUserInfo/\(param)"
+        let param = "?email=\(String(describing: email!.addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!))&nickname=\(String(describing: nickname))&updateDate=\(String(describing: today.addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!))"
         let url = "\(ubuntuServer.host + ubuntuServer.path)/updateUserInfo/\(param)"
-        AF.request(url, method: .post, encoding: URLEncoding.httpBody)
-            .response(completionHandler: { response in
+        
+        print(url)
+        
+        AF.request(url, method: .post)
+            .response(completionHandler: { [weak self] response in
+                guard let self = self else { return }
                 switch response.result {
                 case let .success(data):
                     print("success: \(String(describing: data))")
-                    let alertCon = UIAlertController(title: "확인", message: "닉네임은 변경했습니다.", preferredStyle: UIAlertController.Style.alert)
+                    UserDefaults.standard.set(nickname, forKey: "nickname")
+                    self.nicknameTextField.placeholder = UserDefaults.standard.string(forKey: "nickname")
+                    let alertCon = UIAlertController(title: "확인", message: "닉네임을 변경했습니다.", preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
                 case let .failure(error):
                     print("failure: \(error)")
-                    let alertCon = UIAlertController(title: "오류", message: "닉네임 재설정에 실패했습니다.", preferredStyle: UIAlertController.Style.alert)
+                    let alertCon = UIAlertController(title: "오류", message: "닉네임 변경에 실패했습니다.", preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)

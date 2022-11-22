@@ -14,7 +14,7 @@ final class SearchBar: UISearchBar {
     
     let disposeBag = DisposeBag()
     
-    private lazy var searchButton: UIButton = {
+    lazy var searchButton: UIButton = {
         let button = UIButton()
         button.setTitle("검색", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
@@ -23,7 +23,7 @@ final class SearchBar: UISearchBar {
     
     private lazy var photoButton: UIButton = {
         let button = UIButton()
-        button.setTitle("사진", for: .normal)
+        button.setTitle("모양", for: .normal)
         button.setImage(UIImage(named: "photo"), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         return button
@@ -66,13 +66,15 @@ final class SearchBar: UISearchBar {
             .disposed(by: disposeBag)
         
         searchButtonTapped
-            .subscribe(onNext: {
-                var searchHistoryArray = UserDefaults.standard.array(forKey: "searchHistoryArray")
+            .subscribe(onNext: { [weak self] in
+                var searchHistoryArray = UserDefaults.standard.array(forKey: "searchHistoryArray") as? Array<String>
                 if searchHistoryArray == nil {
                     UserDefaults.standard.set([], forKey:"searchHistoryArray")
-                    searchHistoryArray = UserDefaults.standard.array(forKey: "searchHistoryArray")
+                    searchHistoryArray = UserDefaults.standard.array(forKey: "searchHistoryArray") as? Array<String>
                 }
-                searchHistoryArray!.append(self.text!)
+                if !searchHistoryArray!.contains(String((self?.text)!)) {
+                    searchHistoryArray!.append((self?.text)!)
+                }
                 UserDefaults.standard.set(searchHistoryArray, forKey: "searchHistoryArray")
 //                print("searchHistoryArray: \(String(describing: searchHistoryArray!))")
             })

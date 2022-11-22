@@ -17,6 +17,7 @@ final class SearchViewController: UIViewController {
     
     let alertActionTapped = PublishRelay<AlertAction>()
     var medicineArray: MedicineOverview? = nil
+    var searchHistoryList: Array<String>?
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -45,9 +46,20 @@ final class SearchViewController: UIViewController {
     }()
     
     private lazy var searchLogCollectionView: UICollectionView = {
-        let collectionView = UICollectionView()
+        let layout = UICollectionViewFlowLayout()
+//        layout.minimumLineSpacing = 10
+        
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 15.0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+       
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.isScrollEnabled = true
+        collectionView.register(SearchHistoryCell.self, forCellWithReuseIdentifier: "SearchHistoryCell")
+        
         return collectionView
     }()
     
@@ -77,6 +89,20 @@ final class SearchViewController: UIViewController {
         setupLayout()
         resultTableView.delegate = self
 //        keyboardAtrribute()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        super.viewWillDisappear(animated)
+        let searchHistoryArray = UserDefaults.standard.array(forKey: "searchHistoryArray") as? Array<String>
+        if searchHistoryArray != nil {
+            searchHistoryList = searchHistoryArray
+        }
+        
+        DispatchQueue.main.async {
+            self.searchLogCollectionView.reloadData()
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
@@ -96,27 +122,32 @@ final class SearchViewController: UIViewController {
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return searchHistoryList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        guard let cell = searchLogCollectionView.dequeueReusableCell(withReuseIdentifier: "SearchHistoryCell", for: indexPath) as? SearchHistoryCell else { return UICollectionViewCell() }
+        cell.searchHistoryLabel.text = "  \(String(describing: searchHistoryList![indexPath.row]))"
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let tmpLabel : UILabel = UILabel()
-        tmpLabel.text = "Test"
-        return CGSize(width: (tmpLabel.intrinsicContentSize.width + 10), height: 35)
+        tmpLabel.text = searchHistoryList?[indexPath.row]
+        return CGSize(width: (tmpLabel.intrinsicContentSize.width + 10), height: 30)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
+        return 8
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        searchBar.text = searchHistoryList?[indexPath.row]
+        searchBar.searchButtonTapped
+            .asSignal()
+            .emit(to: searchBar.rx.endEditing)
+            .disposed(by: disposeBag)
     }
-    
 }
 
 extension SearchViewController: UITableViewDelegate {
@@ -228,7 +259,7 @@ private extension SearchViewController {
             .map { message -> Alert in
                 return (
                     title: "오류",
-                    message: "예상치 못한 오류가 발생했습니다. 잠시후 다시 시도해주십시오.\n\(message)",
+                    message: "예상치 못한 오류가 발생했습니다. 잠시후 다시 시도해  주십시오.\n\(message)",
                     actions: [.confirm],
                     style: .alert
                 )
@@ -251,15 +282,53 @@ private extension SearchViewController {
             )
             .asSignal(onErrorSignalWith: .empty())
             .flatMapLatest { alert -> Signal<AlertAction> in
-                let alertController = UIAlertController(title: alert.title, message: alert.message, preferredStyle: alert.style)
+                let alertController = UIAlertController(
+                    title: alert.title,
+                    message: alert.message,
+                    preferredStyle: alert.style)
                 return self.presentAlertController(alertController, actions: alert.actions)
             }
             .emit(to: alertActionTapped)
             .disposed(by: disposeBag)
         
         searchLogDeleteButton.rx.tap
-            .subscribe(onNext: {
-                UserDefaults.standard.removeObject(forKey: "searchHistoryArray")
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                if self.searchHistoryList == [] {
+                    let alertCon = UIAlertController(
+                        title: "경고",
+                        message: "검색 기록이 없습니다.",
+                        preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(
+                        title: "확인",
+                        style: UIAlertAction.Style.default,
+                        handler: { _ in return }
+                    )
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
+                }
+                let alertCon = UIAlertController(
+                    title: "경고",
+                    message: "검색 기록을 삭제하시겠습니까?",
+                    preferredStyle: UIAlertController.Style.alert)
+                let alertActYes = UIAlertAction(
+                    title: "예",
+                    style: UIAlertAction.Style.destructive,
+                    handler: { _ in
+                        UserDefaults.standard.removeObject(forKey: "searchHistoryArray")
+                        UserDefaults.standard.set([], forKey: "searchHistoryArray")
+                        self.searchHistoryList = []
+                        DispatchQueue.main.async {
+                            self.searchLogCollectionView.reloadData()
+                        }
+                    }
+                )
+                let alertActNo = UIAlertAction(
+                    title: "아니오",
+                    style: UIAlertAction.Style.default)
+                
+                [alertActNo, alertActYes].forEach{ alertCon.addAction($0) }
+                self.present(alertCon, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
         
@@ -270,6 +339,20 @@ private extension SearchViewController {
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        Observable
+            .merge(
+                searchBar.rx.searchButtonClicked.asObservable(),
+                searchBar.searchButton.rx.tap.asObservable()
+            )
+            .bind(onNext: { [weak self] in
+                print("searchButtonClickedddddddddddd")
+                self?.searchHistoryList = UserDefaults.standard.array(forKey: "searchHistoryArray") as? Array<String>
+                DispatchQueue.main.async {
+                    self?.searchLogCollectionView.reloadData()
+                }
+            })
+            .disposed(by: disposeBag)
             
     }
     
@@ -278,7 +361,7 @@ private extension SearchViewController {
             backgroundView,
             searchBar,
             searchLogStackView,
-//            searchLogCollectionView,
+            searchLogCollectionView,
             searchImageButton,
             resultTableView,
             imageView
@@ -304,18 +387,19 @@ private extension SearchViewController {
             }
         }
         
+        searchLogCollectionView.snp.makeConstraints {
+            $0.top.equalTo(searchLogStackView.snp.bottom).offset(3.0)
+            $0.leading.equalTo(searchLogStackView.snp.leading)
+            $0.trailing.equalTo(searchLogStackView.snp.trailing)
+            $0.height.equalTo(60.0)
+        }
+        
         resultTableView.snp.makeConstraints {
-            $0.top.equalTo(searchLogStackView.snp.bottom).offset(30.0)
+            $0.top.equalTo(searchLogCollectionView.snp.bottom).offset(10.0)
             $0.leading.equalTo(searchLogStackView.snp.leading)
             $0.trailing.equalTo(searchLogStackView.snp.trailing)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30.0)
         }
-        
-//        searchLogCollectionView.snp.makeConstraints {
-//            $0.top.equalTo(searchLogStackView.snp.bottom).offset(10)
-//            $0.leading.equalTo(searchLogStackView.snp.leading)
-//            $0.trailing.equalTo(searchLogStackView.snp.trailing)
-//        }
         
         searchImageButton.snp.makeConstraints {
             $0.top.equalTo(searchLogStackView.snp.bottom).offset(80)

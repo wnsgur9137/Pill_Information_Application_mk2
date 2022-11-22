@@ -27,7 +27,9 @@ final class PictureSearchViewController: UIViewController {
     }()
     
     private lazy var imagePickerController: UIImagePickerController = {
-        return UIImagePickerController()
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        return imagePickerController
     }()
     
     private lazy var pictureImageView: UIImageView = {
@@ -38,7 +40,7 @@ final class PictureSearchViewController: UIViewController {
     
     private lazy var choiceImageButton: UIButton = {
         let button = UIButton()
-        button.setTitle("사진 재선택", for: .normal)
+        button.setTitle("사진 선택", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         return button
     }()
@@ -169,11 +171,11 @@ final class PictureSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "사진으로 검색"
+        self.navigationItem.title = "알약 모양으로 검색"
         bind()
         setupLayout()
         keyboardAtrribute()
-        choiceImageButtonTapped()
+//        choiceImageButtonTapped()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
@@ -247,8 +249,7 @@ extension PictureSearchViewController: UIImagePickerControllerDelegate, UINaviga
 //            return
 //        }
 //        let video = AVAsset(url: url)
-        
-        dismiss(animated: true, completion: nil)
+        imagePickerController.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -257,7 +258,8 @@ private extension PictureSearchViewController {
     func bind() {
         choiceImageButton.rx.tap
             .bind(onNext: { [weak self] in
-                self?.choiceImageButtonTapped()
+//                self?.choiceImageButtonTapped()
+                self?.actionLibrary()
             })
             .disposed(by: disposeBag)
         
@@ -317,7 +319,7 @@ private extension PictureSearchViewController {
                         self.present(self.imagePickerController, animated: true, completion: nil)
                     }
                 } else {
-                    self.dismiss(animated: true, completion: nil)
+                    self.imagePickerController.dismiss(animated: true, completion: nil)
                 }
             })
         default:
@@ -381,7 +383,7 @@ private extension PictureSearchViewController {
         [
             backgroundView,
             pictureImageView,
-            choiceImageButton,
+//            choiceImageButton,
             textFieldStackView,
             searchButton
         ].forEach{ view.addSubview($0) }
@@ -397,13 +399,13 @@ private extension PictureSearchViewController {
             $0.height.equalTo(240.0)
         }
         
-        choiceImageButton.snp.makeConstraints {
-            $0.top.equalTo(pictureImageView.snp.bottom).offset(10.0)
-            $0.centerX.equalToSuperview()
-        }
+//        choiceImageButton.snp.makeConstraints {
+//            $0.top.equalTo(pictureImageView.snp.bottom).offset(10.0)
+//            $0.centerX.equalToSuperview()
+//        }
         
         textFieldStackView.snp.makeConstraints {
-            $0.top.equalTo(choiceImageButton.snp.bottom).offset(50.0)
+            $0.top.equalTo(pictureImageView.snp.bottom).offset(50.0)
             $0.leading.equalToSuperview().offset(10.0)
             $0.trailing.equalToSuperview().inset(10.0)
             

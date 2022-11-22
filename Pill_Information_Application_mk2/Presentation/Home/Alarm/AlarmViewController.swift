@@ -78,8 +78,6 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmCell", for: indexPath) as? AlarmCell else { return UITableViewCell() }
-        print("111111111111")
-        print(alarms)
         cell.alarmSwitch.isOn = alarms[indexPath.row].isOn
         cell.timeLabel.text = alarms[indexPath.row].time
         cell.meridiemLabel.text = alarms[indexPath.row].meridiem
@@ -106,7 +104,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
             
             self.tableView.reloadData()
             return
-        
+            
         default :
             break
         }

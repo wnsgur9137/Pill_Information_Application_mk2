@@ -40,6 +40,7 @@ final class NicknameSetViewController: UIViewController {
         let textfield = UITextField()
         textfield.placeholder = "닉네임을 입력해 주세요"
         textfield.delegate = self
+        textfield.autocapitalizationType = .none
         return textfield
     }()
     

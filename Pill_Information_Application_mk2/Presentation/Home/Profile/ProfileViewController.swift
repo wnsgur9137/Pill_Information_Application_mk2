@@ -126,12 +126,10 @@ final class ProfileViewController: UIViewController {
         self.bookmarkTableView.dataSource = self
         bind()
         setupLayout()
-        setupLayoutInfo()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         attribute()
     }
 }
@@ -296,16 +294,13 @@ private extension ProfileViewController {
     }
     
     func attribute() {
+        userNameLabel.text = "\(String(describing: UserDefaults.standard.string(forKey: "nickname")!)) 님"
 //        print(UserDefaults.standard.array(forKey: "starList"))
         self.starList = (UserDefaults.standard.array(forKey: "starList") as? [[String]]) ?? [[]]
         self.bookmarkTableView.reloadData()
 //        DispatchQueue.main.async {
 //            self.bookmarkTableView.reloadData()
 //        }
-    }
-    
-    func setupLayoutInfo() {
-        userNameLabel.text = "\(String(describing: UserDefaults.standard.string(forKey: "nickname")!)) 님"
     }
     
     func setupLayout() {
