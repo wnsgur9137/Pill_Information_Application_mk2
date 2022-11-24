@@ -9,7 +9,7 @@ import Foundation
 
 struct MedicineFastAPIOverview: Codable {
     let resultCount: Int
-    let medicineList: [MedicineFastAPIItem]
+    let medicineItem: [MedicineFastAPIItem]
 }
 
 

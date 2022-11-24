@@ -125,6 +125,7 @@ final class PictureSearchViewController: UIViewController {
     
     private lazy var markCodeTextField: UITextField = {
         let textField = UITextField()
+        textField.autocapitalizationType = .none
         return textField
     }()
     
@@ -267,11 +268,29 @@ private extension PictureSearchViewController {
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
                 let vc = ResultViewController()
+//                vc.searchMedicineData = [
+//                    "shape": self.shapeTextField.text ?? "",
+//                    "color": self.colorTextField.text ?? "",
+//                    "line": self.lineTextField.text ?? "",
+//                    "markcode": self.markCodeTextField.text ?? ""
+//                ]
+                let shape = self.shapeTextField.text ?? ""
+                let color = self.colorTextField.text ?? ""
+                var line = ""
+                if self.lineTextField.text! == "-" {
+                    line = "실선"
+                } else if self.lineTextField.text! == "+" {
+                    line = "십자"
+                }
+                var markCode = self.markCodeTextField.text ?? ""
+                if markCode == "" {
+                    markCode = "nil"
+                }
                 vc.searchMedicineData = [
-                    "shape": self.shapeTextField.text ?? "",
-                    "color": self.colorTextField.text ?? "",
-                    "line": self.lineTextField.text ?? "",
-                    "markcode": self.markCodeTextField.text ?? ""
+                    shape,
+                    color,
+                    line,
+                    markCode
                 ]
                 self.navigationController?.pushViewController(vc, animated: true)
             })

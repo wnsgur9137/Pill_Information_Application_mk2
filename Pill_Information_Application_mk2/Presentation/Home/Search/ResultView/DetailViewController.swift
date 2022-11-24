@@ -16,7 +16,11 @@ import Alamofire
 final class DetailViewController: UIViewController {
     let disposeBag = DisposeBag()
     
+    var searchType = "name"
+    
     var medicine: MedicineItem? = nil
+    var medicineFastAPI: MedicineFastAPIItem? = nil
+    
     var medicineList: Array = [[String]]()
     var medicineInfoCheck = false
     var medicineInfo: MedicineInfoItem? = nil
@@ -77,8 +81,13 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.title = "알약 정보"
         self.navigationItem.rightBarButtonItem = self.starButton
+        print("searchType: \(searchType)")
         bind()
-        setData(data: medicine!)
+        if searchType == "name" {
+            setData(data: medicine!)
+        } else {
+            setDataFastAPI(data: medicineFastAPI!)
+        }
         LoadingView.show()
         self.getMedicineInfoData(completionHandler: { [weak self] result in
             guard let self = self else { return }
@@ -131,11 +140,19 @@ private extension DetailViewController {
                 print("directionButton is Tapped")
                 let vc = DirectionViewController()
                 
-                vc.medicineImageURL = (self.medicine?.medicineImage) ?? ""
-                vc.medicineInfo = self.medicineInfo
-                vc.medicineName = self.medicine?.medicineName ?? ""
-                vc.className = self.medicine?.className ?? ""
-                vc.etcOtcName = self.medicine?.etcOtcName ?? ""
+                if self.searchType == "name" {
+                    vc.medicineImageURL = (self.medicine?.medicineImage) ?? ""
+                    vc.medicineInfo = self.medicineInfo
+                    vc.medicineName = self.medicine?.medicineName ?? ""
+                    vc.className = self.medicine?.className ?? ""
+                    vc.etcOtcName = self.medicine?.etcOtcName ?? ""
+                } else {
+                    vc.medicineImageURL = (self.medicineFastAPI?.medicineImage) ?? ""
+                    vc.medicineInfo = self.medicineInfo
+                    vc.medicineName = self.medicineFastAPI?.medicineName ?? ""
+                    vc.className = self.medicineFastAPI?.className ?? ""
+                    vc.etcOtcName = self.medicineFastAPI?.etcOtcName ?? ""
+                }
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
@@ -159,23 +176,35 @@ private extension DetailViewController {
         if starList == nil || starList == [] {
             self.starButton.image = UIImage(systemName: "star")
         } else {
-            for index in 0..<starList!.count {
-                if starList![index][0].contains(medicine!.medicineName!) {
-                    self.starButton
-                        .image = UIImage(systemName: "star.fill")
-                    break
-                } else {
-                    self.starButton.image = UIImage(systemName: "star")
+            if searchType == "name" {
+                for index in 0..<starList!.count {
+                    if starList![index][0].contains((medicine?.medicineName)!) {
+                        self.starButton
+                            .image = UIImage(systemName: "star.fill")
+                        break
+                    } else {
+                        self.starButton.image = UIImage(systemName: "star")
+                    }
+                }
+            } else {
+                for index in 0..<starList!.count {
+                    if starList![index][0].contains((medicineFastAPI?.medicineName)!) {
+                        self.starButton
+                            .image = UIImage(systemName: "star.fill")
+                        break
+                    } else {
+                        self.starButton.image = UIImage(systemName: "star")
+                    }
                 }
             }
         }
     }
     
     @objc func starButtonTapped() {
-        let medicineName = self.medicine?.medicineName ?? ""
-        let medicineImage = self.medicine?.medicineImage ?? ""
-        let className = self.medicine?.className ?? ""
-        let etcOtcname = self.medicine?.etcOtcName ?? ""
+        let medicineName = searchType == "name" ? self.medicine?.medicineName ?? "" : self.medicineFastAPI?.medicineName ?? ""
+        let medicineImage = searchType == "name" ? self.medicine?.medicineImage ?? "" : self.medicineFastAPI?.medicineImage ?? ""
+        let className = searchType == "name" ? self.medicine?.className ?? "" : self.medicineFastAPI?.className ?? ""
+        let etcOtcname = searchType == "name" ? self.medicine?.etcOtcName ?? "" : self.medicineFastAPI?.etcOtcName ?? ""
         var starList = UserDefaults.standard.array(forKey: "starList") as? [[String]]
         
         var starListCheck = false
@@ -218,13 +247,21 @@ private extension DetailViewController {
         classLabel.text = data.className
     }
     
+    func setDataFastAPI(data: MedicineFastAPIItem) {
+        setMedicineListFastAPI(data: data)
+        let pillImageURL = URL(string: data.medicineImage ?? "")
+        pillImageView.kf.setImage(with: pillImageURL)
+        titleLabel.text = data.medicineName
+        classLabel.text = data.className
+    }
+    
     func getMedicineInfoData(completionHandler: @escaping (Result<MedicineInfoOverview, Error>) -> Void) {
 //        let url = "\(MedicineInfoAPI.scheme)://\(MedicineInfoAPI.host + MedicineInfoAPI.path)"
-        let url = "\(MedicineInfoAPI.scheme)://\(MedicineInfoAPI.host + MedicineInfoAPI.path)?serviceKey=\(MedicineInfoAPI.apiKeyEncoding)&itemName=\(String(describing: medicine!.medicineName!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!))&type=json"
+        let url = "\(MedicineInfoAPI.scheme)://\(MedicineInfoAPI.host + MedicineInfoAPI.path)?serviceKey=\(MedicineInfoAPI.apiKeyEncoding)&itemName=\(String(describing: titleLabel.text!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!))&type=json"
         
         let param = [
             "serviceKey": MedicineInfoAPI.apiKeyEncoding,
-            "itemName": medicine!.medicineName!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
+            "itemName": titleLabel.text!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
             "type": "json"
         ]
         
@@ -269,6 +306,40 @@ private extension DetailViewController {
         self.medicineList.append(contentsOf: [["뒷면 분할선", data.lineBack ?? ""]])
         self.medicineList.append(contentsOf: [["장축 길이(mm)", data.lenLong ?? ""]])
         self.medicineList.append(contentsOf: [["단축 길이(mm)", data.lenShort ?? ""]])
+        self.medicineList.append(contentsOf: [["두께", data.thick ?? ""]])
+        self.medicineList.append(contentsOf: [["제형 코드 이름", data.formCodeName ?? ""]])
+        self.medicineList.append(contentsOf: [["앞면 마크내용", data.markCodeFrontAnal ?? ""]])
+        self.medicineList.append(contentsOf: [["뒷면 마크내용", data.markCodeBackAnal ?? ""]])
+        self.medicineList.append(contentsOf: [["앞면 마크코드", data.markCodeFront ?? ""]])
+        self.medicineList.append(contentsOf: [["뒷면 마크코드", data.markCodeBack ?? ""]])
+        self.medicineList.append(contentsOf: [["보험 코드", data.ediCode ?? ""]])
+        self.medicineList.append(contentsOf: [["이미지 링크", data.medicineImage ?? ""]])
+        self.medicineList.append(contentsOf: [["앞면 마크\n이미지 링크", data.markCodeFrontImage ?? ""]])
+        self.medicineList.append(contentsOf: [["뒷면 마크\n이미지 링크", data.markCodeBackImage ?? ""]])
+        self.medicineList.append(contentsOf: [["품목 허가 일지", data.medicinePermitDate ?? ""]])
+        self.medicineList.append(contentsOf: [["약학 정보원\n이미지 생성일", data.imgRegistTs ?? ""]])
+        self.medicineList.append(contentsOf: [["변경 일자", data.ediCode ?? ""]])
+    }
+    
+    func setMedicineListFastAPI(data: MedicineFastAPIItem) {
+        self.medicineList.append(contentsOf: [["일련번호", data.medicineSeq ?? ""]])
+        self.medicineList.append(contentsOf: [["약명", data.medicineName ?? ""]])
+        self.medicineList.append(contentsOf: [["제품 영문명", data.medicineEngName ?? ""]])
+        self.medicineList.append(contentsOf: [["분류번호", data.classNo ?? ""]])
+        self.medicineList.append(contentsOf: [["분류명", data.className ?? ""]])
+        self.medicineList.append(contentsOf: [["전문/일반", data.etcOtcName ?? ""]])
+        self.medicineList.append(contentsOf: [["제약회사 일련번호", data.entpSeq ?? ""]])
+        self.medicineList.append(contentsOf: [["제약회사명", data.entpName ?? ""]])
+        self.medicineList.append(contentsOf: [["성상", data.chart ?? ""]])
+        self.medicineList.append(contentsOf: [["앞면 모양", data.printFront ?? ""]])
+        self.medicineList.append(contentsOf: [["뒷면 모양", data.printBack ?? ""]])
+        self.medicineList.append(contentsOf: [["의약품 모양", data.medicineShape ?? ""]])
+        self.medicineList.append(contentsOf: [["앞면 색상", data.colorClass1 ?? ""]])
+        self.medicineList.append(contentsOf: [["뒷면 색상", data.colorClass2 ?? ""]])
+        self.medicineList.append(contentsOf: [["앞면 분할선", data.lineFront ?? ""]])
+        self.medicineList.append(contentsOf: [["뒷면 분할선", data.lineBack ?? ""]])
+        self.medicineList.append(contentsOf: [["장축 길이(mm)", data.lengLong ?? ""]])
+        self.medicineList.append(contentsOf: [["단축 길이(mm)", data.lengShort ?? ""]])
         self.medicineList.append(contentsOf: [["두께", data.thick ?? ""]])
         self.medicineList.append(contentsOf: [["제형 코드 이름", data.formCodeName ?? ""]])
         self.medicineList.append(contentsOf: [["앞면 마크내용", data.markCodeFrontAnal ?? ""]])

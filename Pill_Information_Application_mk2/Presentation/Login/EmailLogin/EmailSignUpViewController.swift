@@ -330,6 +330,7 @@ private extension EmailSignUpViewController {
                             let result = try decoder.decode(UserInfoOverview.self, from: data!)
                             if result.nickname == "" {
                                 // 사용 가능한 이메일일 경우
+                                
                                 let vc = NicknameSetViewController()
                                 vc.email = self.emailTextField.text!
                                 vc.passwd = self.passwdTextField.text!

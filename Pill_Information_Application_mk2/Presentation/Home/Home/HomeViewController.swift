@@ -86,7 +86,8 @@ final class HomeViewController: UIViewController {
         self.navigationItem.title = "PillSoGood"
         bind()
         setupLayout()
-        if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" {
+        if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" ||
+            UserDefaults.standard.string(forKey: "email") == "admin@adminAcc.com" {
             setupAddNoticeButton()
         }
 //        keyboardAtrribute()

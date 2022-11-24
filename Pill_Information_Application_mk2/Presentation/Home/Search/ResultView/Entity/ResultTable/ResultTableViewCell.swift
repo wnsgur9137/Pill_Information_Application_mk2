@@ -66,6 +66,17 @@ final class ResultTableViewCell: UITableViewCell {
         classNameLabel.text = data.className
         etcOtcNameLabel.text = data.etcOtcName
     }
+    
+    func setDataFastAPI(data: MedicineFastAPIItem) {
+        let medicineImageURL = URL(string: data.medicineImage ?? "")
+        medicineImageView.kf.setImage(
+            with: medicineImageURL!,
+            placeholder: UIImage(systemName: "photo")
+        )
+        medicineNameLabel.text = data.medicineName
+        classNameLabel.text = data.className
+        etcOtcNameLabel.text = data.etcOtcName
+    }
 }
 
 private extension ResultTableViewCell {

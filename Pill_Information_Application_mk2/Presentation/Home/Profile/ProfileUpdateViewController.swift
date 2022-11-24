@@ -568,14 +568,24 @@ private extension ProfileUpdateViewController {
                     print("success: \(String(describing: data))")
                     UserDefaults.standard.set(nickname, forKey: "nickname")
                     self.nicknameTextField.placeholder = UserDefaults.standard.string(forKey: "nickname")
-                    let alertCon = UIAlertController(title: "확인", message: "닉네임을 변경했습니다.", preferredStyle: UIAlertController.Style.alert)
-                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    let alertCon = UIAlertController(
+                        title: "확인",
+                        message: "닉네임을 변경했습니다.",
+                        preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(
+                        title: "확인",
+                        style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
                 case let .failure(error):
                     print("failure: \(error)")
-                    let alertCon = UIAlertController(title: "오류", message: "닉네임 변경에 실패했습니다.", preferredStyle: UIAlertController.Style.alert)
-                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    let alertCon = UIAlertController(
+                        title: "오류",
+                        message: "닉네임 변경에 실패했습니다.",
+                        preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(
+                        title: "확인",
+                        style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
                 }
@@ -588,7 +598,7 @@ private extension ProfileUpdateViewController {
         var dbCheck = false
         var authCheck = false
         
-        let param = "?email=\(UserDefaults.standard.removeObject(forKey: "email"))"
+        let param = "?email=\(String(describing: UserDefaults.standard.string(forKey: "email")!))"
 //        let url = "\(FastAPI.host + FastAPI.path)/deleteUserInfo/\(param)"
         let url = "\(ubuntuServer.host + ubuntuServer.path)/deleteUserInfo/\(param)"
         

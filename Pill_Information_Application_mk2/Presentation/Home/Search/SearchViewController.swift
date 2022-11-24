@@ -259,7 +259,7 @@ private extension SearchViewController {
             .map { message -> Alert in
                 return (
                     title: "오류",
-                    message: "예상치 못한 오류가 발생했습니다. 잠시후 다시 시도해  주십시오.\n\(message)",
+                    message: "해당 이름의 알약이 없습니다.",
                     actions: [.confirm],
                     style: .alert
                 )
@@ -346,7 +346,6 @@ private extension SearchViewController {
                 searchBar.searchButton.rx.tap.asObservable()
             )
             .bind(onNext: { [weak self] in
-                print("searchButtonClickedddddddddddd")
                 self?.searchHistoryList = UserDefaults.standard.array(forKey: "searchHistoryArray") as? Array<String>
                 DispatchQueue.main.async {
                     self?.searchLogCollectionView.reloadData()

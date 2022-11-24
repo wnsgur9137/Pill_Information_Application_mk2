@@ -12,11 +12,12 @@ import RxCocoa
 
 import Firebase
 import FirebaseAuth
+import Alamofire
 
 final class EmailLoginViewController: UIViewController {
     
     let disposeBag = DisposeBag()
-    let db = Firestore.firestore()
+//    let db = Firestore.firestore()
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -198,20 +199,66 @@ private extension EmailLoginViewController {
                     UserDefaults.standard.set("email", forKey: "loginType")
                     UserDefaults.standard.set(self.emailTextField.text!, forKey: "email")
                     UserDefaults.standard.set(self.passwdTextField.text!, forKey: "passwd")
-                    let userDB = self.db.collection("USER")
-                    let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
-                    query.getDocuments { (qs, err) in
-                        if qs!.documents.isEmpty {
-                            let alertCon = UIAlertController(title: "경고", message: "회원 정보가 없습니다.", preferredStyle: UIAlertController.Style.alert)
-                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
-                            alertCon.addAction(alertAct)
-                            self.present(alertCon, animated: true, completion: nil)
-                        } else {
-                            for document in qs!.documents {
-                                UserDefaults.standard.set(document.data()["NickName"]!, forKey: "nickname")
+                    
+                    var userEmail = self.emailTextField.text!.replacingOccurrences(of: "@", with: "%40")
+                    userEmail = userEmail.replacingOccurrences(of: ".", with: "%2E")
+                    let url = "\(ubuntuServer.host + ubuntuServer.path)/getUserInfo/?email=\(String(describing: userEmail))"
+                    print(url)
+                    AF.request(url, method: .get)
+                        .response(completionHandler: { [weak self] response in
+                            guard let self = self else { return }
+                            switch response.result {
+                            case let .success(data):
+                                do {
+                                    let result = try JSONDecoder().decode(UserInfoOverview.self, from: data!)
+                                    print(result)
+                                    UserDefaults.standard.set(result.nickname!, forKey: "nickname")
+                                } catch {
+                                    print("failure: \(error)")
+                                    let alertCon = UIAlertController(
+                                        title: "오류",
+                                        message: "로그인에 실패했습니다.\n\(error)",
+                                        preferredStyle: UIAlertController.Style.alert)
+                                    let alertAct = UIAlertAction(
+                                        title: "확인",
+                                        style: UIAlertAction.Style.destructive,
+                                        handler: { _ in return }
+                                    )
+                                    alertCon.addAction(alertAct)
+                                    self.present(alertCon, animated: true, completion: nil)
+                                }
+                                
+                            case let .failure(error):
+                                print("failure: \(error)")
+                                let alertCon = UIAlertController(
+                                    title: "오류",
+                                    message: "로그인에 실패했습니다.\n\(error)",
+                                    preferredStyle: UIAlertController.Style.alert)
+                                let alertAct = UIAlertAction(
+                                    title: "확인",
+                                    style: UIAlertAction.Style.destructive,
+                                    handler: { _ in return }
+                                )
+                                alertCon.addAction(alertAct)
+                                self.present(alertCon, animated: true, completion: nil)
                             }
-                        }
-                    }
+                        })
+                    
+                    
+//                    let userDB = self.db.collection("USER")
+//                    let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
+//                    query.getDocuments { (qs, err) in
+//                        if qs!.documents.isEmpty {
+//                            let alertCon = UIAlertController(title: "경고", message: "회원 정보가 없습니다.", preferredStyle: UIAlertController.Style.alert)
+//                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+//                            alertCon.addAction(alertAct)
+//                            self.present(alertCon, animated: true, completion: nil)
+//                        } else {
+//                            for document in qs!.documents {
+//                                UserDefaults.standard.set(document.data()["NickName"]!, forKey: "nickname")
+//                            }
+//                        }
+//                    }
                     
                     let vc = HomeTabBarController()
                     vc.modalPresentationStyle = .fullScreen

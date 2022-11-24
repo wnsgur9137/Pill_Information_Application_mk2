@@ -17,9 +17,11 @@ final class ResultViewController: UIViewController {
     
 //    let searchBar = SearchBar()
     
-    let tableView = ResultTableView()
+//    let tableView = ResultTableView()
     
-    var searchMedicineData: Dictionary<String, String>?
+//    var searchMedicineData: Dictionary<String, String>?
+    var searchMedicineData: Array<String>?
+    var medicineArray: [MedicineFastAPIItem] = []
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -27,9 +29,26 @@ final class ResultViewController: UIViewController {
         return view
     }()
     
+    private lazy var medicineCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "총 0개"
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 14.0, weight: .regular)
+        return label
+    }()
+    
+    private lazy var resultTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(ResultTableViewCell.self, forCellReuseIdentifier: "ResultTableViewCell")
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "알약 검색 결과"
+        print(medicineArray.count)
         LoadingView.show()
         bind()
         attribute()
@@ -38,24 +57,32 @@ final class ResultViewController: UIViewController {
     }
 }
 
-//extension ResultViewController: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 10
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        return UITableViewCell()
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 80.0
-//    }
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let vc = DetailViewController()
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
-//}
+extension ResultViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("medicineArray: \(medicineArray)")
+        return medicineArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if medicineArray.count == 0 {
+            return UITableViewCell()
+        }
+        guard let cell = resultTableView.dequeueReusableCell(withIdentifier: "ResultTableViewCell", for: indexPath) as? ResultTableViewCell else { return UITableViewCell() }
+        cell.setDataFastAPI(data: medicineArray[indexPath.row])
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80.0
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailViewController()
+        vc.searchType = "shape"
+        vc.medicineFastAPI = medicineArray[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
 
 
 private extension ResultViewController {
@@ -64,17 +91,65 @@ private extension ResultViewController {
     }
     
     func attribute() {
-        var url = "\(MedicineAPI.scheme)://\(MedicineAPI.host + MedicineAPI.path)"
-        url += "?serviceKey=\(MedicineAPI.apiKeyEncoding)"
-        url += "?DRUG_SHAPE"
-        
+        var param = "?medicineShape=\(searchMedicineData![0].addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!)"
+        param += "&medicineColor=\(searchMedicineData![1].addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!)"
+        param += "&medicineLine=\(searchMedicineData![2].addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!)"
+        param += "&medicineCode=\(searchMedicineData![3].addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!)"
+        let url = "\(ubuntuServer.host + ubuntuServer.path)/getMedicineListShape/\(param)"
+
+        print("\n\n")
+        print(url)
+        AF.request(url, method: .post)
+            .response(completionHandler: { [weak self] response in
+                guard let self = self else { return }
+                switch response.result {
+                case let .success(data):
+                    do {
+                        let result = try JSONDecoder().decode(MedicineFastAPIOverview.self, from: data!)
+//                        print("result: \(result)")
+                        self.medicineCountLabel.text = "총 \(result.resultCount)개"
+                        for index in 0..<result.medicineItem.count {
+                            self.medicineArray.append(result.medicineItem[index])
+                        }
+                        DispatchQueue.main.async {
+                            self.resultTableView.reloadData()
+                        }
+                    } catch {
+                        let alertCon = UIAlertController(
+                            title: "경고",
+                            message: "해당하는 알약이 존재하지 않습니다.",
+                            preferredStyle: UIAlertController.Style.alert)
+                        let alertAct = UIAlertAction(
+                            title: "확인",
+                            style: UIAlertAction.Style.default,
+                            handler: { _ in self.dismiss(animated: true)}
+                        )
+                        alertCon.addAction(alertAct)
+                        self.present(alertCon, animated: true, completion: nil)
+                    }
+                case let .failure(error):
+                    print("failure: \(error)")
+                    let alertCon = UIAlertController(
+                        title: "경고",
+                        message: "해당하는 알약이 없습니다.",
+                        preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(
+                        title: "확인",
+                        style: UIAlertAction.Style.default,
+                        handler: { _ in self.dismiss(animated: true)}
+                    )
+                    alertCon.addAction(alertAct)
+                    self.present(alertCon, animated: true, completion: nil)
+                }
+            })
     }
     
     func setupLayout() {
         [
             backgroundView,
 //            searchBar,
-            tableView
+            medicineCountLabel,
+            resultTableView
         ].forEach{ view.addSubview($0) }
         
         backgroundView.snp.makeConstraints {
@@ -86,8 +161,13 @@ private extension ResultViewController {
 //            $0.leading.trailing.equalToSuperview()
 //        }
         
-        tableView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+        medicineCountLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(10.0)
+            $0.trailing.equalToSuperview().offset(-20.0)
+        }
+        
+        resultTableView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(25.0)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
