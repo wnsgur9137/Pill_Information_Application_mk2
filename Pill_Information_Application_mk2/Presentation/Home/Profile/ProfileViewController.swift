@@ -196,17 +196,30 @@ private extension ProfileViewController {
     func bind() {
         resetBookmarkButton.rx.tap
             .bind(onNext: { [weak self] in
-                let alertCon = UIAlertController(title: "경고", message: "즐겨찾기를 초기화하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
-                let alertActYes = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
-                    UserDefaults.standard.removeObject(forKey: "starList")
-                    DispatchQueue.main.async {
-                        self?.bookmarkTableView.reloadData()
-                    }
-                })
-                let alertActNo = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
-                alertCon.addAction(alertActYes)
-                alertCon.addAction(alertActNo)
-                self?.present(alertCon, animated: true)
+                if self?.starList == [[]] {
+                    let alertCon = UIAlertController(
+                        title: "즐겨찾기가 없습니다.",
+                        message: "알약을 검색하고 즐겨찾기를 추가해 보세요.",
+                        preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(
+                        title: "확인",
+                        style: UIAlertAction.Style.default)
+                    alertCon.addAction(alertAct)
+                    self?.present(alertCon, animated: true, completion: nil)
+                } else {
+                    let alertCon = UIAlertController(title: "즐겨찾기를 초기화하시겠습니까?", message: nil, preferredStyle: UIAlertController.Style.alert)
+                    let alertActYes = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
+                        UserDefaults.standard.removeObject(forKey: "starList")
+                        self?.starList = [[]]
+                        DispatchQueue.main.async {
+                            self?.bookmarkTableView.reloadData()
+                        }
+                    })
+                    let alertActNo = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+                    alertCon.addAction(alertActYes)
+                    alertCon.addAction(alertActNo)
+                    self?.present(alertCon, animated: true)
+                }
             })
             .disposed(by: disposeBag)
         
