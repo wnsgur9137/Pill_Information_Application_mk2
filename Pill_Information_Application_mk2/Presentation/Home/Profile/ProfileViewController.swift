@@ -16,6 +16,7 @@ import Alamofire
 
 final class ProfileViewController: UIViewController {
     
+    var loginCheckBool: Bool = false
     let disposeBag = DisposeBag()
     var starList: Array = [[String]]()
     var starMedicineData: MedicineItem?
@@ -39,6 +40,7 @@ final class ProfileViewController: UIViewController {
         label.text = "Name"
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         label.textColor = .label
+        label.numberOfLines = 0
         return label
     }()
     
@@ -50,7 +52,14 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
-    private lazy var logoutButton: UIButton = {
+//    private lazy var loginButton: UIButton = {
+//        let button = UIButton()
+//        button.setTitle("로그인", for: .normal)
+//        button.setTitleColor(.systemBlue, for: .normal)
+//        return button
+//    }()
+    
+    private lazy var loginoutButton: UIButton = {
         let button = UIButton()
         button.setTitle("로그아웃", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
@@ -81,7 +90,7 @@ final class ProfileViewController: UIViewController {
         let stackView = UIStackView(arrangedSubviews: [
             userImageView,
             userInfoStackView,
-            logoutButton
+            loginoutButton
         ])
         stackView.axis = .horizontal
         stackView.distribution = .fill
@@ -121,9 +130,15 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "내 정보"
+        
+        // 로그인 체크
+        self.loginCheckBool = self.loginCheck()
+        
+        // 즐겨찾기
         self.bookmarkTableView.register(BookmarkTableViewCell.self, forCellReuseIdentifier: "BookmarkTableViewCell")
         self.bookmarkTableView.delegate = self
         self.bookmarkTableView.dataSource = self
+        
         bind()
         setupLayout()
     }
@@ -195,16 +210,23 @@ private extension ProfileViewController {
             })
             .disposed(by: disposeBag)
         
-        logoutButton.rx.tap
+        loginoutButton.rx.tap
             .bind(onNext: { [weak self] _ in
-                let alertCon = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
-                let alertActCancel = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
-                let alertActSure = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { [weak self] _ in
-                    self?.logout()
-                })
-                alertCon.addAction(alertActCancel)
-                alertCon.addAction(alertActSure)
-                self?.present(alertCon, animated: true)
+                guard let self = self else { return }
+                print(self.loginCheckBool)
+                if self.loginCheckBool {
+                    let alertCon = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+                    let alertActCancel = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+                    let alertActSure = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
+                        self.logout()
+                    })
+                    alertCon.addAction(alertActCancel)
+                    alertCon.addAction(alertActSure)
+                    self.present(alertCon, animated: true)
+                } else {
+                    let vc = MainViewController()
+                    self.present(vc, animated: true, completion: nil)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -242,6 +264,15 @@ private extension ProfileViewController {
 //        alertCon.addAction(alertActNo)
 //        self.present(alertCon, animated: true)
 //    }
+    
+    func loginCheck() -> Bool {
+        let userEmail = UserDefaults.standard.string(forKey: "email")
+        if userEmail == "" {
+            return false
+        } else {
+            return true
+        }
+    }
     
     func getStarMedicineData(medicineName: String, completionHandler: @escaping (Result<MedicineOverview, Error>) -> Void) {
         
@@ -285,17 +316,40 @@ private extension ProfileViewController {
             
             // 로그아웃
             try Auth.auth().signOut()
-            let vc = MainViewController()
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
+            self.loginCheckBool = false
+            self.attribute()
+            
+            // 초기 필수 로그인일 경우
+//            let vc = MainViewController()
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
         } catch let signOutError as NSError {
             print("ERROR: signout \(signOutError.localizedDescription)")
         }
     }
     
     func attribute() {
-        userNameLabel.text = "\(String(describing: UserDefaults.standard.string(forKey: "nickname")!)) 님"
-//        print(UserDefaults.standard.array(forKey: "starList"))
+        
+        if loginCheckBool {
+            [
+                userUpdateButton
+            ].forEach {
+                $0.isHidden = false
+            }
+            loginoutButton.setTitle("로그아웃", for: .normal)
+            userNameLabel.text = "\(String(describing: UserDefaults.standard.string(forKey: "nickname")!)) 님"
+            userNameLabel.font = .systemFont(ofSize: 20.0, weight: .bold)
+        } else {
+            [
+                userUpdateButton
+            ].forEach {
+                $0.isHidden = true
+            }
+            loginoutButton.setTitle("로그인", for: .normal)
+            userNameLabel.text = "로그인이 \n되어있지 않습니다."
+            userNameLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
+        }
+        
         self.starList = (UserDefaults.standard.array(forKey: "starList") as? [[String]]) ?? [[]]
         self.bookmarkTableView.reloadData()
 //        DispatchQueue.main.async {

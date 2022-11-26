@@ -19,6 +19,8 @@ final class HomeTabBarController: UITabBarController {
         UITabBar.clearShadow()
         tabBar.layer.applyShadow(color: .gray, alpha: 0.3, x: 0, y: 0, blur: 12)
         
+        loginCheck()
+        
 //        UserDefaults.standard.removeObject(forKey: "starList")
         
 //        do {
@@ -93,4 +95,19 @@ final class HomeTabBarController: UITabBarController {
 
 extension HomeTabBarController: UITabBarControllerDelegate {
     
+}
+
+extension HomeTabBarController {
+    func loginCheck() {
+        
+        if let _ = Auth.auth().currentUser {
+            print("자동로그인 성공")
+            
+        } else {
+            print("자동로그인 실패")
+            UserDefaults.standard.set("", forKey: "email")
+            UserDefaults.standard.set("", forKey: "passwd")
+            UserDefaults.standard.set("", forKey: "nickname")
+        }
+    }
 }
