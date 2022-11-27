@@ -237,7 +237,10 @@ private extension ProfileViewController {
                     alertCon.addAction(alertActSure)
                     self.present(alertCon, animated: true)
                 } else {
-                    let vc = MainViewController()
+//                    let vc = MainViewController()
+//                    let vc = EmailLoginViewController()
+                    let vc = UINavigationController(rootViewController: EmailLoginViewController())
+                    vc.modalPresentationStyle = .pageSheet
                     self.present(vc, animated: true, completion: nil)
                 }
             })

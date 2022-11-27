@@ -140,7 +140,11 @@ private extension FindPasswdViewController {
                             self.present(alertCon, animated: true, completion: nil)
                         } else {
                             let alertCon = UIAlertController(title: "확인", message: "비밀번호 재설정 이메일을 전송했습니다.", preferredStyle: UIAlertController.Style.alert)
-                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            let alertAct = UIAlertAction(
+                                title: "확인",
+                                style: UIAlertAction.Style.default,
+                                handler: { _ in self.dismiss(animated: true) }
+                            )
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
                         }

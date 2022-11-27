@@ -405,7 +405,7 @@ private extension EmailSignUpViewController {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(90)
+            $0.top.equalTo(imageView.snp.bottom).offset(40)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(50)
         }
@@ -419,7 +419,7 @@ private extension EmailSignUpViewController {
         }
         
         emailVerticalStackView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(90)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(40)
             $0.centerX.equalToSuperview()
             $0.width.equalTo(328)
             $0.height.equalTo(64)
