@@ -116,13 +116,14 @@ private extension ResultViewController {
                         }
                     } catch {
                         let alertCon = UIAlertController(
-                            title: "경고",
-                            message: "해당하는 알약이 존재하지 않습니다.",
+                            title: "해당하는 알약이 존재하지 않습니다.",
+                            message: nil,
                             preferredStyle: UIAlertController.Style.alert)
                         let alertAct = UIAlertAction(
                             title: "확인",
                             style: UIAlertAction.Style.default,
-                            handler: { _ in self.dismiss(animated: true)}
+                            handler: { _ in self.emptyMedicine()
+                            }
                         )
                         alertCon.addAction(alertAct)
                         self.present(alertCon, animated: true, completion: nil)
@@ -130,8 +131,8 @@ private extension ResultViewController {
                 case let .failure(error):
                     print("failure: \(error)")
                     let alertCon = UIAlertController(
-                        title: "경고",
-                        message: "해당하는 알약이 없습니다.",
+                        title: "해당하는 알약이 없습니다.",
+                        message: nil,
                         preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(
                         title: "확인",
@@ -142,6 +143,11 @@ private extension ResultViewController {
                     self.present(alertCon, animated: true, completion: nil)
                 }
             })
+    }
+    
+    func emptyMedicine() {
+        print("emptyMedicine")
+        self.dismiss(animated: true)
     }
     
     func setupLayout() {

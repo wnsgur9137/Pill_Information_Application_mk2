@@ -144,7 +144,7 @@ private extension FindPasswdViewController {
                 if self.emailBool {
                     Auth.auth().sendPasswordReset(withEmail: self.emailTextField.text!) { (error) in
                         if error != nil {
-                            let alertCon = UIAlertController(title: "경고", message: "이메일이 존재하지 않습니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertCon = UIAlertController(title: "이메일이 존재하지 않습니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
                             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
@@ -160,7 +160,7 @@ private extension FindPasswdViewController {
                         }
                     }
                 } else {
-                    let alertCon = UIAlertController(title: "경고", message: "이메일 형식을 맞춰주세요.", preferredStyle: UIAlertController.Style.alert)
+                    let alertCon = UIAlertController(title: "이메일 형식을 맞춰주세요.", message: nil, preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)

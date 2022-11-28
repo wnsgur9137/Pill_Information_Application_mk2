@@ -115,7 +115,7 @@ private extension NoticeDetailViewController {
         
         deleteButton.rx.tap
             .bind(onNext: { [weak self] in
-                let alertCon = UIAlertController(title: "경고", message: "공지사항을 삭제하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+                let alertCon = UIAlertController(title: "공지사항을 삭제하시겠습니까?", message: nil, preferredStyle: UIAlertController.Style.alert)
                 let alertAcc = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
                 let alertCancel = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
                     self?.deleteNotice()

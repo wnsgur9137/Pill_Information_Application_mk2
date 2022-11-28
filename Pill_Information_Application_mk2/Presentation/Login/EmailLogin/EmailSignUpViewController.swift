@@ -347,14 +347,14 @@ private extension EmailSignUpViewController {
                                 vc.passwd = self.passwdTextField.text!
                                 self.navigationController?.pushViewController(vc, animated: true)
                             } else {
-                                let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+                                let alertCon = UIAlertController(title: "중복된 이메일입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
                                 let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                                 alertCon.addAction(alertAct)
                                 self.present(alertCon, animated: true, completion: nil)
                             }
                         } catch {
                             print("catch")
-                            let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertCon = UIAlertController(title: "중복된 이메일입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
                             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
@@ -378,14 +378,14 @@ private extension EmailSignUpViewController {
 //                    self.navigationController?.pushViewController(vc, animated: true)
 //                } else {
 //                    // 이메일이 중복된 경우
-//                    let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+//                    let alertCon = UIAlertController(title: "중복된 이메일입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
 //                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
 //                    alertCon.addAction(alertAct)
 //                    self.present(alertCon, animated: true, completion: nil)
 //                }
 //            }
         } else {
-            let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+            let alertCon = UIAlertController(title: "이메일과 비밀번호를 확인해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
             alertCon.addAction(alertAct)
             self.present(alertCon, animated: true, completion: nil)
@@ -467,7 +467,7 @@ private extension EmailSignUpViewController {
         }
         
         signupButton.snp.makeConstraints {
-            $0.top.equalTo(passwdCheckVerticalStackView.snp.bottom).offset(80)
+            $0.top.equalTo(passwdCheckVerticalStackView.snp.bottom).offset(40)
             $0.centerX.equalToSuperview()
         }
     }
@@ -497,7 +497,7 @@ private extension EmailSignUpViewController {
                 let keyboardRectangle = keyboardFrame.cgRectValue
                 let keyboardHeight = keyboardRectangle.height
 //                self.view.frame.origin.y -= (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)!)
-                self.view.frame.origin.y -= keyboardHeight
+                self.view.frame.origin.y -= (keyboardHeight - 100)
             }
         }
     }
@@ -510,7 +510,7 @@ private extension EmailSignUpViewController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
 //            self.view.frame.origin.y += (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)!)
-            self.view.frame.origin.y += keyboardHeight
+            self.view.frame.origin.y += (keyboardHeight - 100)
         }
     }
 }

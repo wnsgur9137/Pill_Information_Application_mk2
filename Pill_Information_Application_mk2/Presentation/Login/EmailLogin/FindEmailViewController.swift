@@ -113,7 +113,7 @@ private extension FindEmailViewController {
             let query = self.userDB.whereField("NickName", isEqualTo: self.nicknameTextField.text!)
             query.getDocuments { (qs, err) in
                 if qs!.documents.isEmpty {
-                    let alertCon = UIAlertController(title: "경고", message: "회원 정보가 없습니다.", preferredStyle: UIAlertController.Style.alert)
+                    let alertCon = UIAlertController(title: "회원 정보가 없습니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
@@ -126,7 +126,7 @@ private extension FindEmailViewController {
                 }
             }
         } else {
-            let alertCon = UIAlertController(title: "경고", message: "닉네임을 입력해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+            let alertCon = UIAlertController(title: "닉네임을 입력해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
             alertCon.addAction(alertAct)
             self.present(alertCon, animated: true, completion: nil)

@@ -72,12 +72,12 @@ final class NicknameSetViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.addKeyboardNotifications()
+//        self.addKeyboardNotifications()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.view.endEditing(true)
-        self.removeKeyboardNotifications()
+//        self.removeKeyboardNotifications()
     }
 }
 
@@ -116,7 +116,7 @@ private extension NicknameSetViewController {
     @objc func signUpButtonTapped() {
         // 유저 생성
         if !nickNameBool {
-            let alertCon = UIAlertController(title: "경고", message: "닉네임은 2자 이상, 8자 이하로 설정해주세요.", preferredStyle: UIAlertController.Style.alert)
+            let alertCon = UIAlertController(title: "닉네임은 2자 이상, 8자 이하로 설정해주세요.", message: nil, preferredStyle: UIAlertController.Style.alert)
             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
             alertCon.addAction(alertAct)
             present(alertCon, animated: true)
@@ -137,7 +137,7 @@ private extension NicknameSetViewController {
                         let decoder = JSONDecoder()
                         let result = try decoder.decode(UserInfoOverview.self, from: data!)
                         if self.nicknameTextField.text ?? "" == result.nickname {
-                            let alertCon = UIAlertController(title: "경고", message: "중복된 닉네임입니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertCon = UIAlertController(title: "중복된 닉네임입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
                             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
@@ -174,7 +174,7 @@ private extension NicknameSetViewController {
                             Auth.auth().createUser(withEmail: self.email!, password: self.passwd!) {
                                 [self]authResult, error in
                                 if let _ = error {  // 유저 생성에 실패할 경우
-                                    let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+                                    let alertCon = UIAlertController(title: "중복된 이메일입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
                                     let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                                     alertCon.addAction(alertAct)
                                     self.present(alertCon, animated: true, completion: nil)
@@ -190,7 +190,7 @@ private extension NicknameSetViewController {
                             }
                         }
                     } catch {
-                        let alertCon = UIAlertController(title: "경고", message: "중복된 닉네임입니다.", preferredStyle: UIAlertController.Style.alert)
+                        let alertCon = UIAlertController(title: "중복된 닉네임입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
                         let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                         alertCon.addAction(alertAct)
                         self.present(alertCon, animated: true, completion: nil)
@@ -209,7 +209,7 @@ private extension NicknameSetViewController {
 //                Auth.auth().createUser(withEmail: self.email!, password: self.passwd!) {
 //                    [self]authResult, error in
 //                    if let _ = error {  // 유저 생성에 실패할 경우
-//                        let alertCon = UIAlertController(title: "경고", message: "중복된 이메일입니다.", preferredStyle: UIAlertController.Style.alert)
+//                        let alertCon = UIAlertController(title: "중복된 이메일입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
 //                        let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
 //                        alertCon.addAction(alertAct)
 //                        self.present(alertCon, animated: true, completion: nil)
@@ -226,7 +226,7 @@ private extension NicknameSetViewController {
 //                }
 //            } else {
 //                // 이메일이 중복된 경우
-//                let alertCon = UIAlertController(title: "경고", message: "중복된 닉네임입니다.", preferredStyle: UIAlertController.Style.alert)
+//                let alertCon = UIAlertController(title: "중복된 닉네임입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
 //                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
 //                alertCon.addAction(alertAct)
 //                self.present(alertCon, animated: true, completion: nil)
@@ -254,7 +254,7 @@ private extension NicknameSetViewController {
                 alertCon.addAction(alertAct)
                 self.present(alertCon, animated: true, completion: nil)
             } else {
-                let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+                let alertCon = UIAlertController(title: "이메일과 비밀번호를 확인해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
                 let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                 alertCon.addAction(alertAct)
                 self.present(alertCon, animated: true, completion: nil)

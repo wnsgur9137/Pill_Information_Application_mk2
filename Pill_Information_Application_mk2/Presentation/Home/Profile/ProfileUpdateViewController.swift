@@ -376,8 +376,8 @@ private extension ProfileUpdateViewController {
                 
                 if !self.nicknameLengthCheck {
                     let alertCon = UIAlertController(
-                        title: "경고",
-                        message: "닉네임은 2글자 이상, 8자 이하로 설정해 주세요.",
+                        title: "닉네임은 2글자 이상, 8자 이하로 설정해 주세요.",
+                        message: nil,
                         preferredStyle: UIAlertController.Style.alert
                     )
                     let alertAct = UIAlertAction(
@@ -391,8 +391,8 @@ private extension ProfileUpdateViewController {
                 
                 if self.nicknameTextField.text! == UserDefaults.standard.string(forKey: "nickname") {
                     let alertCon = UIAlertController(
-                        title: "경고",
-                        message: "현재 닉네임과 동일합니다.",
+                        title: "현재 닉네임과 동일합니다.",
+                        message: nil,
                         preferredStyle: UIAlertController.Style.alert
                     )
                     let alertAct = UIAlertAction(
@@ -432,7 +432,7 @@ private extension ProfileUpdateViewController {
                                 } else {
 //                                    self.changeNickname() // test code
                                     let alertCon = UIAlertController(
-                                        title: "경고",
+                                        title: "변경할 수 없음",
                                         message: "닉네임은 한 달에 한 번 변경할 수 있습니다.\n\(30-days)일 남았습니다.",
                                         preferredStyle: UIAlertController.Style.alert)
                                     let alertAct = UIAlertAction(
@@ -443,7 +443,7 @@ private extension ProfileUpdateViewController {
                                 }
                             } catch {
                                 let alertCon = UIAlertController(
-                                    title: "경고",
+                                    title: "변경할 수 없음",
                                     message: "닉네임은 한 달에 한 번 변경할 수 있습니다.",
                                     preferredStyle: UIAlertController.Style.alert)
                                 let alertAct = UIAlertAction(
@@ -498,8 +498,8 @@ private extension ProfileUpdateViewController {
                     }
                 } else {
                     let alertCon = UIAlertController(
-                        title: "경고",
-                        message: "비밀번호가 일치하지 않습니다.",
+                        title: "비밀번호가 일치하지 않습니다.",
+                        message: nil,
                         preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(
                         title: "확인",

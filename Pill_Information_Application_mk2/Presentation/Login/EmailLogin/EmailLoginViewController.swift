@@ -173,12 +173,13 @@ final class EmailLoginViewController: UIViewController {
         self.title = "EmailLogin"
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
         self.navigationItem.leftBarButtonItem = dismissButton
+        self.addKeyboardNotifications()
         bind()
         setupLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.addKeyboardNotifications()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -268,7 +269,7 @@ private extension EmailLoginViewController {
 //                    let query = userDB.whereField("Email", isEqualTo: self.emailTextField.text!)
 //                    query.getDocuments { (qs, err) in
 //                        if qs!.documents.isEmpty {
-//                            let alertCon = UIAlertController(title: "경고", message: "회원 정보가 없습니다.", preferredStyle: UIAlertController.Style.alert)
+//                            let alertCon = UIAlertController(title: "회원 정보가 없습니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
 //                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
 //                            alertCon.addAction(alertAct)
 //                            self.present(alertCon, animated: true, completion: nil)
@@ -283,7 +284,7 @@ private extension EmailLoginViewController {
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
                 } else {
-                    let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 확인해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+                    let alertCon = UIAlertController(title: "이메일과 비밀번호를 확인해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
@@ -291,7 +292,7 @@ private extension EmailLoginViewController {
             }
                 
         } else {
-            let alertCon = UIAlertController(title: "경고", message: "이메일과 비밀번호를 입력해 주십시오.", preferredStyle: UIAlertController.Style.alert)
+            let alertCon = UIAlertController(title: "이메일과 비밀번호를 입력해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
             alertCon.addAction(alertAct)
             self.present(alertCon, animated: true, completion: nil)
@@ -427,7 +428,7 @@ private extension EmailLoginViewController {
                 let keyboardRectangle = keyboardFrame.cgRectValue
                 let keyboardHeight = keyboardRectangle.height
 //                self.view.frame.origin.y -= (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)!)
-                self.view.frame.origin.y -= keyboardHeight
+                self.view.frame.origin.y -= (keyboardHeight - 200)
             }
         }
     }
@@ -440,7 +441,7 @@ private extension EmailLoginViewController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
 //            self.view.frame.origin.y += (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)!)
-            self.view.frame.origin.y += keyboardHeight
+            self.view.frame.origin.y += (keyboardHeight - 200)
         }
     }
 }

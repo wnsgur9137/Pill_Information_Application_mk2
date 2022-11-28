@@ -296,8 +296,8 @@ private extension SearchViewController {
                 guard let self = self else { return }
                 if self.searchHistoryList == [] {
                     let alertCon = UIAlertController(
-                        title: "경고",
-                        message: "검색 기록이 없습니다.",
+                        title: "검색 기록이 없습니다.",
+                        message: nil,
                         preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(
                         title: "확인",
@@ -308,8 +308,8 @@ private extension SearchViewController {
                     self.present(alertCon, animated: true, completion: nil)
                 }
                 let alertCon = UIAlertController(
-                    title: "경고",
-                    message: "검색 기록을 삭제하시겠습니까?",
+                    title: "검색 기록을 삭제하시겠습니까?",
+                    message: nil,
                     preferredStyle: UIAlertController.Style.alert)
                 let alertActYes = UIAlertAction(
                     title: "예",
