@@ -27,6 +27,13 @@ final class EmailLoginViewController: UIViewController {
         return view
     }()
     
+    private lazy var dismissButton: UIBarButtonItem = {
+        var barButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(dismissButtonTapped))
+//        var barButtonItem = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(dismissButtonTapped))
+        barButtonItem.tintColor = .systemBlue
+        return barButtonItem
+    }()
+    
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 4.0
@@ -165,6 +172,7 @@ final class EmailLoginViewController: UIViewController {
         super.viewDidLoad()
         self.title = "EmailLogin"
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
+        self.navigationItem.leftBarButtonItem = dismissButton
         bind()
         setupLayout()
     }
@@ -174,6 +182,7 @@ final class EmailLoginViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        self.view.endEditing(true)
         self.removeKeyboardNotifications()
     }
 }
@@ -304,6 +313,10 @@ private extension EmailLoginViewController {
         let vc = FindPasswdViewController()
         vc.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func dismissButtonTapped() {
+        self.dismiss(animated: true)
     }
     
     

@@ -67,6 +67,9 @@ final class SearchBar: UISearchBar {
         
         searchButtonTapped
             .subscribe(onNext: { [weak self] in
+                if self?.text == "" {
+                    return
+                }
                 var searchHistoryArray = UserDefaults.standard.array(forKey: "searchHistoryArray") as? Array<String>
                 if searchHistoryArray == nil {
                     UserDefaults.standard.set([], forKey:"searchHistoryArray")

@@ -104,6 +104,7 @@ final class FindPasswdViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        self.view.endEditing(true)
         self.removeKeyboardNotifications()
     }
 }

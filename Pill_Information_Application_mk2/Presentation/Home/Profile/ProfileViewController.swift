@@ -240,7 +240,8 @@ private extension ProfileViewController {
 //                    let vc = MainViewController()
 //                    let vc = EmailLoginViewController()
                     let vc = UINavigationController(rootViewController: EmailLoginViewController())
-                    vc.modalPresentationStyle = .pageSheet
+//                    vc.modalPresentationStyle = .pageSheet
+                    vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true, completion: nil)
                 }
             })
