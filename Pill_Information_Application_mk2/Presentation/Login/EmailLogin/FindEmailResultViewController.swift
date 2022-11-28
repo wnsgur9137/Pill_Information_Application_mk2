@@ -49,7 +49,7 @@ final class FindEmailResultViewController: UIViewController {
     private lazy var gotoEmailLoginButton: UIButton = {
         let button = UIButton()
         button.setTitle("로그인 하기", for: .normal)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         button.addTarget(self, action: #selector(gotoEmailLoginButtonTapped), for: .touchUpInside)
         return button
@@ -58,7 +58,7 @@ final class FindEmailResultViewController: UIViewController {
     private lazy var gotoFindPasswdButton: UIButton = {
         let button = UIButton()
         button.setTitle("비밀번호 찾기", for: .normal)
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         button.addTarget(self, action: #selector(gotoFindPasswdButtonTapped), for: .touchUpInside)
         return button

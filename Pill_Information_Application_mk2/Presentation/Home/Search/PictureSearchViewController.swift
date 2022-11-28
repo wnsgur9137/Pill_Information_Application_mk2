@@ -26,6 +26,13 @@ final class PictureSearchViewController: UIViewController {
         return view
     }()
     
+    var keyboardCheck = true
+    
+//    private lazy var scrollView : UIScrollView = {
+//        let scrollView = UIScrollView()
+//        return scrollView
+//    }()
+    
     private lazy var imagePickerController: UIImagePickerController = {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -173,10 +180,19 @@ final class PictureSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "알약 모양으로 검색"
+        self.navigationController?.navigationBar.backgroundColor = .systemBackground
         bind()
         setupLayout()
         keyboardAtrribute()
 //        choiceImageButtonTapped()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.addKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.removeKeyboardNotifications()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
@@ -407,6 +423,16 @@ private extension PictureSearchViewController {
             searchButton
         ].forEach{ view.addSubview($0) }
         
+        
+//        view.addSubview(scrollView)
+//        [
+//            backgroundView,
+//            pictureImageView,
+////            choiceImageButton,
+//            textFieldStackView,
+//            searchButton
+//        ].forEach{ scrollView.addSubview($0) }
+        
         backgroundView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
@@ -414,8 +440,8 @@ private extension PictureSearchViewController {
         pictureImageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(50.0)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(240.0)
-            $0.height.equalTo(240.0)
+            $0.width.equalTo(180.0)
+            $0.height.equalTo(180.0)
         }
         
 //        choiceImageButton.snp.makeConstraints {
@@ -443,5 +469,47 @@ private extension PictureSearchViewController {
         }
         
         
+    }
+    
+    // 노티피케이션을 추가하는 메서드
+    func addKeyboardNotifications(){
+        // 키보드가 나타날 때 앱에게 알리는 메서드 추가
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification , object: nil)
+        // 키보드가 사라질 때 앱에게 알리는 메서드 추가
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    // 노티피케이션을 제거하는 메서드
+    func removeKeyboardNotifications(){
+        // 키보드가 나타날 때 앱에게 알리는 메서드 제거
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification , object: nil)
+        // 키보드가 사라질 때 앱에게 알리는 메서드 제거
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    // 키보드가 나타났다는 알림을 받으면 실행할 메서드
+    @objc func keyboardWillShow(_ noti: NSNotification){
+        // 키보드의 높이만큼 화면을 올려준다.
+        if self.keyboardCheck {
+            self.keyboardCheck = false
+            if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardRectangle = keyboardFrame.cgRectValue
+                let keyboardHeight = keyboardRectangle.height
+//                self.view.frame.origin.y -= (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)!)
+                self.view.frame.origin.y -= keyboardHeight
+            }
+        }
+    }
+
+    // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
+    @objc func keyboardWillHide(_ noti: NSNotification){
+        self.keyboardCheck = true
+        // 키보드의 높이만큼 화면을 내려준다.
+        if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+//            self.view.frame.origin.y += (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)!)
+            self.view.frame.origin.y += keyboardHeight
+        }
     }
 }
