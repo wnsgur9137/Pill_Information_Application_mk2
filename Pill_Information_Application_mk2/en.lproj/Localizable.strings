@@ -7,10 +7,16 @@
 
 // Alert Action
 "예" = "Yes";
-"아니오" = "Cancel";
+"아니오" = "No";
+"취소" = "Cancel";
 "확인" = "OK";
+"성공" = "Success";
+"오류" = "Error";
+"에러" = "Error";
+"경고" = "Warning";
 
 // 로그인
+"로그인 방법을 선택해 주세요!" = "Please select a login method!";
 "회원가입" = "SignUp";
 "회원 가입" = "SignUp";
 "로그인" = "SignIn";
@@ -21,24 +27,295 @@
 "이메일 찾기" = "Find Email";
 "비밀번호" = "Password";
 "비밀번호 찾기" = "Find Password";
-"비밀번호 확인" = "PasswordCheck";
 
-"이메일과 비밀번호를 확인해 주십시오" = "Check Email and Password";
-"이메일과 비밀번호를 입력해 주십시오" = "Check Email and Password";
 
-// SignUp
-"사용할 닉네임을 입력해주세요." = "";
-"닉네임을 입력해 주세요" = "";
+"이메일과 비밀번호를 확인해 주십시오" = "Please confirm your email and password";
+"이메일과 비밀번호를 입력해 주십시오" = "Please enter your email and password";
 
-// ProfileViewController
-"로그인이 되어있지 않습니다" = "";
+// 회원가입
+"이메일 회원가입" = "Email SignUp";
+"비밀번호 확인" = "Check Password";
+"이메일 형식에 맞추어 주십시오" = "Please match the format of your email";
+"비밀번호 형식" = "Combining letters, numbers, and special characters
+Please match the format of 8 to 20 lengths.";
+"비밀번호가 일치하지 않습니다" = "Password doesn't match";
+"중복된 이메일입니다" = "Duplicate email";
+"이메일과 비밀번호를 확인해 주십시오" = "Please confirm your email and password";
+"사용할 닉네임을 입력해주세요" = "Please enter a nickname to use";
+"닉네임을 입력해 주세요" = "Please enter a nickname to use";
+"계속" = "Continue";
+
+// 이메일 찾기
+"이메일 찾기" = "Find Email";
+"닉네임" = "Nickname";
+"닉네임을 입력해 주십시오" = "Please enter your nickname";
+
+// 이메일 찾기 결과 View
+"로그인 하기" = "Go to Login";
+"해당 닉네임의 이메일은\n%d 입니다." = "The email for this nickname is \n%d.";
+
+// 비밀번호 찾기
+"비밀번호 찾기" = "Find Password";
+"이메일 형식에 맞추어 주십시오" = "Please match the format of your email";
+"이메일이 존재하지 않습니다" = "Email does not exist";
+"비밀번호 재설정 이메일을 전송했습니다" = "Sent you a password reset email";
+
 
 // 로그인 Alert
-"로그아웃 하시겠습니까?" = "";
-"로그인에 실패했습니다" = "Failed Login";
+"로그아웃 하시겠습니까?" = "Are you sure you want to log out?";
+"로그인에 실패했습니다" = "Login failed";
 
 
 // 즐겨찾기
 "즐겨찾기" = "BookMark";
 "즐겨찾기 초기화" = "Reset BookMark";
 
+// HomeTabBarController
+"약 검색" = "Search Pill";
+"홈" = "Home";
+"알람/타이머" = "Alarm/Timer";
+"내 정보" = "Profile";
+
+// SearchViewController
+"최근 검색 기록" = "Search History";
+"검색 기록 삭제" = "Delete History";
+"알약 검색" = "Search Pill";
+"해당 이름의 알약이 없습니다" = "There are no tablets of that name";
+"검색 기록이 없습니다" = "No search history";
+"검색 기록을 삭제하시겠습니까?" = "Are you sure you want to delete the search history?";
+
+// PictureSearchViewController
+"장방형" = "Rectangle";
+"원형" = "Circle";
+"팔각형" = "Octagon";
+"타원형" = "Oval";
+"육각형" = "Hexagon";
+"반원형" = "Semicircular";
+"삼각형" = "Triangle";
+"오각형" = "Pentagon";
+"마름모형" = "Rhombus";
+"기타" = "Other";
+
+"하양" = "White";
+"빨강" = "Red";
+"분홍" = "Pink";
+"자주" = "Red Purple";
+"주황" = "Orange";
+"갈색" = "Brown";
+"노랑" = "Yellow";
+"연두" = "Light Green";
+"초록" = "Green";
+"청록" = "Turquoise";
+"파랑" = "Blue";
+"남색" = "Navy";
+"보라" = "Purple";
+"회색" = "Gray";
+"검정" = "Black";
+"투명" = "Transparent";
+
+"없음" = "None";
+
+"사진 선택" = "Select a picture";
+"의약품 모양" = "Shape";
+"색상" = "Color";
+"분할선" = "Dividing line";
+"마크 코드" = "Identifying characters";
+"검색" = "Search";
+"알약 모양으로 검색" = "Search by pill shape";
+
+"사진으로 검색" = "Search with pictures";
+"사진 촬영" = "Camera";
+"갤러리 사진 선택" = "Select Gallery Photo";
+
+"현재 카메라 사용에 대한 접근 권한이 없습니다" = "You do not currently have access to the camera";
+"설정 -> {필쏘굿}탭에서 접근을 활성화 할 수 있습니다." = "You can enable access from the Settings -> {Pill So Good} tab.";
+"설정으로 이동하기" = "Go to Settings";
+
+// SearchBar
+"검색" = "Search";
+"모양" = "Shape";
+
+// ResultViewController
+"총 0개" = "0 in total";
+"총 %d개" = "%d in total";
+"알약 검색 결과" = "Search Results";
+
+"해당하는 알약이 존재하지 않습니다" = "The pill does not exist";
+"해당하는 알약이 없습니다." = "There are no corresponding pills.";
+
+// DetailViewController
+"약 이름" = "Pill Name";
+"해열제" = "Fever Reducer";
+"복용 방법" = "How to take it
+";
+"알약 정보" = "Pill Info";
+
+"일련번호" = "Serial number
+";
+"약명" = "Pill Name";
+"제품 영문명" = "Eng Name";
+"분류번호" = "Class number";
+"분류명" = "Class Name";
+"전문/일반" = "etc/otc";
+"제약회사 일련번호" = "Pharmaceutical company\nserial number";
+"제약회사명" = "Company Name";
+"성상" = "Icon";
+"앞면 모양" = "Shape Front";
+"뒷면 모양" = "Shape Back";
+"의약품 모양" = "Shape Pill ";
+"앞면 색상" = "Color Front";
+"뒷면 색상" = "Color Back";
+"앞면 분할선" = "Line Front";
+"뒷면 분할선" = "Line Back";
+"장축 길이(mm)" = "major axis\nLength(mm)";
+"단축 길이(mm)" = "Shortening\nLength(mm)";
+"두께" = "Thickness";
+"제형 코드 이름" = "Formulation\ncode name";
+"앞면 마크내용" = "Mark Front";
+"뒷면 마크내용" = "Mark Back";
+"앞면 마크코드" = "MarkCode Front";
+"뒷면 마크코드" = "MarkCode Back";
+"보험 코드" = "Insurance Code";
+"이미지 링크" = "Image Link";
+"앞면 마크\n이미지 링크" = "Front Image Link";
+"뒷면 마크\n이미지 링크" = "Back Image Link";
+"품목 허가 일지" = "Authorization Diary";
+"약학 정보원\n이미지 생성일" = "Pharmacological Sources\nImage Creation Date";
+"변경 일자" = "Date of change";
+
+// DirectionViewController
+"약 이름" = "Pill Name";
+"해열제" = "Fever Reducer";
+"복용 방법" = "How to take it";
+
+"제품명" = "Pill Name";
+"업체명" = "Company Name";
+"품목기준코드" = "Item standard code";
+"효능" = "Efficacy";
+"사용법" = "Instructions";
+"주의사항, 경고" = "Precautions\nWarnings";
+"주의사항" = "Precautions";
+"상호작용" = "Interaction";
+"부작용" = "Side effects";
+"보관법" = "Storage method";
+"공개일자" = "Disclosure date";
+"수정일자" = "Modified date";
+"낱알 이미지" = "Pill Image";
+
+
+// DetailTableViewCell
+"제목" = "Title";
+"내용" = "Content";
+
+// HomeViewController
+"공지사항" = "Notice";
+
+// NoticeDetailViewController
+"작성자: Title" = "Writer: Title";
+"고객지원" = "Support";
+"수정" = "Modify";
+"삭제" = "Delete";
+"작성자: %s" = "";
+
+"공지사항을 삭제하시겠습니까?" = "";
+
+// AddNoticeViewController
+"공지사항 제목" = "Notice Title";
+"공지사항 내용" = "Notice Content";
+"저장" = "Save";
+"공지사항 추가" = "Add Notice";
+"공지사항 작성 완료" = "Completion of writing Notice";
+"공지사항 작성에 실패하였습니다." = "Failed to writing Notice";
+
+// UpdateNoticeViewController
+"공지사항 제목" = "Notice Title";
+"공지사항 내용" = "Notice Content";
+"수정" = "Modify";
+"공지사항 추가" = "Add Notice";
+"공지사항 수정 완료" = "Completion of modify Notice";
+"공지사항 수정에 실패하였습니다." = "Failed to modify Notice";
+
+// NoticeTableViewCell
+"공지사항" = "Notice";
+
+// AlarmViewController
+"알람" = "Alarm";
+"타이머" = "Timer";
+"알람 추가" = "Add Alarm";
+"💊 약 먹을 시간" = "💊 Time to take your medicine";
+
+// TimerViewController
+"시작" = "Start";
+"일시정지" = "Pause";
+"타이머" = "Timer";
+"타이머가 종료되었어요!" = "Time is Over!";
+"약은 꼭 생수와 먹읍시다!" = "taking medicine with watter!";
+
+// AddAlarmViewController
+"먹을 약 이름:" = "Medicine Name";
+"알람 설정" = "Add Alarm";
+
+// AlamCell
+"오전" = "A.M.";
+
+// UNUserNotificationCenter
+" 먹을 시간이에요. 💊" = "Time to take your medicine 💊";
+"약 먹기 전 식사는 하셨나요? 👀" = "Did you eat before taking the medicine? 👀";
+
+// ProfileViewController
+"이름" = "Nickname";
+"회원 정보 변경" = "Change Profile";
+"로그아웃" = "LogOut";
+"즐겨찾기" = "Bookmark";
+"즐겨찾기 초기화" = "Reset Bookmark";
+"내 정보" = "Profile";
+"해당 정보를 찾을 수 없습니다.\n잠시후 다시 시도해주십시오." = "No such information was found.\nPlease try again in a moment.";
+"즐겨찾기가 없습니다." = "No have Bookmark";
+"알약을 검색하고 즐겨찾기를 추가해 보세요." = "Search for pills and add favorites.";
+"즐겨찾기를 초기화하시겠습니까?" = "Do you want to initialize your favorites?";
+"로그아웃 하시겠습니까?" = "Are you sure you want to log out?";
+"%s 님" = "%s";
+"로그인이 \n되어있지 않습니다." = "Login \n is not present.";
+
+// ProfileUpdateViewController
+"회원 정보 업데이트" = "Update Profile";
+"내 정보" = "Profile";
+"닉네임: " = "Nickname: ";
+"닉네임은 한 달에 한 번 변경할 수 있습니다." = "You can change your nickname once a month.";
+"닉네임 변경" = "Change Nickname";
+"이메일: " = "Email: ";
+"비밀번호 변경" = "Change Password";
+"현재 비밀번호: " = "Current password: ";
+"새 비밀번호: " = "New Password: ";
+"비밀번호 확인: " = "Check Password: ";
+"비밀번호 변경" = "Change Password";
+"회원 탈퇴" = "Withdrawal";
+"회원 탈퇴시, 복구할 수 없습니다." = "If you withdraw, you cannot recover it.";
+"현재 비밀번호: " = "Current Password: ";
+"회원 탈퇴" = "Withdrawal";
+"내 정보 변경" = "Change Profile";
+"닉네임은 2글자 이상, 8자 이하로 설정해 주세요." = "Please set the nickname to at least 2 characters and at least 8 characters.";
+"현재 닉네임과 동일합니다." = "This is the same nickname as the current one.";
+"닉네임은 한 달에 한 번 변경할 수 있습니다.\n%d일 남았습니다." = "You can change your nickname once a month.\n%d days are left.";
+"닉네임은 한 달에 한 번 변경할 수 있습니다." = "You can change your nickname once a month.";
+"비밀번호 재설정 이메일을 전송에 실패했습니다.\n이메일 확인 및 고객지원 연락 부탁드립니다.\n%s" = "Failed to send password reset email.\nPlease check your email and contact customer support.\n%s";
+"비밀번호 재설정 이메일을 전송했습니다." = "Password reset email sent successfully.";
+"비밀번호가 일치하지 않습니다." = "Password does not match.";
+"정말로 탈퇴하시겠습니까?" = "Are you sure you want to Withdrawal?";
+"닉네임을 변경했습니다." = "Nickname changed successfully.";
+"닉네임 변경에 실패했습니다." = "Nickname change failed.";
+"회원 탈퇴가 완료되었습니다." = "Withdrawal has been completed.";
+"회원 탈퇴에 실패했습니다. 고객문의를 부탁드립니다." = "Failed to withdraw. Please inquire with the customer.";
+
+// PasswordCheckViewController
+"비밀번호 확인" = "Check Passowrd";
+"비밀번호" = "Password";
+
+//NicknameSetViewController
+"사용할 닉네임을 입력해주세요" = "Please enter your nickname";
+"닉네임을 입력해 주세요" = "Please enter your nickname";
+"닉네임은 2자 이상, 8자 이하로 설정해주세요." = "Please set your nickname to at\nleast 2 characters and at least 8 characters."
+"중복된 닉네임입니다." = "It's a duplicate nickname.";
+"중복된 이메일입니다." = "It's a duplicate email.";
+"환영합니다." = "welcome!";
+"이메일과 비밀번호를 확인해 주십시오." = "Please check your email and password.";

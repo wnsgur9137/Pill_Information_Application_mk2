@@ -36,7 +36,7 @@ final class HomeViewController: UIViewController {
     
     private lazy var noticeLabel: UILabel = {
         let label = UILabel()
-        label.text = "공지사항"
+        label.text = "공지사항".localized()
         label.font = .systemFont(ofSize: 17.0, weight: .bold)
         label.textColor = .label
         return label

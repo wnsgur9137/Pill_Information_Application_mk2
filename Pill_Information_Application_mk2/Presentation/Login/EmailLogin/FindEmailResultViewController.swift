@@ -29,7 +29,7 @@ final class FindEmailResultViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "이메일 찾기"
+        label.text = NSLocalizedString("이메일 찾기", comment: "Find Email")
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .regular)
         label.textAlignment = .center
@@ -48,7 +48,7 @@ final class FindEmailResultViewController: UIViewController {
     
     private lazy var gotoEmailLoginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("로그인 하기", for: .normal)
+        button.setTitle(NSLocalizedString("로그인 하기", comment: "Go to Login"), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         button.addTarget(self, action: #selector(gotoEmailLoginButtonTapped), for: .touchUpInside)
@@ -57,7 +57,7 @@ final class FindEmailResultViewController: UIViewController {
     
     private lazy var gotoFindPasswdButton: UIButton = {
         let button = UIButton()
-        button.setTitle("비밀번호 찾기", for: .normal)
+        button.setTitle(NSLocalizedString("비밀번호 찾기", comment: ""), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         button.addTarget(self, action: #selector(gotoFindPasswdButtonTapped), for: .touchUpInside)
@@ -78,7 +78,7 @@ final class FindEmailResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "이메일 찾기"
+        self.title = NSLocalizedString("이메일 찾기", comment: "Find Email")
         setupLayout()
         setupLayoutInfo()
     }
@@ -106,7 +106,8 @@ private extension FindEmailResultViewController {
     }
     
     func setupLayoutInfo() {
-        self.emailLabel.text = "해당 닉네임의 이메일은\n\(String(describing: email!)) 입니다."
+        self.emailLabel.text = "해당 닉네임의 이메일은\n%d 입니다.".localized(with: email!, comment: "")
+//        self.emailLabel.text = "해당 닉네임의 이메일은\n\(String(describing: email!)) 입니다."
     }
     
     func setupLayout() {

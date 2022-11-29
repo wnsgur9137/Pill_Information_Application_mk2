@@ -28,7 +28,7 @@ final class EmailLoginViewController: UIViewController {
     }()
     
     private lazy var dismissButton: UIBarButtonItem = {
-        var barButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(dismissButtonTapped))
+        var barButtonItem = UIBarButtonItem(title: "취소".localized(), style: .plain, target: self, action: #selector(dismissButtonTapped))
 //        var barButtonItem = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(dismissButtonTapped))
         barButtonItem.tintColor = .systemBlue
         return barButtonItem

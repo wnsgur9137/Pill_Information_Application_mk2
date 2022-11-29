@@ -35,7 +35,7 @@ final class DirectionViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "약 이름"
+        label.text = "약 이름".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 30.0, weight: .bold)
         label.numberOfLines = 0
@@ -44,7 +44,7 @@ final class DirectionViewController: UIViewController {
     
     private lazy var directionLabel: UILabel = {
         let label = UILabel()
-        label.text = "해열제"
+        label.text = "해열제".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         label.numberOfLines = 0
@@ -68,7 +68,7 @@ final class DirectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         LoadingView.show()
-        self.navigationItem.title = "복용 방법"
+        self.navigationItem.title = "복용 방법".localized()
         self.navigationItem.rightBarButtonItem = self.starButton
         bind()
         attribute()
@@ -166,19 +166,19 @@ private extension DirectionViewController {
     }
     
     func setMedicineInfoList(data: MedicineInfoItem) {
-        self.medicineInfoList.append(contentsOf: [["제품명", data.medicineName ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["업체명", data.entpName ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["품목기준코드", data.medicineSeq ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["효능", data.efcyQesitm ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["사용법", data.useMethodQesitm ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["주의사항, 경고", data.atpnWarnQesitm ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["주의사항", data.atpnQesitm ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["상호작용", data.intrcQesitm ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["부작용", data.seQesitm ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["보관법", data.depositMethodQesitm ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["공개일자", data.openDate ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["수정일자", data.updateDate ?? ""]])
-        self.medicineInfoList.append(contentsOf: [["낱알 이미지", data.medicineImage ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["제품명".localized(), data.medicineName ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["업체명".localized(), data.entpName ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["품목기준코드".localized(), data.medicineSeq ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["효능".localized(), data.efcyQesitm ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["사용법".localized(), data.useMethodQesitm ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["주의사항, 경고".localized(), data.atpnWarnQesitm ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["주의사항".localized(), data.atpnQesitm ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["상호작용".localized(), data.intrcQesitm ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["부작용".localized(), data.seQesitm ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["보관법".localized(), data.depositMethodQesitm ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["공개일자".localized(), data.openDate ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["수정일자".localized(), data.updateDate ?? ""]])
+        self.medicineInfoList.append(contentsOf: [["낱알 이미지".localized(), data.medicineImage ?? ""]])
     }
     
     func setupLayout() {

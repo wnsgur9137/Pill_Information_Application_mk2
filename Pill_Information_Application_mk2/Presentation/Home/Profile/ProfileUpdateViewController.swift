@@ -29,7 +29,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Profile Update"
+        label.text = "회원 정보 업데이트".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .regular)
         return label
@@ -37,7 +37,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var myInfoLabel: UILabel = {
         let label = UILabel()
-        label.text = "내 정보"
+        label.text = "내 정보".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         return label
@@ -45,7 +45,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var nicknameLabel: UILabel = {
         let label = UILabel()
-        label.text = "닉네임: "
+        label.text = "닉네임: ".localized()
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textColor = .label
         label.textAlignment = .center
@@ -61,7 +61,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var warningChangeNicknameLabel: UILabel = {
         let label = UILabel()
-        label.text = "닉네임은 한 달에 한 번 변경할 수 있습니다."
+        label.text = "닉네임은 한 달에 한 번 변경할 수 있습니다.".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 10.0, weight: .regular)
         label.textAlignment = .right
@@ -70,7 +70,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var changeNicknameButton: UIButton = {
         let button = UIButton()
-        button.setTitle("닉네임 변경", for: .normal)
+        button.setTitle("닉네임 변경".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
         return button
@@ -78,7 +78,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var emailLabel: UILabel = {
         let label = UILabel()
-        label.text = "이메일: "
+        label.text = "이메일: ".localized()
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textColor = .label
         label.textAlignment = .center
@@ -93,7 +93,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var passwdChangeLabel: UILabel = {
         let label = UILabel()
-        label.text = "비밀번호 변경"
+        label.text = "비밀번호 변경".localized()
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         label.textColor = .label
         return label
@@ -101,7 +101,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var nowPasswdLabel: UILabel = {
         let label = UILabel()
-        label.text = "현재 비밀번호: "
+        label.text = "현재 비밀번호: ".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
         label.textAlignment = .center
@@ -110,7 +110,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var newPasswdLabel: UILabel = {
         let label = UILabel()
-        label.text = "새 비밀번호: "
+        label.text = "새 비밀번호: ".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
         label.textAlignment = .center
@@ -119,7 +119,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var newPasswdCheckLabel: UILabel = {
         let label = UILabel()
-        label.text = "비밀번호 확인: "
+        label.text = "비밀번호 확인: ".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
         label.textAlignment = .center
@@ -160,7 +160,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var changePasswdButton: UIButton = {
         let button = UIButton()
-        button.setTitle("비밀번호 변경", for: .normal)
+        button.setTitle("비밀번호 변경".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
         return button
@@ -168,7 +168,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var withdrawLabel: UILabel = {
         let label = UILabel()
-        label.text = "회원 탈퇴"
+        label.text = "회원 탈퇴".localized()
         label.textColor = .systemRed
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         return label
@@ -176,7 +176,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var warningWithdrawLabel: UILabel = {
         let label = UILabel()
-        label.text = "회원 탈퇴시, 복구할 수 없습니다."
+        label.text = "회원 탈퇴시, 복구할 수 없습니다.".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
         return label
@@ -184,7 +184,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var withdrawPasswdCheckLabel: UILabel = {
         let label = UILabel()
-        label.text = "현재 비밀번호: "
+        label.text = "현재 비밀번호: ".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
         label.textAlignment = .center
@@ -201,7 +201,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var withdrawButton: UIButton = {
         let button = UIButton()
-        button.setTitle("회원 탈퇴", for: .normal)
+        button.setTitle("회원 탈퇴".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
         return button
@@ -297,7 +297,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "내 정보 변경"
+        self.title = "내 정보 변경".localized()
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
         bind()
         setupLayout()
@@ -376,12 +376,12 @@ private extension ProfileUpdateViewController {
                 
                 if !self.nicknameLengthCheck {
                     let alertCon = UIAlertController(
-                        title: "닉네임은 2글자 이상, 8자 이하로 설정해 주세요.",
+                        title: "닉네임은 2글자 이상, 8자 이하로 설정해 주세요.".localized(),
                         message: nil,
                         preferredStyle: UIAlertController.Style.alert
                     )
                     let alertAct = UIAlertAction(
-                        title: "확인",
+                        title: "확인".localized(),
                         style: UIAlertAction.Style.default,
                         handler: { _ in return }
                     )
@@ -391,12 +391,12 @@ private extension ProfileUpdateViewController {
                 
                 if self.nicknameTextField.text! == UserDefaults.standard.string(forKey: "nickname") {
                     let alertCon = UIAlertController(
-                        title: "현재 닉네임과 동일합니다.",
+                        title: "현재 닉네임과 동일합니다.".localized(),
                         message: nil,
                         preferredStyle: UIAlertController.Style.alert
                     )
                     let alertAct = UIAlertAction(
-                        title: "확인",
+                        title: "확인".localized(),
                         style: UIAlertAction.Style.default,
                         handler: { _ in return }
                     )
@@ -432,22 +432,22 @@ private extension ProfileUpdateViewController {
                                 } else {
 //                                    self.changeNickname() // test code
                                     let alertCon = UIAlertController(
-                                        title: "변경할 수 없음",
-                                        message: "닉네임은 한 달에 한 번 변경할 수 있습니다.\n\(30-days)일 남았습니다.",
+                                        title: nil,
+                                        message: "닉네임은 한 달에 한 번 변경할 수 있습니다.\n%d일 남았습니다.".localized(with: 30-days),
                                         preferredStyle: UIAlertController.Style.alert)
                                     let alertAct = UIAlertAction(
-                                        title: "확인",
+                                        title: "확인".localized(),
                                         style: UIAlertAction.Style.default)
                                     alertCon.addAction(alertAct)
                                     self.present(alertCon, animated: true, completion: nil)
                                 }
                             } catch {
                                 let alertCon = UIAlertController(
-                                    title: "변경할 수 없음",
-                                    message: "닉네임은 한 달에 한 번 변경할 수 있습니다.",
+                                    title: nil,
+                                    message: "닉네임은 한 달에 한 번 변경할 수 있습니다.".localized(),
                                     preferredStyle: UIAlertController.Style.alert)
                                 let alertAct = UIAlertAction(
-                                    title: "확인",
+                                    title: "확인".localized(),
                                     style: UIAlertAction.Style.default)
                                 alertCon.addAction(alertAct)
                                 self.present(alertCon, animated: true, completion: nil)
@@ -481,28 +481,28 @@ private extension ProfileUpdateViewController {
                     Auth.auth().sendPasswordReset(withEmail: UserDefaults.standard.string(forKey: "email")!) { error in
                         if let error = error {
                             let alertCon = UIAlertController(
-                                title: "확인",
-                                message: "비밀번호 재설정 이메일을 전송에 실패했습니다.\n이메일 확인 및 고객지원 연락 부탁드립니다.\n\(error)",
+                                title: nil,
+                                message: "비밀번호 재설정 이메일을 전송에 실패했습니다.\n이메일 확인 및 고객지원 연락 부탁드립니다.\n%s".localized(with: error as CVarArg),
                                 preferredStyle: UIAlertController.Style.alert)
                             let alertAct = UIAlertAction(
-                                title: "확인",
+                                title: "확인".localized(),
                                 style: UIAlertAction.Style.default)
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
                         } else {
-                            let alertCon = UIAlertController(title: "확인", message: "비밀번호 재설정 이메일을 전송했습니다.", preferredStyle: UIAlertController.Style.alert)
-                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            let alertCon = UIAlertController(title: nil, message: "비밀번호 재설정 이메일을 전송했습니다.".localized(), preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
                         }
                     }
                 } else {
                     let alertCon = UIAlertController(
-                        title: "비밀번호가 일치하지 않습니다.",
+                        title: "비밀번호가 일치하지 않습니다.".localized(),
                         message: nil,
                         preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(
-                        title: "확인",
+                        title: "확인".localized(),
                         style: UIAlertAction.Style.cancel)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
@@ -514,14 +514,14 @@ private extension ProfileUpdateViewController {
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
                 let alertCon = UIAlertController(
-                    title: "경고",
-                    message: "정말로 탈퇴하시겠습니까?",
+                    title: "경고".localized(),
+                    message: "정말로 탈퇴하시겠습니까?".localized(),
                     preferredStyle: UIAlertController.Style.alert)
                 let alertActYes = UIAlertAction(
-                    title: "예",
+                    title: "예".localized(),
                     style: UIAlertAction.Style.cancel,
                     handler: { _ in self.withdrawUser()} )
-                let alertActNo = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+                let alertActNo = UIAlertAction(title: "아니오".localized(), style: UIAlertAction.Style.default)
                 [
                     alertActYes,
                     alertActNo
@@ -581,22 +581,22 @@ private extension ProfileUpdateViewController {
                     UserDefaults.standard.set(nickname, forKey: "nickname")
                     self.nicknameTextField.placeholder = UserDefaults.standard.string(forKey: "nickname")
                     let alertCon = UIAlertController(
-                        title: "확인",
-                        message: "닉네임을 변경했습니다.",
+                        title: nil,
+                        message: "닉네임을 변경했습니다.".localized(),
                         preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(
-                        title: "확인",
+                        title: "확인".localized(),
                         style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
                 case let .failure(error):
                     print("failure: \(error)")
                     let alertCon = UIAlertController(
-                        title: "오류",
-                        message: "닉네임 변경에 실패했습니다.",
+                        title: "오류".localized(),
+                        message: "닉네임 변경에 실패했습니다.".localized(),
                         preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(
-                        title: "확인",
+                        title: "확인".localized(),
                         style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
@@ -643,15 +643,15 @@ private extension ProfileUpdateViewController {
         
         if userDefaultCheck && dbCheck && authCheck {
             
-            let alertCon = UIAlertController(title: "성공", message: "회원 탈퇴가 완료되었습니다.", preferredStyle: UIAlertController.Style.alert)
-            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: { _ in
+            let alertCon = UIAlertController(title: "성공".localized(), message: "회원 탈퇴가 완료되었습니다.".localized(), preferredStyle: UIAlertController.Style.alert)
+            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default, handler: { _ in
                 
             })
             alertCon.addAction(alertAct)
             self.present(alertCon, animated: true, completion: nil)
         } else {
-            let alertCon = UIAlertController(title: "오류", message: "회원 탈퇴에 실패했습니다. 고객문의를 부탁드립니다.", preferredStyle: UIAlertController.Style.alert)
-            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            let alertCon = UIAlertController(title: "오류".localized(), message: "회원 탈퇴에 실패했습니다. 고객문의를 부탁드립니다.".localized(), preferredStyle: UIAlertController.Style.alert)
+            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
             alertCon.addAction(alertAct)
             self.present(alertCon, animated: true, completion: nil)
         }

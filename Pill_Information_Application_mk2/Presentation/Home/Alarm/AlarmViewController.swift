@@ -23,7 +23,7 @@ final class AlarmViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "알람"
+        label.text = "알람".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         return label
@@ -38,12 +38,12 @@ final class AlarmViewController: UIViewController {
     }()
     
     private lazy var timerBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "타이머", style: UIBarButtonItem.Style.plain, target: self, action: #selector(timerBarButtonItemTapped))
+        let barButtonItem = UIBarButtonItem(title: "타이머".localized(), style: UIBarButtonItem.Style.plain, target: self, action: #selector(timerBarButtonItemTapped))
         return barButtonItem
     }()
     
     private lazy var alramBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "알람 추가", style: UIBarButtonItem.Style.plain, target: self, action: #selector(alramBarButtonItemTapped))
+        let barButtonItem = UIBarButtonItem(title: "알람 추가".localized(), style: UIBarButtonItem.Style.plain, target: self, action: #selector(alramBarButtonItemTapped))
         return barButtonItem
     }()
     
@@ -70,7 +70,7 @@ extension AlarmViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return "💊 약 먹을 시간"
+            return "💊 약 먹을 시간".localized()
         default :
             return nil
         }
@@ -169,7 +169,7 @@ private extension AlarmViewController {
     }
     
     func attribute() {
-        self.navigationItem.title = "알람"
+        self.navigationItem.title = "알람".localized()
         self.navigationItem.leftBarButtonItem = timerBarButtonItem
         self.navigationItem.rightBarButtonItem = alramBarButtonItem
     }

@@ -16,8 +16,8 @@ import FirebaseAuth
 final class FindPasswdViewController: UIViewController {
     
     let disposeBag = DisposeBag()
-    let db = Firestore.firestore()
-    let userDB = Firestore.firestore().collection("USER")
+//    let db = Firestore.firestore()
+//    let userDB = Firestore.firestore().collection("USER")
     
     var emailBool = false
     var keyboardCheck = true
@@ -38,7 +38,7 @@ final class FindPasswdViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "비밀번호 찾기"
+        label.text = NSLocalizedString("비밀번호 찾기", comment: "Find Password")
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .regular)
         label.textAlignment = .center
@@ -47,7 +47,7 @@ final class FindPasswdViewController: UIViewController {
     
     private lazy var emailLabel: UILabel = {
         let label = UILabel()
-        label.text = "이메일"
+        label.text = NSLocalizedString("이메일", comment: "Email")
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textAlignment = .center
@@ -73,7 +73,7 @@ final class FindPasswdViewController: UIViewController {
     
     private lazy var findPasswdButton: UIButton = {
         let button = UIButton()
-        button.setTitle("비밀번호 찾기", for: .normal)
+        button.setTitle(NSLocalizedString("비밀번호 찾기", comment: "Find Password"), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         return button
@@ -93,7 +93,7 @@ final class FindPasswdViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "비밀번호 찾기"
+        self.title = NSLocalizedString("비밀번호 찾기", comment: "Find Password")
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
         bind()
         setupLayout()
@@ -128,7 +128,7 @@ private extension FindPasswdViewController {
                 if changeText != "" {
                     let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
                     if !NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: changeText) {
-                        self.warningEmailTypeLabel.text = "이메일 형식에 맞추어 주십시오."
+                        self.warningEmailTypeLabel.text = NSLocalizedString("이메일 형식에 맞추어 주십시오", comment: "")
                         self.emailBool = false
                     } else {
                         self.warningEmailTypeLabel.text = ""
@@ -144,14 +144,14 @@ private extension FindPasswdViewController {
                 if self.emailBool {
                     Auth.auth().sendPasswordReset(withEmail: self.emailTextField.text!) { (error) in
                         if error != nil {
-                            let alertCon = UIAlertController(title: "이메일이 존재하지 않습니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
-                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            let alertCon = UIAlertController(title: NSLocalizedString("이메일이 존재하지 않습니다", comment: ""), message: nil, preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: NSLocalizedString("확인", comment: "Ok"), style: UIAlertAction.Style.default)
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
                         } else {
-                            let alertCon = UIAlertController(title: "확인", message: "비밀번호 재설정 이메일을 전송했습니다.", preferredStyle: UIAlertController.Style.alert)
+                            let alertCon = UIAlertController(title: nil, message: NSLocalizedString("비밀번호 재설정 이메일을 전송했습니다", comment: ""), preferredStyle: UIAlertController.Style.alert)
                             let alertAct = UIAlertAction(
-                                title: "확인",
+                                title: NSLocalizedString("확인", comment: "Ok"),
                                 style: UIAlertAction.Style.default,
                                 handler: { _ in self.dismiss(animated: true) }
                             )
@@ -160,8 +160,8 @@ private extension FindPasswdViewController {
                         }
                     }
                 } else {
-                    let alertCon = UIAlertController(title: "이메일 형식을 맞춰주세요.", message: nil, preferredStyle: UIAlertController.Style.alert)
-                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    let alertCon = UIAlertController(title: NSLocalizedString("이메일 형식에 맞추어 주십시오", comment: ""), message: nil, preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(title: NSLocalizedString("확인", comment: "Ok"), style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
                 }

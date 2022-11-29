@@ -27,7 +27,7 @@ final class SearchViewController: UIViewController {
     
     private lazy var searchLogLabel: UILabel = {
         let label = UILabel()
-        label.text = "최근 검색 기록"
+        label.text = "최근 검색 기록".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 17.0, weight: .bold)
         return label
@@ -35,7 +35,7 @@ final class SearchViewController: UIViewController {
     
     private lazy var searchLogDeleteButton: UIButton = {
         let button = UIButton()
-        button.setTitle("검색 기록 삭제", for: .normal)
+        button.setTitle("검색 기록 삭제".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         return button
     }()
@@ -84,7 +84,7 @@ final class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "알약 검색"
+        self.navigationItem.title = "알약 검색".localized()
         bind()
         setupLayout()
         resultTableView.delegate = self
@@ -258,8 +258,8 @@ private extension SearchViewController {
         let alertForErrorMessage = medicineError
             .map { message -> Alert in
                 return (
-                    title: "오류",
-                    message: "해당 이름의 알약이 없습니다.",
+                    title: nil,
+                    message: "해당 이름의 알약이 없습니다".localized(),
                     actions: [.confirm],
                     style: .alert
                 )
@@ -296,11 +296,11 @@ private extension SearchViewController {
                 guard let self = self else { return }
                 if self.searchHistoryList == [] {
                     let alertCon = UIAlertController(
-                        title: "검색 기록이 없습니다.",
+                        title: "검색 기록이 없습니다".localized(),
                         message: nil,
                         preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(
-                        title: "확인",
+                        title: "확인".localized(),
                         style: UIAlertAction.Style.default,
                         handler: { _ in return }
                     )
@@ -308,11 +308,11 @@ private extension SearchViewController {
                     self.present(alertCon, animated: true, completion: nil)
                 }
                 let alertCon = UIAlertController(
-                    title: "검색 기록을 삭제하시겠습니까?",
+                    title: "검색 기록을 삭제하시겠습니까?".localized(),
                     message: nil,
                     preferredStyle: UIAlertController.Style.alert)
                 let alertActYes = UIAlertAction(
-                    title: "예",
+                    title: "예".localized(),
                     style: UIAlertAction.Style.destructive,
                     handler: { _ in
                         UserDefaults.standard.removeObject(forKey: "searchHistoryArray")
@@ -324,7 +324,7 @@ private extension SearchViewController {
                     }
                 )
                 let alertActNo = UIAlertAction(
-                    title: "아니오",
+                    title: "아니오".localized(),
                     style: UIAlertAction.Style.default)
                 
                 [alertActNo, alertActYes].forEach{ alertCon.addAction($0) }

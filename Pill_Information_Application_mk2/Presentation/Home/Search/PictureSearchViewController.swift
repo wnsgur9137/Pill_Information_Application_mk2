@@ -16,9 +16,42 @@ import Photos
 final class PictureSearchViewController: UIViewController {
     let disposeBag = DisposeBag()
     
-    var medicineShapeList = ["장방형", "원형", "팔각형", "타원형", "육각형", "반원형", "삼각형", "오각형", "마름모형", "기타"]
-    var medicineColorList = ["하양", "빨강", "분홍", "자주", "주황", "갈색", "노랑", "연두", "초록", "청록", "파랑", "남색", "보라", "회색", "검정", "투명"]
-    var medicineLineList = ["없음", "-", "+", "기타"]
+    var medicineShapeList = [
+        "장방형".localized(),
+        "원형".localized(),
+        "팔각형".localized(),
+        "타원형".localized(),
+        "육각형".localized(),
+        "반원형".localized(),
+        "삼각형".localized(),
+        "오각형".localized(),
+        "마름모형".localized(),
+        "기타".localized()
+    ]
+    var medicineColorList = [
+        "하양",
+        "빨강",
+        "분홍",
+        "자주",
+        "주황",
+        "갈색",
+        "노랑",
+        "연두",
+        "초록",
+        "청록",
+        "파랑",
+        "남색",
+        "보라",
+        "회색",
+        "검정",
+        "투명"
+    ]
+    var medicineLineList = [
+        "없음".localized(),
+        "-",
+        "+",
+        "기타".localized()
+    ]
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -47,14 +80,14 @@ final class PictureSearchViewController: UIViewController {
     
     private lazy var choiceImageButton: UIButton = {
         let button = UIButton()
-        button.setTitle("사진 선택", for: .normal)
+        button.setTitle("사진 선택".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         return button
     }()
     
     private lazy var shapeLabel: UILabel = {
         let label = UILabel()
-        label.text = "의약품 모양"
+        label.text = "의약품 모양".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textAlignment = .center
@@ -77,7 +110,7 @@ final class PictureSearchViewController: UIViewController {
     
     private lazy var colorLabel: UILabel = {
         let label = UILabel()
-        label.text = "색상"
+        label.text = "색상".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textAlignment = .center
@@ -100,7 +133,7 @@ final class PictureSearchViewController: UIViewController {
     
     private lazy var lineLabel: UILabel = {
         let label = UILabel()
-        label.text = "분할선"
+        label.text = "분할선".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textAlignment = .center
@@ -123,7 +156,7 @@ final class PictureSearchViewController: UIViewController {
     
     private lazy var markCodeLabel: UILabel = {
         let label = UILabel()
-        label.text = "마크 코드"
+        label.text = "마크 코드".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textAlignment = .center
@@ -138,7 +171,7 @@ final class PictureSearchViewController: UIViewController {
     
     private lazy var searchButton: UIButton = {
         let button = UIButton()
-        button.setTitle("검색", for: .normal)
+        button.setTitle("검색".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         return button
     }()
@@ -179,7 +212,7 @@ final class PictureSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "알약 모양으로 검색"
+        self.navigationItem.title = "알약 모양으로 검색".localized()
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
         bind()
         setupLayout()
@@ -315,14 +348,27 @@ private extension PictureSearchViewController {
     }
     
     func choiceImageButtonTapped() {
-        let alert = UIAlertController(title: "사진으로 검색", message: nil, preferredStyle: .actionSheet)
-        let cameraAction = UIAlertAction(title: "사진 촬영", style: .default) { (action) in
+        let alert = UIAlertController(
+            title: "사진으로 검색".localized(),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        let cameraAction = UIAlertAction(
+            title: "사진 촬영".localized(),
+            style: .default
+        ) { (action) in
             self.actionCamera()
         }
-        let libraryAction = UIAlertAction(title: "갤러리 사진 선택", style: .default) { (action) in
+        let libraryAction = UIAlertAction(
+            title: "갤러리 사진 선택".localized(),
+            style: .default
+        ) { (action) in
             self.actionLibrary()
         }
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        let cancel = UIAlertAction(
+            title: "취소".localized(),
+            style: .cancel
+        )
 
         alert.addAction(cameraAction)
         alert.addAction(libraryAction)
@@ -386,18 +432,18 @@ private extension PictureSearchViewController {
     
     func showAlertGoToSetting() {
         let alertCon = UIAlertController(
-            title: "현재 카메라 사용에 대한 접근 권한이 없습니다.",
-            message: "설정 -> {앱 이름}탭에서 접근을 활성화 할 수 있습니다.",
+            title: "현재 카메라 사용에 대한 접근 권한이 없습니다".localized(),
+            message: "설정 -> {앱 이름}탭에서 접근을 활성화 할 수 있습니다.".localized(),
             preferredStyle: .alert
         )
         let cancelAct = UIAlertAction(
-            title: "취소",
+            title: "취소".localized(),
             style: .cancel
         ) { _ in
             alertCon.dismiss(animated: true, completion: nil)
         }
         let gotoSettingAct = UIAlertAction(
-            title: "설정으로 이동하기",
+            title: "설정으로 이동하기".localized(),
             style: .default
         ) { _ in
             guard let settingURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingURL) else { return }

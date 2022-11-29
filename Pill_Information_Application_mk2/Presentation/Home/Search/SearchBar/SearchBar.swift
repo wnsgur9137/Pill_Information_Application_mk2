@@ -16,14 +16,14 @@ final class SearchBar: UISearchBar {
     
     lazy var searchButton: UIButton = {
         let button = UIButton()
-        button.setTitle("검색", for: .normal)
+        button.setTitle("검색".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         return button
     }()
     
     private lazy var photoButton: UIButton = {
         let button = UIButton()
-        button.setTitle("모양", for: .normal)
+        button.setTitle("모양".localized(), for: .normal)
         button.setImage(UIImage(named: "photo"), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         return button

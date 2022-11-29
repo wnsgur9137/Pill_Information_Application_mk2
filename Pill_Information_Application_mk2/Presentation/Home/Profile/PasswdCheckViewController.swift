@@ -31,7 +31,7 @@ final class PasswdCheckViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "비밀번호 확인"
+        label.text = "비밀번호 확인".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textAlignment = .center
@@ -40,7 +40,7 @@ final class PasswdCheckViewController: UIViewController {
     
     private lazy var passwdLabel: UILabel = {
         let label = UILabel()
-        label.text = "비밀번호"
+        label.text = "비밀번호".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textAlignment = .center

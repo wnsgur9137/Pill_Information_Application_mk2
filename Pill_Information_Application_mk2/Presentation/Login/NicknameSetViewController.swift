@@ -33,14 +33,14 @@ final class NicknameSetViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "사용할 닉네임을 입력해주세요."
-        
+        label.text = "사용할 닉네임을 입력해주세요".localized()
+        label.numberOfLines = 0
         return label
     }()
     
     private lazy var nicknameTextField: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "닉네임을 입력해 주세요"
+        textfield.placeholder = "닉네임을 입력해 주세요".localized()
         textfield.delegate = self
         textfield.autocapitalizationType = .none
         return textfield
@@ -52,12 +52,13 @@ final class NicknameSetViewController: UIViewController {
         label.textColor = .systemRed
         label.font = .systemFont(ofSize: 15.0, weight: .bold)
         label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }()
     
     private lazy var signUpButton: UIButton = {
         let button = UIButton()
-        button.setTitle("회원가입", for: .normal)
+        button.setTitle("회원가입".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
@@ -106,7 +107,7 @@ private extension NicknameSetViewController {
                         self.nickNameBool = true
                     } else {
                         self.nickNameBool = false
-                        self.warningLabel.text = "닉네임은 2자 이상, 8자 이하로 설정해주세요."
+                        self.warningLabel.text = "닉네임은 2자 이상, 8자 이하로 설정해주세요.".localized()
                     }
                 }
             })
@@ -116,8 +117,8 @@ private extension NicknameSetViewController {
     @objc func signUpButtonTapped() {
         // 유저 생성
         if !nickNameBool {
-            let alertCon = UIAlertController(title: "닉네임은 2자 이상, 8자 이하로 설정해주세요.", message: nil, preferredStyle: UIAlertController.Style.alert)
-            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            let alertCon = UIAlertController(title: "닉네임은 2자 이상, 8자 이하로 설정해주세요.".localized(), message: nil, preferredStyle: UIAlertController.Style.alert)
+            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
             alertCon.addAction(alertAct)
             present(alertCon, animated: true)
             return
@@ -137,8 +138,8 @@ private extension NicknameSetViewController {
                         let decoder = JSONDecoder()
                         let result = try decoder.decode(UserInfoOverview.self, from: data!)
                         if self.nicknameTextField.text ?? "" == result.nickname {
-                            let alertCon = UIAlertController(title: "중복된 닉네임입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
-                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            let alertCon = UIAlertController(title: "중복된 닉네임입니다.".localized(), message: nil, preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
                         } else {
@@ -174,8 +175,8 @@ private extension NicknameSetViewController {
                             Auth.auth().createUser(withEmail: self.email!, password: self.passwd!) {
                                 [self]authResult, error in
                                 if let _ = error {  // 유저 생성에 실패할 경우
-                                    let alertCon = UIAlertController(title: "중복된 이메일입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
-                                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                                    let alertCon = UIAlertController(title: "중복된 이메일입니다.".localized(), message: nil, preferredStyle: UIAlertController.Style.alert)
+                                    let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
                                     alertCon.addAction(alertAct)
                                     self.present(alertCon, animated: true, completion: nil)
                                 } else {    // 유저 생성에 성공할 경우
@@ -190,8 +191,8 @@ private extension NicknameSetViewController {
                             }
                         }
                     } catch {
-                        let alertCon = UIAlertController(title: "중복된 닉네임입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
-                        let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                        let alertCon = UIAlertController(title: "중복된 닉네임입니다.".localized(), message: nil, preferredStyle: UIAlertController.Style.alert)
+                        let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
                         alertCon.addAction(alertAct)
                         self.present(alertCon, animated: true, completion: nil)
                     }
@@ -245,8 +246,8 @@ private extension NicknameSetViewController {
                 UserDefaults.standard.set(self.passwd!, forKey: "passwd")
                 UserDefaults.standard.set(self.nicknameTextField.text!, forKey: "nickname")
                 
-                let alertCon = UIAlertController(title: "성공", message: "환영합니다.", preferredStyle: UIAlertController.Style.alert)
-                let alertAct = UIAlertAction(title: "로그인", style: UIAlertAction.Style.default, handler: { _ in
+                let alertCon = UIAlertController(title: nil, message: "환영합니다.".localized(), preferredStyle: UIAlertController.Style.alert)
+                let alertAct = UIAlertAction(title: "로그인".localized(), style: UIAlertAction.Style.default, handler: { _ in
                     let vc = HomeTabBarController()
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
@@ -254,8 +255,8 @@ private extension NicknameSetViewController {
                 alertCon.addAction(alertAct)
                 self.present(alertCon, animated: true, completion: nil)
             } else {
-                let alertCon = UIAlertController(title: "이메일과 비밀번호를 확인해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
-                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                let alertCon = UIAlertController(title: "이메일과 비밀번호를 확인해 주십시오.".localized(), message: nil, preferredStyle: UIAlertController.Style.alert)
+                let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
                 alertCon.addAction(alertAct)
                 self.present(alertCon, animated: true, completion: nil)
             }

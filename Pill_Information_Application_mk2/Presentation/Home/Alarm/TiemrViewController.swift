@@ -62,21 +62,21 @@ final class TimerViewController: UIViewController {
     
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
-        button.setTitle("취소", for: .normal)
+        button.setTitle("취소".localized(), for: .normal)
         button.setTitleColor(.systemRed, for: .normal)
         return button
     }()
     
     private lazy var toggleButton: UIButton = {
         let button = UIButton()
-        button.setTitle("시작", for: .normal)
+        button.setTitle("시작".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         return button
     }()
     
     private lazy var pauseButton: UIButton = {
         let button = UIButton()
-        button.setTitle("일시 정지", for: .normal)
+        button.setTitle("일시정지".localized(), for: .normal)
         button.setTitleColor(.systemRed, for: .normal)
         return button
     }()
@@ -89,7 +89,7 @@ final class TimerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "타이머"
+        self.navigationItem.title = "타이머".localized()
         bind()
         setupLayout()
         self.configureToggle()
@@ -125,8 +125,8 @@ private extension TimerViewController {
         self.timerLabel.alpha = 0
         self.progressView.alpha = 0
         self.datePicker.alpha = 1
-        self.toggleButton.setTitle("시작", for: .normal)  // 버튼의 초기 상태, 즉 normal 상태일 때 버튼의 타이틀이 시작이고
-        self.toggleButton.setTitle("일시정지", for: .selected)  // 버튼이 선택된 상태 (selected) 일 땐 버튼의 타이틀이 일시정지
+        self.toggleButton.setTitle("시작".localized(), for: .normal)  // 버튼의 초기 상태, 즉 normal 상태일 때 버튼의 타이틀이 시작이고
+        self.toggleButton.setTitle("일시정지".localized(), for: .selected)  // 버튼이 선택된 상태 (selected) 일 땐 버튼의 타이틀이 일시정지
     }
     
     func startTimer() {  // 타이머를 설정하고, 타이머가 시작되게 하는 메서드
@@ -153,7 +153,7 @@ private extension TimerViewController {
                 if self.currentSeconds <= 0 {
                     self.stopTimer()
                     AudioServicesPlaySystemSound(1005)
-                    self.messageAlert(controllerTitle: "타이머가 종료되었어요!", controllerMessage: "약은 꼭 생수와 먹읍시다!", actionTitle: "확인")
+                    self.messageAlert(controllerTitle: "타이머가 종료되었어요!".localized(), controllerMessage: "약은 꼭 생수와 먹읍시다!".localized(), actionTitle: "확인".localized())
                 }
             })
             self.timer?.resume()

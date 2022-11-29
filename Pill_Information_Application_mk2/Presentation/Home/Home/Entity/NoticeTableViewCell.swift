@@ -11,7 +11,7 @@ import SnapKit
 final class NoticeTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "공지사항"
+        label.text = "공지사항".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 18.0, weight: .bold)
         label.numberOfLines = 2

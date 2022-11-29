@@ -24,7 +24,7 @@ final class AddNoticeViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "공지사항 제목"
+        label.text = "공지사항 제목".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         return label
@@ -38,7 +38,7 @@ final class AddNoticeViewController: UIViewController {
     
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.text = "공지사항 내용"
+        label.text = "공지사항 내용".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         return label
@@ -55,7 +55,7 @@ final class AddNoticeViewController: UIViewController {
     
     private lazy var addNoticeButton: UIButton = {
         let button = UIButton()
-        button.setTitle("저장", for: .normal)
+        button.setTitle("저장".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
         return button
@@ -63,7 +63,7 @@ final class AddNoticeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "공지사항 추가"
+        self.navigationItem.title = "공지사항 추가".localized()
         bind()
         setupLayout()
         keyboardAttribute()
@@ -101,16 +101,16 @@ private extension AddNoticeViewController {
                         switch response.result {
                         case let .success(data):
                             print("success: \(String(describing: data))")
-                            let alertCon = UIAlertController(title: "성공", message: "공지사항 작성 완료", preferredStyle: UIAlertController.Style.alert)
-                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: { _ in
+                            let alertCon = UIAlertController(title: "성공".localized(), message: "공지사항 작성 완료".localized(), preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default, handler: { _ in
                                 self.dismiss(animated: true)
                             })
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
                         case let .failure(error):
                             print("failure: \(error)")
-                            let alertCon = UIAlertController(title: "오류", message: "공지사항 작성에 실패하였습니다.", preferredStyle: UIAlertController.Style.alert)
-                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            let alertCon = UIAlertController(title: "오류".localized(), message: "공지사항 작성에 실패하였습니다.".localized(), preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true)
                         }

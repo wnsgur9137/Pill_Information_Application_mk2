@@ -34,7 +34,7 @@ final class LoginViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.text = "로그인 방법을 선택해 주세요!"
+        titleLabel.text = "로그인 방법을 선택해 주세요!".localized()
         titleLabel.font = .systemFont(ofSize: 24.0, weight: .bold)
         titleLabel.textColor = .systemMint
         

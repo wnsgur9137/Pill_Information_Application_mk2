@@ -47,7 +47,7 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.text = "Email 회원가입"
+        titleLabel.text = NSLocalizedString("이메일 회원가입", comment: "Email SignUp")
         titleLabel.textColor = .label
         titleLabel.font = .systemFont(ofSize: 20.0, weight: .regular)
         titleLabel.textAlignment = .center
@@ -57,7 +57,7 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var emailLabel: UILabel = {
         let emailLabel = UILabel()
-        emailLabel.text = "이메일"
+        emailLabel.text = NSLocalizedString("이메일", comment: "Email")
         emailLabel.textColor = .label
         emailLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         emailLabel.textAlignment = .center
@@ -86,7 +86,7 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var passwdLabel: UILabel = {
         let passwdLabel = UILabel()
-        passwdLabel.text = "비밀번호"
+        passwdLabel.text = NSLocalizedString("비밀번호", comment: "Password")
         passwdLabel.textColor = .label
         passwdLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         passwdLabel.textAlignment = .center
@@ -115,7 +115,7 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var passwdCheckLabel: UILabel = {
         let passwdCheckLabel = UILabel()
-        passwdCheckLabel.text = "비밀번호 확인"
+        passwdCheckLabel.text = NSLocalizedString("비밀번호 확인", comment: "Check Password")
         passwdCheckLabel.textColor = .label
         passwdCheckLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         passwdCheckLabel.textAlignment = .center
@@ -143,7 +143,7 @@ final class EmailSignUpViewController: UIViewController {
     
     private lazy var signupButton: UIButton = {
         let button = UIButton()
-        button.setTitle("회원가입", for: .normal)
+        button.setTitle(NSLocalizedString("계속", comment: "Continue"), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         button.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
@@ -233,7 +233,7 @@ final class EmailSignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "회원가입"
+        self.title = NSLocalizedString("회원가입", comment: "SignUp")
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
         bind()
         setupLayout()
@@ -276,7 +276,7 @@ private extension EmailSignUpViewController {
                 if changeText != "" {
                     let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
                     if !NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: changeText) {
-                        self.warningEmailTypeLabel.text = "이메일 형식에 맞추어 주십시오."
+                        self.warningEmailTypeLabel.text = NSLocalizedString("이메일 형식에 맞추어 주십시오.", comment: "")
                         self.emailBool = false
                     } else {
                         self.warningEmailTypeLabel.text = ""
@@ -292,10 +292,7 @@ private extension EmailSignUpViewController {
                 if changeText != "" {
                     let passwordreg =  ("(?=.*[A-Za-z])(?=.*[0-9]).{8,20}")
                     if !NSPredicate(format: "SELF MATCHES %@", passwordreg).evaluate(with: changeText) {
-                        self.warningPasswdTypeLabel.text = """
-                                                            문자, 숫자, 특수문자르 조합하여
-                                                            8~20 길이의 형식을 맞추어 주십시오.
-                                                            """
+                        self.warningPasswdTypeLabel.text = NSLocalizedString("비밀번호 형식", comment: "")
                         self.pwdTypeBool = false
                     } else {
                         self.warningPasswdTypeLabel.text = ""
@@ -309,7 +306,7 @@ private extension EmailSignUpViewController {
             .subscribe(onNext: { [weak self] changeText in
                 guard let self = self else { return }
                 if changeText != self.passwdTextField.text {
-                    self.warningPasswdCheckLabel.text = "비밀번호가 일치하지 않습니다."
+                    self.warningPasswdCheckLabel.text = NSLocalizedString("비밀번호가 일치하지 않습니다", comment: "")
                     self.pwdCheckBool = false
                 } else {
                     self.warningPasswdCheckLabel.text = ""
@@ -349,15 +346,15 @@ private extension EmailSignUpViewController {
                                 vc.passwd = self.passwdTextField.text!
                                 self.navigationController?.pushViewController(vc, animated: true)
                             } else {
-                                let alertCon = UIAlertController(title: "중복된 이메일입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
-                                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                                let alertCon = UIAlertController(title: NSLocalizedString("중복된 이메일입니다", comment: ""), message: nil, preferredStyle: UIAlertController.Style.alert)
+                                let alertAct = UIAlertAction(title: NSLocalizedString("확인", comment: "Ok"), style: UIAlertAction.Style.default)
                                 alertCon.addAction(alertAct)
                                 self.present(alertCon, animated: true, completion: nil)
                             }
                         } catch {
                             print("catch")
-                            let alertCon = UIAlertController(title: "중복된 이메일입니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
-                            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                            let alertCon = UIAlertController(title: NSLocalizedString("중복된 이메일입니다", comment: ""), message: nil, preferredStyle: UIAlertController.Style.alert)
+                            let alertAct = UIAlertAction(title: NSLocalizedString("확인", comment: "Ok"), style: UIAlertAction.Style.default)
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)
                         }
@@ -387,8 +384,8 @@ private extension EmailSignUpViewController {
 //                }
 //            }
         } else {
-            let alertCon = UIAlertController(title: "이메일과 비밀번호를 확인해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
-            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            let alertCon = UIAlertController(title: NSLocalizedString("이메일과 비밀번호를 확인해 주십시오", comment: "Check Email and Password"), message: nil, preferredStyle: UIAlertController.Style.alert)
+            let alertAct = UIAlertAction(title: NSLocalizedString("확인", comment: "Ok"), style: UIAlertAction.Style.default)
             alertCon.addAction(alertAct)
             self.present(alertCon, animated: true, completion: nil)
         }

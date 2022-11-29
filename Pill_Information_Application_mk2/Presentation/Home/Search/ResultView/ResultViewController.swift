@@ -31,7 +31,7 @@ final class ResultViewController: UIViewController {
     
     private lazy var medicineCountLabel: UILabel = {
         let label = UILabel()
-        label.text = "총 0개"
+        label.text = "총 0개".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         return label
@@ -47,7 +47,7 @@ final class ResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "알약 검색 결과"
+        self.navigationItem.title = "알약 검색 결과".localized()
         print(medicineArray.count)
         LoadingView.show()
         bind()
@@ -107,7 +107,8 @@ private extension ResultViewController {
                     do {
                         let result = try JSONDecoder().decode(MedicineFastAPIOverview.self, from: data!)
 //                        print("result: \(result)")
-                        self.medicineCountLabel.text = "총 \(result.resultCount)개"
+//                        self.medicineCountLabel.text = "총 \(result.resultCount)개"
+                        self.medicineCountLabel.text = "총 %d개".localized(with: result.resultCount)
                         for index in 0..<result.medicineItem.count {
                             self.medicineArray.append(result.medicineItem[index])
                         }
@@ -116,11 +117,11 @@ private extension ResultViewController {
                         }
                     } catch {
                         let alertCon = UIAlertController(
-                            title: "해당하는 알약이 존재하지 않습니다.",
+                            title: "해당하는 알약이 존재하지 않습니다".localized(),
                             message: nil,
                             preferredStyle: UIAlertController.Style.alert)
                         let alertAct = UIAlertAction(
-                            title: "확인",
+                            title: "확인".localized(),
                             style: UIAlertAction.Style.default,
                             handler: { _ in self.emptyMedicine()
                             }
@@ -131,11 +132,11 @@ private extension ResultViewController {
                 case let .failure(error):
                     print("failure: \(error)")
                     let alertCon = UIAlertController(
-                        title: "해당하는 알약이 없습니다.",
+                        title: "해당하는 알약이 없습니다.".localized(),
                         message: nil,
                         preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(
-                        title: "확인",
+                        title: "확인".localized(),
                         style: UIAlertAction.Style.default,
                         handler: { _ in self.dismiss(animated: true)}
                     )

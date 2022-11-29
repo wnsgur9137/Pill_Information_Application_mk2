@@ -14,7 +14,7 @@ class AlarmCell: UITableViewCell {
     
     lazy var meridiemLabel: UILabel = {
         let label = UILabel()
-        label.text = "오전"
+        label.text = "오전".localized()
         label.font = .systemFont(ofSize: 30.0, weight: .regular)
         label.textColor = .label
         return label

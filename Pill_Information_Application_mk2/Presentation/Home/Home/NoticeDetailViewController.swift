@@ -25,7 +25,7 @@ final class NoticeDetailViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "작성자: Title"
+        label.text = "작성자: Title".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 30.0, weight: .bold)
         label.numberOfLines = 0
@@ -53,7 +53,7 @@ final class NoticeDetailViewController: UIViewController {
     
     private lazy var helpLabel: UILabel = {
         let label = UILabel()
-        label.text = "고객지원"
+        label.text = "고객지원".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 17.0, weight: .bold)
         return label
@@ -69,7 +69,7 @@ final class NoticeDetailViewController: UIViewController {
     
     private lazy var updateButton: UIButton = {
         let button = UIButton()
-        button.setTitle("수정", for: .normal)
+        button.setTitle("수정".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
         return button
@@ -77,7 +77,7 @@ final class NoticeDetailViewController: UIViewController {
     
     private lazy var deleteButton: UIButton = {
         let button = UIButton()
-        button.setTitle("삭제", for: .normal)
+        button.setTitle("삭제".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
         return button
@@ -85,7 +85,7 @@ final class NoticeDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "공지사항"
+        self.navigationItem.title = "공지사항".localized()
         bind()
         setupLayout()
         
@@ -108,7 +108,8 @@ final class NoticeDetailViewController: UIViewController {
     func setData(id: Int, title: String, writer: String, content: String) {
         noticeId = id
         titleLabel.text = title.removingPercentEncoding
-        writerLabel.text = "작성자: \(String(describing: writer.removingPercentEncoding ?? "Admin"))"
+//        writerLabel.text = "작성자: \(String(describing: writer.removingPercentEncoding ?? "Admin"))"
+        writerLabel.text = "작성자: %s".localized(with: String(describing: writer.removingPercentEncoding ?? "Admin"))
         contentTextView.text = content.removingPercentEncoding?.replacingOccurrences(of: "\\n", with: "\n")
     }
 }
@@ -126,9 +127,9 @@ private extension NoticeDetailViewController {
         
         deleteButton.rx.tap
             .bind(onNext: { [weak self] in
-                let alertCon = UIAlertController(title: "공지사항을 삭제하시겠습니까?", message: nil, preferredStyle: UIAlertController.Style.alert)
-                let alertAcc = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
-                let alertCancel = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
+                let alertCon = UIAlertController(title: "공지사항을 삭제하시겠습니까?".localized(), message: nil, preferredStyle: UIAlertController.Style.alert)
+                let alertAcc = UIAlertAction(title: "아니오".localized(), style: UIAlertAction.Style.default)
+                let alertCancel = UIAlertAction(title: "예".localized(), style: UIAlertAction.Style.destructive, handler: { _ in
                     self?.deleteNotice()
                 })
                 alertCon.addAction(alertAcc)

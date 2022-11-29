@@ -12,8 +12,8 @@ extension UNUserNotificationCenter {
     func addNotificationRequest(by alarm: Alarm) {
         let content = UNMutableNotificationContent()
         let taking = alarm.pillName
-        content.title = taking + " 먹을 시간이에요. 💊"
-        content.body = "약 먹기 전 식사는 하셨나요? 👀"
+        content.title = taking + " 먹을 시간이에요. 💊".localized()
+        content.body = "약 먹기 전 식사는 하셨나요? 👀".localized()
         content.sound = .default
         content.badge = 1
         

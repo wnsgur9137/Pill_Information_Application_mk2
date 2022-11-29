@@ -55,7 +55,7 @@ final class HomeTabBarController: UITabBarController {
         
         let searchTab = UINavigationController(rootViewController: SearchViewController())
         let searchTabItem = UITabBarItem(
-            title: "약 검색",
+            title: "약 검색".localized(),
             image: UIImage(systemName: "pills"),
             selectedImage: UIImage(systemName: "pills.fill")
         )
@@ -65,7 +65,7 @@ final class HomeTabBarController: UITabBarController {
 //        let homeTab = UINavigationController(rootViewController: HomeView())
         let homeTab = UINavigationController(rootViewController: HomeViewController())
         let homeTabItem = UITabBarItem(
-            title: "홈",
+            title: "홈".localized(),
             image: UIImage(systemName: "house"),
             selectedImage: UIImage(systemName: "house.fill")
         )
@@ -73,7 +73,7 @@ final class HomeTabBarController: UITabBarController {
         
         let alarmTab = UINavigationController(rootViewController: AlarmViewController())
         let alarmTabItem = UITabBarItem(
-            title: "알람/타이머",
+            title: "알람/타이머".localized(),
             image: UIImage(systemName: "alarm"),
             selectedImage: UIImage(systemName: "alarm.fill")
         )
@@ -81,7 +81,7 @@ final class HomeTabBarController: UITabBarController {
         
         let profileTab = UINavigationController(rootViewController: ProfileViewController())
         let profileTabItem = UITabBarItem(
-            title: "내 정보",
+            title: "내 정보".localized(),
             image: UIImage(systemName: "person.circle"),
             selectedImage: UIImage(systemName: "person.circle.fill")
         )

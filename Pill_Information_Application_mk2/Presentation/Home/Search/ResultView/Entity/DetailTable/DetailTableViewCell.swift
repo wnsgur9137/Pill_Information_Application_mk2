@@ -12,7 +12,7 @@ final class DetailTableViewCell: UITableViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "제목"
+        label.text = "제목".localized()
         label.font = .systemFont(ofSize: 18.0, weight: .bold)
         label.textColor = .label
         label.numberOfLines = 0
@@ -21,7 +21,7 @@ final class DetailTableViewCell: UITableViewCell {
     
     lazy var contentLabel: UILabel = {
         let label = UILabel()
-        label.text = "내용"
+        label.text = "내용".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 16.0, weight: .regular)
         label.numberOfLines = 0

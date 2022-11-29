@@ -37,7 +37,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var userNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Name"
+        label.text = "이름".localized()
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         label.textColor = .label
         label.numberOfLines = 0
@@ -46,7 +46,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var userUpdateButton: UIButton = {
         let button = UIButton()
-        button.setTitle("회원 정보 변경", for: .normal)
+        button.setTitle("회원 정보 변경".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
 //        button.addTarget(self, action: #selector(userUpdateButtonTapped), for: .touchUpInside)
         return button
@@ -61,7 +61,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var loginoutButton: UIButton = {
         let button = UIButton()
-        button.setTitle("로그아웃", for: .normal)
+        button.setTitle("로그아웃".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
 //        button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         return button
@@ -69,7 +69,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var bookmarkLabel: UILabel = {
         let label = UILabel()
-        label.text = "즐겨찾기"
+        label.text = "즐겨찾기".localized()
         label.font = .systemFont(ofSize: 17.0, weight: .regular)
         label.textColor = .label
         label.textAlignment = .left
@@ -78,7 +78,7 @@ final class ProfileViewController: UIViewController {
     
     private lazy var resetBookmarkButton: UIButton = {
         let button = UIButton()
-        button.setTitle("즐겨찾기 초기화", for: .normal)
+        button.setTitle("즐겨찾기 초기화".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .regular)
 //        button.addTarget(self, action: #selector(resetBookmarkButtonTapped), for: .touchUpInside)
@@ -129,7 +129,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "내 정보"
+        self.navigationItem.title = "내 정보".localized()
         
         // 로그인 체크
         self.loginCheckBool = self.loginCheck()
@@ -181,9 +181,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 vc.medicine = self.starMedicineData
                 self.navigationController?.pushViewController(vc, animated: true)
             case let .failure(error):
-                print("----failure----")
-                let alertCon = UIAlertController(title: "오류", message: "해당 정보를 찾을 수 없습니다.\n잠시후 다시 시도해주십시오.\n\(error)", preferredStyle: UIAlertController.Style.alert)
-                let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                print("----failure----\n\(error)")
+                let alertCon = UIAlertController(title: nil, message: "해당 정보를 찾을 수 없습니다.\n잠시후 다시 시도해주십시오.".localized(), preferredStyle: UIAlertController.Style.alert)
+                let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
                 alertCon.addAction(alertAct)
                 self.present(alertCon, animated: true)
             }
@@ -198,24 +198,24 @@ private extension ProfileViewController {
             .bind(onNext: { [weak self] in
                 if self?.starList == [[]] {
                     let alertCon = UIAlertController(
-                        title: "즐겨찾기가 없습니다.",
-                        message: "알약을 검색하고 즐겨찾기를 추가해 보세요.",
+                        title: "즐겨찾기가 없습니다.".localized(),
+                        message: "알약을 검색하고 즐겨찾기를 추가해 보세요.".localized(),
                         preferredStyle: UIAlertController.Style.alert)
                     let alertAct = UIAlertAction(
-                        title: "확인",
+                        title: "확인".localized(),
                         style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self?.present(alertCon, animated: true, completion: nil)
                 } else {
-                    let alertCon = UIAlertController(title: "즐겨찾기를 초기화하시겠습니까?", message: nil, preferredStyle: UIAlertController.Style.alert)
-                    let alertActYes = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
+                    let alertCon = UIAlertController(title: "즐겨찾기를 초기화하시겠습니까?".localized(), message: nil, preferredStyle: UIAlertController.Style.alert)
+                    let alertActYes = UIAlertAction(title: "예".localized(), style: UIAlertAction.Style.destructive, handler: { _ in
                         UserDefaults.standard.removeObject(forKey: "starList")
                         self?.starList = [[]]
                         DispatchQueue.main.async {
                             self?.bookmarkTableView.reloadData()
                         }
                     })
-                    let alertActNo = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
+                    let alertActNo = UIAlertAction(title: "아니오".localized(), style: UIAlertAction.Style.default)
                     alertCon.addAction(alertActYes)
                     alertCon.addAction(alertActNo)
                     self?.present(alertCon, animated: true)
@@ -228,9 +228,9 @@ private extension ProfileViewController {
                 guard let self = self else { return }
                 print(self.loginCheckBool)
                 if self.loginCheckBool {
-                    let alertCon = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
-                    let alertActCancel = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
-                    let alertActSure = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
+                    let alertCon = UIAlertController(title: "로그아웃".localized(), message: "로그아웃 하시겠습니까?".localized(), preferredStyle: UIAlertController.Style.alert)
+                    let alertActCancel = UIAlertAction(title: "아니오".localized(), style: UIAlertAction.Style.default)
+                    let alertActSure = UIAlertAction(title: "예".localized(), style: UIAlertAction.Style.destructive, handler: { _ in
                         self.logout()
                     })
                     alertCon.addAction(alertActCancel)
@@ -353,8 +353,9 @@ private extension ProfileViewController {
             ].forEach {
                 $0.isHidden = false
             }
-            loginoutButton.setTitle("로그아웃", for: .normal)
-            userNameLabel.text = "\(String(describing: UserDefaults.standard.string(forKey: "nickname")!)) 님"
+            loginoutButton.setTitle("로그아웃".localized(), for: .normal)
+//            userNameLabel.text = "\(String(describing: UserDefaults.standard.string(forKey: "nickname")!)) 님"
+            userNameLabel.text = "%s 님".localized(with: String(describing: UserDefaults.standard.string(forKey: "nickname")!))
             userNameLabel.font = .systemFont(ofSize: 20.0, weight: .bold)
         } else {
             [
@@ -362,8 +363,8 @@ private extension ProfileViewController {
             ].forEach {
                 $0.isHidden = true
             }
-            loginoutButton.setTitle("로그인", for: .normal)
-            userNameLabel.text = "로그인이 \n되어있지 않습니다."
+            loginoutButton.setTitle("로그인".localized(), for: .normal)
+            userNameLabel.text = "로그인이 \n되어있지 않습니다.".localized()
             userNameLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         }
         

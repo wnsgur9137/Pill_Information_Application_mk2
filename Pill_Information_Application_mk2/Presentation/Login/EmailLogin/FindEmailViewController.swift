@@ -32,7 +32,7 @@ final class FindEmailViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "이메일 찾기"
+        label.text = NSLocalizedString("이메일 찾기", comment: "Find Email")
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .regular)
         label.textAlignment = .center
@@ -41,7 +41,7 @@ final class FindEmailViewController: UIViewController {
     
     private lazy var nicknameLabel: UILabel = {
         let label = UILabel()
-        label.text = "닉네임"
+        label.text = NSLocalizedString("닉네임", comment: "Nickname")
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textAlignment = .center
@@ -59,7 +59,7 @@ final class FindEmailViewController: UIViewController {
     
     private lazy var findEmailButton: UIButton = {
         let button = UIButton()
-        button.setTitle("이메일 찾기", for: .normal)
+        button.setTitle(NSLocalizedString("이메일 찾기", comment: "Find Email"), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         button.addTarget(self, action: #selector(findEmailButtonTapped), for: .touchUpInside)
@@ -80,7 +80,7 @@ final class FindEmailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "이메일 찾기"
+        self.title = NSLocalizedString("이메일 찾기", comment: "Find Email")
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
         setupLayout()
     }
@@ -132,8 +132,8 @@ private extension FindEmailViewController {
 //                }
 //            }
         } else {
-            let alertCon = UIAlertController(title: "닉네임을 입력해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
-            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            let alertCon = UIAlertController(title: NSLocalizedString("닉네임을 입력해 주십시오", comment: "Input your Nickname"), message: nil, preferredStyle: UIAlertController.Style.alert)
+            let alertAct = UIAlertAction(title: NSLocalizedString("확인", comment: "Ok"), style: UIAlertAction.Style.default)
             alertCon.addAction(alertAct)
             self.present(alertCon, animated: true, completion: nil)
         }

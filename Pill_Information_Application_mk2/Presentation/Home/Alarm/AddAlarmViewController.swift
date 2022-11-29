@@ -28,7 +28,7 @@ final class AddAlarmViewController: UIViewController {
     
     private lazy var pillNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "먹을 약 이름:"
+        label.text = "먹을 약 이름:".localized()
         label.textColor = .label
         label.font = .systemFont(ofSize: 17.0, weight: .regular)
         label.textAlignment = .center
@@ -52,7 +52,7 @@ final class AddAlarmViewController: UIViewController {
     
     private lazy var setAlramButton: UIButton = {
         let button = UIButton()
-        button.setTitle("알람 설정", for: .normal)
+        button.setTitle("알람 설정".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(setAlramButtonTapped), for: .touchUpInside)
         return button
@@ -68,7 +68,7 @@ final class AddAlarmViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "알람 설정"
+        self.navigationItem.title = "알람 설정".localized()
         
         bind()
         setupLayout()
