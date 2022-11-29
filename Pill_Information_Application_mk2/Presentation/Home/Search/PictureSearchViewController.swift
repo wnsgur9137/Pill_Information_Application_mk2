@@ -29,22 +29,22 @@ final class PictureSearchViewController: UIViewController {
         "기타".localized()
     ]
     var medicineColorList = [
-        "하양",
-        "빨강",
-        "분홍",
-        "자주",
-        "주황",
-        "갈색",
-        "노랑",
-        "연두",
-        "초록",
-        "청록",
-        "파랑",
-        "남색",
-        "보라",
-        "회색",
-        "검정",
-        "투명"
+        "하양".localized(),
+        "빨강".localized(),
+        "분홍".localized(),
+        "자주".localized(),
+        "주황".localized(),
+        "갈색".localized(),
+        "노랑".localized(),
+        "연두".localized(),
+        "초록".localized(),
+        "청록".localized(),
+        "파랑".localized(),
+        "남색".localized(),
+        "보라".localized(),
+        "회색".localized(),
+        "검정".localized(),
+        "투명".localized()
     ]
     var medicineLineList = [
         "없음".localized(),
@@ -160,6 +160,7 @@ final class PictureSearchViewController: UIViewController {
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     

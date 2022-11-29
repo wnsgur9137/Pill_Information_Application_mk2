@@ -89,7 +89,8 @@ final class NoticeDetailViewController: UIViewController {
         bind()
         setupLayout()
         
-        if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" {
+        if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" ||
+            UserDefaults.standard.string(forKey: "email") == "admin@adminAcc.com" {
             addAdminLayout()
         }
         keyboardAttribute()
@@ -109,7 +110,7 @@ final class NoticeDetailViewController: UIViewController {
         noticeId = id
         titleLabel.text = title.removingPercentEncoding
 //        writerLabel.text = "작성자: \(String(describing: writer.removingPercentEncoding ?? "Admin"))"
-        writerLabel.text = "작성자: %s".localized(with: String(describing: writer.removingPercentEncoding ?? "Admin"))
+        writerLabel.text = "작성자: %@".localized(with: String(describing: writer.removingPercentEncoding ?? "Admin"))
         contentTextView.text = content.removingPercentEncoding?.replacingOccurrences(of: "\\n", with: "\n")
     }
 }
@@ -176,7 +177,7 @@ private extension NoticeDetailViewController {
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().inset(100)
+            $0.trailing.equalToSuperview().inset(130)
         }
         
         writerLabel.snp.makeConstraints {

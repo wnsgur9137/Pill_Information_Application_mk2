@@ -22,7 +22,7 @@ final class HomeTabBarController: UITabBarController {
         loginCheck()
         
 //        UserDefaults.standard.removeObject(forKey: "starList")
-        
+//        
 //        do {
 //            // 자동 로그인 제거
 //            UserDefaults.standard.removeObject(forKey: "loginType")

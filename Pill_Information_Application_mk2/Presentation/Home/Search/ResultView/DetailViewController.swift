@@ -384,7 +384,8 @@ private extension DetailViewController {
         directionButton.snp.makeConstraints {
             $0.top.equalTo(classLabel.snp.top)
             $0.trailing.equalTo(titleLabel.snp.trailing)
-            $0.width.equalTo(100.0)
+//            $0.width.equalTo(100.0)
+//            $0.height.equalTo(40)
         }
         
         pillImageView.snp.makeConstraints {

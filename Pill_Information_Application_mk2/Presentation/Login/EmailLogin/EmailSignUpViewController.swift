@@ -61,7 +61,7 @@ final class EmailSignUpViewController: UIViewController {
         emailLabel.textColor = .label
         emailLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         emailLabel.textAlignment = .center
-        
+        emailLabel.numberOfLines = 0
         return emailLabel
     }()
     
@@ -80,7 +80,7 @@ final class EmailSignUpViewController: UIViewController {
         label.textColor = .systemRed
         label.font = .systemFont(ofSize: 15.0, weight: .bold)
         label.textAlignment = .right
-        
+        label.numberOfLines = 0
         return label
     }()
     
@@ -90,7 +90,7 @@ final class EmailSignUpViewController: UIViewController {
         passwdLabel.textColor = .label
         passwdLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         passwdLabel.textAlignment = .center
-        
+        passwdLabel.numberOfLines = 0
         return passwdLabel
     }()
     
@@ -108,7 +108,7 @@ final class EmailSignUpViewController: UIViewController {
         label.textColor = .systemRed
         label.font = .systemFont(ofSize: 15.0, weight: .bold)
         label.textAlignment = .right
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         
         return label
     }()
@@ -119,7 +119,7 @@ final class EmailSignUpViewController: UIViewController {
         passwdCheckLabel.textColor = .label
         passwdCheckLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         passwdCheckLabel.textAlignment = .center
-        
+        passwdCheckLabel.numberOfLines = 0
         return passwdCheckLabel
     }()
     
@@ -137,7 +137,7 @@ final class EmailSignUpViewController: UIViewController {
         label.textColor = .systemRed
         label.font = .systemFont(ofSize: 15.0, weight: .bold)
         label.textAlignment = .right
-        
+        label.numberOfLines = 0
         return label
     }()
     
@@ -454,9 +454,9 @@ private extension EmailSignUpViewController {
             $0.width.equalTo(100)
         }
         
-        passwdCheckTextField.snp.makeConstraints {
-            $0.height.equalTo(32)
-        }
+//        passwdCheckTextField.snp.makeConstraints {
+//            $0.height.equalTo(32)
+//        }
         
         passwdCheckVerticalStackView.snp.makeConstraints {
             $0.top.equalTo(passwdVerticalStackView.snp.bottom).offset(1)

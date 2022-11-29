@@ -106,7 +106,7 @@ private extension FindEmailResultViewController {
     }
     
     func setupLayoutInfo() {
-        self.emailLabel.text = "해당 닉네임의 이메일은\n%d 입니다.".localized(with: email!, comment: "")
+        self.emailLabel.text = "해당 닉네임의 이메일은\n%@ 입니다.".localized(with: email!, comment: "")
 //        self.emailLabel.text = "해당 닉네임의 이메일은\n\(String(describing: email!)) 입니다."
     }
     

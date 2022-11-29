@@ -284,7 +284,7 @@ private extension ProfileViewController {
     
     func loginCheck() -> Bool {
         let userEmail = UserDefaults.standard.string(forKey: "email")
-        if userEmail == "" {
+        if userEmail == "" || userEmail == nil {
             return false
         } else {
             return true
@@ -355,7 +355,8 @@ private extension ProfileViewController {
             }
             loginoutButton.setTitle("로그아웃".localized(), for: .normal)
 //            userNameLabel.text = "\(String(describing: UserDefaults.standard.string(forKey: "nickname")!)) 님"
-            userNameLabel.text = "%s 님".localized(with: String(describing: UserDefaults.standard.string(forKey: "nickname")!))
+            let userNickname = String(describing: UserDefaults.standard.string(forKey: "nickname")!)
+            userNameLabel.text = "%@ 님".localized(with: userNickname)
             userNameLabel.font = .systemFont(ofSize: 20.0, weight: .bold)
         } else {
             [

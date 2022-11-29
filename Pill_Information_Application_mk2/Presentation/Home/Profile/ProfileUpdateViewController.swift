@@ -49,6 +49,7 @@ final class ProfileUpdateViewController: UIViewController {
         label.font = .systemFont(ofSize: 14.0, weight: .regular)
         label.textColor = .label
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -70,7 +71,7 @@ final class ProfileUpdateViewController: UIViewController {
     
     private lazy var changeNicknameButton: UIButton = {
         let button = UIButton()
-        button.setTitle("닉네임 변경".localized(), for: .normal)
+        button.setTitle("닉네임 변경 버튼".localized(), for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17.0, weight: .bold)
         return button
@@ -96,6 +97,7 @@ final class ProfileUpdateViewController: UIViewController {
         label.text = "비밀번호 변경".localized()
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         label.textColor = .label
+        label.numberOfLines = 0
         return label
     }()
     
@@ -105,6 +107,7 @@ final class ProfileUpdateViewController: UIViewController {
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -114,6 +117,7 @@ final class ProfileUpdateViewController: UIViewController {
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -123,6 +127,7 @@ final class ProfileUpdateViewController: UIViewController {
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -155,6 +160,7 @@ final class ProfileUpdateViewController: UIViewController {
         label.text = ""
         label.textColor = .systemRed
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -482,7 +488,7 @@ private extension ProfileUpdateViewController {
                         if let error = error {
                             let alertCon = UIAlertController(
                                 title: nil,
-                                message: "비밀번호 재설정 이메일을 전송에 실패했습니다.\n이메일 확인 및 고객지원 연락 부탁드립니다.\n%s".localized(with: error as CVarArg),
+                                message: "비밀번호 재설정 이메일을 전송에 실패했습니다.\n이메일 확인 및 고객지원 연락 부탁드립니다.\n%@".localized(with: error as CVarArg),
                                 preferredStyle: UIAlertController.Style.alert)
                             let alertAct = UIAlertAction(
                                 title: "확인".localized(),
@@ -641,20 +647,27 @@ private extension ProfileUpdateViewController {
           }
         }
         
-        if userDefaultCheck && dbCheck && authCheck {
+        let alertCon = UIAlertController(title: "성공".localized(), message: "회원 탈퇴가 완료되었습니다.".localized(), preferredStyle: UIAlertController.Style.alert)
+        let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default, handler: { _ in
             
-            let alertCon = UIAlertController(title: "성공".localized(), message: "회원 탈퇴가 완료되었습니다.".localized(), preferredStyle: UIAlertController.Style.alert)
-            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default, handler: { _ in
-                
-            })
-            alertCon.addAction(alertAct)
-            self.present(alertCon, animated: true, completion: nil)
-        } else {
-            let alertCon = UIAlertController(title: "오류".localized(), message: "회원 탈퇴에 실패했습니다. 고객문의를 부탁드립니다.".localized(), preferredStyle: UIAlertController.Style.alert)
-            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
-            alertCon.addAction(alertAct)
-            self.present(alertCon, animated: true, completion: nil)
-        }
+        })
+        alertCon.addAction(alertAct)
+        self.present(alertCon, animated: true, completion: nil)
+        
+//        if userDefaultCheck && dbCheck && authCheck {
+//            
+//            let alertCon = UIAlertController(title: "성공".localized(), message: "회원 탈퇴가 완료되었습니다.".localized(), preferredStyle: UIAlertController.Style.alert)
+//            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default, handler: { _ in
+//                
+//            })
+//            alertCon.addAction(alertAct)
+//            self.present(alertCon, animated: true, completion: nil)
+//        } else {
+//            let alertCon = UIAlertController(title: "오류".localized(), message: "회원 탈퇴에 실패했습니다. 고객문의를 부탁드립니다.".localized(), preferredStyle: UIAlertController.Style.alert)
+//            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default)
+//            alertCon.addAction(alertAct)
+//            self.present(alertCon, animated: true, completion: nil)
+//        }
     }
     
     
@@ -679,12 +692,12 @@ private extension ProfileUpdateViewController {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(30)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(15)
             $0.centerX.equalToSuperview()
         }
         
         myInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(30)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(15)
             $0.leading.equalToSuperview().offset(40)
             $0.height.equalTo(34)
         }
@@ -703,9 +716,9 @@ private extension ProfileUpdateViewController {
         }
         
         passwdChangeLabel.snp.makeConstraints {
-            $0.top.equalTo(userInfoStackView.snp.bottom).offset(40)
+            $0.top.equalTo(userInfoStackView.snp.bottom).offset(30)
             $0.leading.equalTo(myInfoLabel.snp.leading)
-            $0.height.equalTo(34)
+            $0.height.equalTo(40)
             
             [
                 nowPasswdLabel,
@@ -750,7 +763,7 @@ private extension ProfileUpdateViewController {
             $0.top.equalTo(warningWithdrawLabel.snp.bottom).offset(10)
             $0.leading.equalTo(myInfoLabel.snp.leading)
             $0.trailing.equalToSuperview().inset(40)
-            $0.height.equalTo(34)
+            $0.height.equalTo(40)
             withdrawPasswdCheckLabel.snp.makeConstraints {
                 $0.width.equalTo(100)
             }
@@ -787,7 +800,7 @@ private extension ProfileUpdateViewController {
             if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                 let keyboardRectangle = keyboardFrame.cgRectValue
                 let keyboardHeight = keyboardRectangle.height
-                self.view.frame.origin.y -= (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)!)
+                self.view.frame.origin.y -= (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)! - 130)
 //                self.view.frame.origin.y -= keyboardHeight
             }
         }
@@ -800,7 +813,7 @@ private extension ProfileUpdateViewController {
         if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
-            self.view.frame.origin.y += (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)!)
+            self.view.frame.origin.y += (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)! - 130)
 //            self.view.frame.origin.y += keyboardHeight
         }
     }
