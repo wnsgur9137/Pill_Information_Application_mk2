@@ -49,6 +49,7 @@
 		6661B00A292C678C003F18B0 /* SearchHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B009292C678C003F18B0 /* SearchHistoryCell.swift */; };
 		6661B00C292CC41F003F18B0 /* RxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B00B292CC41F003F18B0 /* RxViewController.swift */; };
 		6661B00E29343B47003F18B0 /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B00D29343B47003F18B0 /* KeyboardNotification.swift */; };
+		6661B0132935C3B6003F18B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6661B0152935C3B6003F18B0 /* Localizable.strings */; };
 		66ABD626290369490050D048 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66ABD625290369490050D048 /* GoogleService-Info.plist */; };
 		66ABD62A29036E3A0050D048 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62929036E3A0050D048 /* HomeTabBarController.swift */; };
 		66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62B29038EB30050D048 /* SearchViewController.swift */; };
@@ -123,6 +124,8 @@
 		6661B009292C678C003F18B0 /* SearchHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryCell.swift; sourceTree = "<group>"; };
 		6661B00B292CC41F003F18B0 /* RxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxViewController.swift; sourceTree = "<group>"; };
 		6661B00D29343B47003F18B0 /* KeyboardNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardNotification.swift; sourceTree = "<group>"; };
+		6661B0142935C3B6003F18B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6661B0162935C3E5003F18B0 /* ko-KR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ko-KR"; path = "ko-KR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		66ABD625290369490050D048 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66ABD62929036E3A0050D048 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		66ABD62B29038EB30050D048 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +211,7 @@
 				665E927628F7BD130090B51F /* AppDelegate.swift */,
 				665E927828F7BD130090B51F /* SceneDelegate.swift */,
 				6661B00B292CC41F003F18B0 /* RxViewController.swift */,
+				6661B0152935C3B6003F18B0 /* Localizable.strings */,
 				6661AFC7291A65C4003F18B0 /* Network */,
 				6661AFC8291A65F9003F18B0 /* Entities */,
 				665E929728F88D140090B51F /* Presentation */,
@@ -530,6 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				665E928328F7BD140090B51F /* LaunchScreen.storyboard in Resources */,
+				6661B0132935C3B6003F18B0 /* Localizable.strings in Resources */,
 				665E928028F7BD140090B51F /* Assets.xcassets in Resources */,
 				66ABD626290369490050D048 /* GoogleService-Info.plist in Resources */,
 			);
@@ -655,6 +660,15 @@
 				6661AFFA292B5467003F18B0 /* ko-KR */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		6661B0152935C3B6003F18B0 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6661B0142935C3B6003F18B0 /* en */,
+				6661B0162935C3E5003F18B0 /* ko-KR */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -783,7 +797,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 202211272;
+				CURRENT_PROJECT_VERSION = 202211284;
 				DEVELOPMENT_TEAM = VW2UR5Y845;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pill_Information_Application_mk2/Info.plist;
@@ -799,7 +813,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.41;
+				MARKETING_VERSION = 1.1.52;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.junhyeok.Pill-Information-Application-mk2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -818,7 +832,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 202211272;
+				CURRENT_PROJECT_VERSION = 202211284;
 				DEVELOPMENT_TEAM = VW2UR5Y845;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pill_Information_Application_mk2/Info.plist;
@@ -834,7 +848,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.41;
+				MARKETING_VERSION = 1.1.52;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.junhyeok.Pill-Information-Application-mk2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

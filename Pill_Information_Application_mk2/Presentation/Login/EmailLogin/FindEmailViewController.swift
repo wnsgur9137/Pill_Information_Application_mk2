@@ -7,12 +7,12 @@
 
 import UIKit
 import SnapKit
-import Firebase
+//import Firebase
 
 final class FindEmailViewController: UIViewController {
     
-    let db = Firestore.firestore()
-    let userDB = Firestore.firestore().collection("USER")
+//    let db = Firestore.firestore()
+//    let userDB = Firestore.firestore().collection("USER")
     
     var keyboardCheck = true
     
@@ -110,21 +110,27 @@ private extension FindEmailViewController {
     
     @objc func findEmailButtonTapped() {
         if self.nicknameLabel.text != "" {
-            let query = self.userDB.whereField("NickName", isEqualTo: self.nicknameTextField.text!)
-            query.getDocuments { (qs, err) in
-                if qs!.documents.isEmpty {
-                    let alertCon = UIAlertController(title: "회원 정보가 없습니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
-                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
-                    alertCon.addAction(alertAct)
-                    self.present(alertCon, animated: true, completion: nil)
-                } else {
-                    for document in qs!.documents {
-                        let vc = FindEmailResultViewController()
-                        vc.email = String(describing: document.data()["Email"]!)
-                        self.navigationController?.pushViewController(vc, animated: true)
-                    }
-                }
-            }
+            
+            let nickname = nicknameTextField.text ?? ""
+            
+            let param = "?nickname=\(nickname)"
+            
+            let url = "\(ubuntuServer.host + ubuntuServer.path)/getUserInfo/\(param)"
+//            let query = self.userDB.whereField("NickName", isEqualTo: self.nicknameTextField.text!)
+//            query.getDocuments { (qs, err) in
+//                if qs!.documents.isEmpty {
+//                    let alertCon = UIAlertController(title: "회원 정보가 없습니다.", message: nil, preferredStyle: UIAlertController.Style.alert)
+//                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+//                    alertCon.addAction(alertAct)
+//                    self.present(alertCon, animated: true, completion: nil)
+//                } else {
+//                    for document in qs!.documents {
+//                        let vc = FindEmailResultViewController()
+//                        vc.email = String(describing: document.data()["Email"]!)
+//                        self.navigationController?.pushViewController(vc, animated: true)
+//                    }
+//                }
+//            }
         } else {
             let alertCon = UIAlertController(title: "닉네임을 입력해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)

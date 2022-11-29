@@ -239,7 +239,7 @@ private extension FindPasswdViewController {
                 let keyboardRectangle = keyboardFrame.cgRectValue
                 let keyboardHeight = keyboardRectangle.height
     //            self.view.frame.origin.y -= (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)!)
-                self.view.frame.origin.y -= keyboardHeight
+                self.view.frame.origin.y -= ( keyboardHeight - 100)
             }
         }
     }
@@ -252,7 +252,7 @@ private extension FindPasswdViewController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
 //            self.view.frame.origin.y += (keyboardHeight-(self.tabBarController?.tabBar.frame.size.height)!)
-            self.view.frame.origin.y += keyboardHeight
+            self.view.frame.origin.y += (keyboardHeight - 100)
         }
     }
 }

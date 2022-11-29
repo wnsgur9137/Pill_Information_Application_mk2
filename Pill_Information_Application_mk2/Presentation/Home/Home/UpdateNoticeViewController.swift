@@ -66,6 +66,17 @@ final class UpdateNoticeViewController: UIViewController {
         self.navigationItem.title = "공지사항 추가"
         bind()
         setupLayout()
+        keyboardAttribute()
+    }
+    
+    func keyboardAttribute() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+            tapGesture.cancelsTouchesInView = true
+        self.view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
     }
     
     func setData(id: Int, title: String, content: String) {
@@ -97,7 +108,8 @@ private extension UpdateNoticeViewController {
                             print("success: \(String(describing: data))")
                             let alertCon = UIAlertController(title: "성공", message: "공지사항 수정 완료", preferredStyle: UIAlertController.Style.alert)
                             let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: { _ in
-                                self.dismiss(animated: true)
+//                                self.dismiss(animated: true)
+                                self.navigationController?.popViewController(animated: true)
                             })
                             alertCon.addAction(alertAct)
                             self.present(alertCon, animated: true, completion: nil)

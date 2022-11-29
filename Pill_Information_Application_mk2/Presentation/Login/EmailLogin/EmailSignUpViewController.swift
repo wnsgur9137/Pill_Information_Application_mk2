@@ -325,7 +325,9 @@ private extension EmailSignUpViewController {
             
             let urlEmail = emailTextField.text ?? ""
             
-            let param = "?email=\(urlEmail)"
+            var param = "?email=\(urlEmail)"
+            param = param.replacingOccurrences(of: "@", with: "%40")
+            param = param.replacingOccurrences(of: ".", with: "%2E")
             
 //            let url = "\(FastAPI.host + FastAPI.path)/getUserInfo/\(param)"
             let url = "\(ubuntuServer.host + ubuntuServer.path)/getUserInfo/\(param)"

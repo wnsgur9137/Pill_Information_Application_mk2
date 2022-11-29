@@ -1,0 +1,44 @@
+//
+//  Localizable.strings
+//  Pill_Information_Application_mk2
+//
+//  Created by 이준혁 on 2022/11/29.
+//
+
+// Alert Action
+"예" = "Yes";
+"아니오" = "Cancel";
+"확인" = "OK";
+
+// 로그인
+"회원가입" = "SignUp";
+"회원 가입" = "SignUp";
+"로그인" = "SignIn";
+"로그아웃" = "LogOut";
+"회원 정보 변경" = "Update User Info";
+"이메일" = "Email";
+"이메일 로그인" = "Email Login";
+"이메일 찾기" = "Find Email";
+"비밀번호" = "Password";
+"비밀번호 찾기" = "Find Password";
+"비밀번호 확인" = "PasswordCheck";
+
+"이메일과 비밀번호를 확인해 주십시오" = "Check Email and Password";
+"이메일과 비밀번호를 입력해 주십시오" = "Check Email and Password";
+
+// SignUp
+"사용할 닉네임을 입력해주세요." = "";
+"닉네임을 입력해 주세요" = "";
+
+// ProfileViewController
+"로그인이 되어있지 않습니다" = "";
+
+// 로그인 Alert
+"로그아웃 하시겠습니까?" = "";
+"로그인에 실패했습니다" = "Failed Login";
+
+
+// 즐겨찾기
+"즐겨찾기" = "BookMark";
+"즐겨찾기 초기화" = "Reset BookMark";
+

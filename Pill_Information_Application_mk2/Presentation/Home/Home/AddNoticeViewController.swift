@@ -14,6 +14,8 @@ import RxCocoa
 final class AddNoticeViewController: UIViewController {
     let disposeBag = DisposeBag()
     
+    var keyboardCheck = true
+    
     private lazy var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -64,6 +66,17 @@ final class AddNoticeViewController: UIViewController {
         self.navigationItem.title = "공지사항 추가"
         bind()
         setupLayout()
+        keyboardAttribute()
+    }
+    
+    func keyboardAttribute() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+            tapGesture.cancelsTouchesInView = true
+        self.view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
     }
 }
 

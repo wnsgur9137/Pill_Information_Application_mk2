@@ -92,6 +92,17 @@ final class NoticeDetailViewController: UIViewController {
         if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" {
             addAdminLayout()
         }
+        keyboardAttribute()
+    }
+    
+    func keyboardAttribute() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+            tapGesture.cancelsTouchesInView = true
+        self.view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc func hideKeyboard() {
+        self.view.endEditing(true)
     }
     
     func setData(id: Int, title: String, writer: String, content: String) {

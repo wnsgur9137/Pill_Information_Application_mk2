@@ -47,7 +47,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.text = "Email Login"
+        titleLabel.text = String(format: NSLocalizedString("이메일 로그인", comment: "Email Login"))
         titleLabel.textColor = .label
         titleLabel.font = .systemFont(ofSize: 20.0, weight: .regular)
         titleLabel.textAlignment = .center
@@ -57,7 +57,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var emailLabel: UILabel = {
         let emailLabel = UILabel()
-        emailLabel.text = "이메일"
+        emailLabel.text = String(format: NSLocalizedString("이메일", comment: "Email"))
         emailLabel.textColor = .label
         emailLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         emailLabel.textAlignment = .center
@@ -76,7 +76,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var passwdLabel: UILabel = {
         let passwdLabel = UILabel()
-        passwdLabel.text = "비밀번호"
+        passwdLabel.text = NSLocalizedString("비밀번호", comment: "Password")
         passwdLabel.textColor = .label
         passwdLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
         passwdLabel.textAlignment = .center
@@ -94,7 +94,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var signinButton: UIButton = {
         let signinButton = UIButton()
-        signinButton.setTitle("로그인", for: .normal)
+        signinButton.setTitle(NSLocalizedString("로그인", comment: "LogIn"), for: .normal)
         signinButton.setTitleColor(.systemBlue, for: .normal)
         signinButton.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         signinButton.addTarget(self, action: #selector(signInButtonTapped), for: .touchUpInside)
@@ -103,7 +103,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var findEmailButton: UIButton = {
         let findEmailButton = UIButton()
-        findEmailButton.setTitle("이메일 찾기", for: .normal)
+        findEmailButton.setTitle(NSLocalizedString("이메일 찾기", comment: "Find Email"), for: .normal)
         findEmailButton.setTitleColor(.systemBlue, for: .normal)
         findEmailButton.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         findEmailButton.addTarget(self, action: #selector(findEmailButtonTapped), for: .touchUpInside)
@@ -112,7 +112,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var findPasswdButton: UIButton = {
         let findPasswdButton = UIButton()
-        findPasswdButton.setTitle("비밀번호 찾기", for: .normal)
+        findPasswdButton.setTitle(NSLocalizedString("비밀번호 찾기", comment: "Find Password"), for: .normal)
         findPasswdButton.setTitleColor(.systemBlue, for: .normal)
         findPasswdButton.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         findPasswdButton.addTarget(self, action: #selector(findPasswdButtonTapped), for: .touchUpInside)
@@ -121,7 +121,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var signupButton: UIButton = {
         let signupButton = UIButton()
-        signupButton.setTitle("회원가입", for: .normal)
+        signupButton.setTitle(NSLocalizedString("회원가입", comment: "SignUp"), for: .normal)
         signupButton.setTitleColor(.systemBlue, for: .normal)
         signupButton.titleLabel?.font = .systemFont(ofSize: 14.0, weight: .regular)
         signupButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
@@ -156,7 +156,7 @@ final class EmailLoginViewController: UIViewController {
     
     private lazy var buttonStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
-            findEmailButton,
+//            findEmailButton,
             findPasswdButton,
             signupButton
         ])
@@ -170,7 +170,7 @@ final class EmailLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "EmailLogin"
+        self.title = NSLocalizedString("이메일 로그인", comment: "Email Login")
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
         self.navigationItem.leftBarButtonItem = dismissButton
         self.addKeyboardNotifications()
@@ -236,11 +236,11 @@ private extension EmailLoginViewController {
                                 } catch {
                                     print("failure: \(error)")
                                     let alertCon = UIAlertController(
-                                        title: "오류",
-                                        message: "로그인에 실패했습니다.\n\(error)",
+                                        title: nil,
+                                        message: NSLocalizedString("로그인에 실패했습니다", comment: "Failed Login"),
                                         preferredStyle: UIAlertController.Style.alert)
                                     let alertAct = UIAlertAction(
-                                        title: "확인",
+                                        title: NSLocalizedString("확인", comment: "Ok"),
                                         style: UIAlertAction.Style.destructive,
                                         handler: { _ in return }
                                     )
@@ -251,11 +251,11 @@ private extension EmailLoginViewController {
                             case let .failure(error):
                                 print("failure: \(error)")
                                 let alertCon = UIAlertController(
-                                    title: "오류",
-                                    message: "로그인에 실패했습니다.\n\(error)",
+                                    title: "Error",
+                                    message: NSLocalizedString("로그인에 실패했습니다", comment: "Failed Login"),
                                     preferredStyle: UIAlertController.Style.alert)
                                 let alertAct = UIAlertAction(
-                                    title: "확인",
+                                    title: NSLocalizedString("확인", comment: "Ok"),
                                     style: UIAlertAction.Style.destructive,
                                     handler: { _ in return }
                                 )
@@ -284,16 +284,16 @@ private extension EmailLoginViewController {
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
                 } else {
-                    let alertCon = UIAlertController(title: "이메일과 비밀번호를 확인해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
-                    let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                    let alertCon = UIAlertController(title: NSLocalizedString("이메일과 비밀번호를 확인해 주십시오", comment: "Check Email and Password"), message: nil, preferredStyle: UIAlertController.Style.alert)
+                    let alertAct = UIAlertAction(title: NSLocalizedString("확인", comment: "Ok"), style: UIAlertAction.Style.default)
                     alertCon.addAction(alertAct)
                     self.present(alertCon, animated: true, completion: nil)
                 }
             }
                 
         } else {
-            let alertCon = UIAlertController(title: "이메일과 비밀번호를 입력해 주십시오.", message: nil, preferredStyle: UIAlertController.Style.alert)
-            let alertAct = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+            let alertCon = UIAlertController(title: NSLocalizedString("이메일과 비밀번호를 입력해 주십시오", comment: "Check Email and Password"), message: nil, preferredStyle: UIAlertController.Style.alert)
+            let alertAct = UIAlertAction(title: NSLocalizedString("확인", comment: "Ok"), style: UIAlertAction.Style.default)
             alertCon.addAction(alertAct)
             self.present(alertCon, animated: true, completion: nil)
         }
