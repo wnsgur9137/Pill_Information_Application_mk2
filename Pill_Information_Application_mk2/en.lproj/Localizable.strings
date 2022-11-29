@@ -314,7 +314,7 @@ Please match the format of 8 to 20 lengths.";
 //NicknameSetViewController
 "사용할 닉네임을 입력해주세요" = "Please enter your nickname";
 "닉네임을 입력해 주세요" = "Please enter your nickname";
-"닉네임은 2자 이상, 8자 이하로 설정해주세요." = "Please set your nickname to at\nleast 2 characters and at least 8 characters."
+"닉네임은 2자 이상, 8자 이하로 설정해주세요." = "Please set your nickname to at\nleast 2 characters and at least 8 characters.";
 "중복된 닉네임입니다." = "It's a duplicate nickname.";
 "중복된 이메일입니다." = "It's a duplicate email.";
 "환영합니다." = "welcome!";
