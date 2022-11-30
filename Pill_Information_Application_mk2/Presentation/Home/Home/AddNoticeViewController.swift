@@ -86,7 +86,7 @@ private extension AddNoticeViewController {
         addNoticeButton.rx.tap
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
-                
+                self.view.endEditing(true)
                 let urlTitle = (self.titleTextField.text ?? "").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 let urlWriter = (UserDefaults.standard.string(forKey: "nickname")!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 let urlContent = (self.contentTextView.text ?? "").replacingOccurrences(of: "\n", with: "%5Cn").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!

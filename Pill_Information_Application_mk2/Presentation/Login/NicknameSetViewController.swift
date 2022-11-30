@@ -115,6 +115,7 @@ private extension NicknameSetViewController {
     }
     
     @objc func signUpButtonTapped() {
+        self.view.endEditing(true)
         // 유저 생성
         if !nickNameBool {
             let alertCon = UIAlertController(title: "닉네임은 2자 이상, 8자 이하로 설정해주세요.".localized(), message: nil, preferredStyle: UIAlertController.Style.alert)

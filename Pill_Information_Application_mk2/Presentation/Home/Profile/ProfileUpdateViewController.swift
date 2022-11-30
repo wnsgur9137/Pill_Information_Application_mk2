@@ -194,6 +194,7 @@ final class ProfileUpdateViewController: UIViewController {
         label.textColor = .label
         label.font = .systemFont(ofSize: 14.0, weight: .bold)
         label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -379,7 +380,7 @@ private extension ProfileUpdateViewController {
         changeNicknameButton.rx.tap
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
-                
+                self.view.endEditing(true)
                 if !self.nicknameLengthCheck {
                     let alertCon = UIAlertController(
                         title: "닉네임은 2글자 이상, 8자 이하로 설정해 주세요.".localized(),
@@ -483,6 +484,7 @@ private extension ProfileUpdateViewController {
         changePasswdButton.rx.tap
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
+                self.view.endEditing(true)
                 if self.passwdChack {
                     Auth.auth().sendPasswordReset(withEmail: UserDefaults.standard.string(forKey: "email")!) { error in
                         if let error = error {
@@ -519,6 +521,7 @@ private extension ProfileUpdateViewController {
         withdrawButton.rx.tap
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
+                self.view.endEditing(true)
                 let alertCon = UIAlertController(
                     title: "경고".localized(),
                     message: "정말로 탈퇴하시겠습니까?".localized(),
@@ -648,17 +651,17 @@ private extension ProfileUpdateViewController {
         }
         
         let alertCon = UIAlertController(title: "성공".localized(), message: "회원 탈퇴가 완료되었습니다.".localized(), preferredStyle: UIAlertController.Style.alert)
-        let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default, handler: { _ in
-            
+        let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default, handler: { [weak self] _ in
+            self?.dismiss(animated: true)
         })
         alertCon.addAction(alertAct)
         self.present(alertCon, animated: true, completion: nil)
         
 //        if userDefaultCheck && dbCheck && authCheck {
-//            
+//
 //            let alertCon = UIAlertController(title: "성공".localized(), message: "회원 탈퇴가 완료되었습니다.".localized(), preferredStyle: UIAlertController.Style.alert)
 //            let alertAct = UIAlertAction(title: "확인".localized(), style: UIAlertAction.Style.default, handler: { _ in
-//                
+//
 //            })
 //            alertCon.addAction(alertAct)
 //            self.present(alertCon, animated: true, completion: nil)

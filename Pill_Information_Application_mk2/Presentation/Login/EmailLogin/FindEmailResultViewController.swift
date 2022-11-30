@@ -87,6 +87,7 @@ final class FindEmailResultViewController: UIViewController {
 private extension FindEmailResultViewController {
     
     @objc func gotoEmailLoginButtonTapped() {
+        self.view.endEditing(true)
         let controllers = self.navigationController?.viewControllers
         for vc in controllers! {
             if vc is EmailLoginViewController {
@@ -96,6 +97,7 @@ private extension FindEmailResultViewController {
     }
     
     @objc func gotoFindPasswdButtonTapped() {
+        self.view.endEditing(true)
         let controllers = self.navigationController?.viewControllers
         for vc in controllers! {
             if vc is EmailLoginViewController {

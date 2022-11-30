@@ -318,6 +318,7 @@ private extension EmailSignUpViewController {
     }
     
     @objc func signupButtonTapped() {
+        self.view.endEditing(true)
         if self.emailBool && self.pwdCheckBool && self.pwdCheckBool {
             
             let urlEmail = emailTextField.text ?? ""

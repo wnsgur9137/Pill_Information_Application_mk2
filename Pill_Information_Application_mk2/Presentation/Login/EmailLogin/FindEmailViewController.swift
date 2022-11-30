@@ -109,6 +109,7 @@ extension FindEmailViewController: UITextFieldDelegate {
 private extension FindEmailViewController {
     
     @objc func findEmailButtonTapped() {
+        self.view.endEditing(true)
         if self.nicknameLabel.text != "" {
             
             let nickname = nicknameTextField.text ?? ""

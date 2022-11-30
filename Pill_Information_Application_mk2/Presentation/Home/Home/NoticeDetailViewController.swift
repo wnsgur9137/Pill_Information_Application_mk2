@@ -90,7 +90,7 @@ final class NoticeDetailViewController: UIViewController {
         setupLayout()
         
         if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" ||
-            UserDefaults.standard.string(forKey: "email") == "admin@adminAcc.com" {
+            UserDefaults.standard.string(forKey: "email") == "admin@admin.com" {
             addAdminLayout()
         }
         keyboardAttribute()
@@ -120,6 +120,7 @@ private extension NoticeDetailViewController {
         updateButton.rx.tap
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
+                self.view.endEditing(true)
                 let vc = UpdateNoticeViewController()
                 vc.setData(id: self.noticeId!, title: self.titleLabel.text!, content: self.contentTextView.text!)
                 self.navigationController?.pushViewController(vc, animated: true)
@@ -128,6 +129,7 @@ private extension NoticeDetailViewController {
         
         deleteButton.rx.tap
             .bind(onNext: { [weak self] in
+                self?.view.endEditing(true)
                 let alertCon = UIAlertController(title: "공지사항을 삭제하시겠습니까?".localized(), message: nil, preferredStyle: UIAlertController.Style.alert)
                 let alertAcc = UIAlertAction(title: "아니오".localized(), style: UIAlertAction.Style.default)
                 let alertCancel = UIAlertAction(title: "예".localized(), style: UIAlertAction.Style.destructive, handler: { _ in

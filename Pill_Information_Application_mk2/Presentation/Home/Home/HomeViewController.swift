@@ -87,7 +87,7 @@ final class HomeViewController: UIViewController {
         bind()
         setupLayout()
         if UserDefaults.standard.string(forKey: "email") == "wnsgur9137@icloud.com" ||
-            UserDefaults.standard.string(forKey: "email") == "admin@adminAcc.com" {
+            UserDefaults.standard.string(forKey: "email") == "admin@admin.com" {
             setupAddNoticeButton()
         }
 //        keyboardAtrribute()

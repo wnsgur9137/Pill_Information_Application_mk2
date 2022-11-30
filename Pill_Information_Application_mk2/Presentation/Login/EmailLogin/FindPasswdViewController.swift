@@ -141,6 +141,7 @@ private extension FindPasswdViewController {
         findPasswdButton.rx.tap
             .bind(onNext: { [weak self] in
                 guard let self = self else { return }
+                self.view.endEditing(true)
                 if self.emailBool {
                     Auth.auth().sendPasswordReset(withEmail: self.emailTextField.text!) { (error) in
                         if error != nil {

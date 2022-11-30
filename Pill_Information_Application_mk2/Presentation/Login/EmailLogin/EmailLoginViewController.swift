@@ -211,6 +211,7 @@ private extension EmailLoginViewController {
     }
     
     @objc func signInButtonTapped() {
+        self.view.endEditing(true)
         if self.emailTextField.text != "" && self.passwdTextField.text != "" {
             
             Auth.auth().signIn(withEmail: self.emailTextField.text!, password: self.passwdTextField.text!) { (user, error) in
@@ -300,23 +301,27 @@ private extension EmailLoginViewController {
     }
     
     @objc func signUpButtonTapped() {
+        self.view.endEditing(true)
         let vc = EmailSignUpViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func findEmailButtonTapped() {
+        self.view.endEditing(true)
         let vc = FindEmailViewController()
         vc.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func findPasswdButtonTapped() {
+        self.view.endEditing(true)
         let vc = FindPasswdViewController()
         vc.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func dismissButtonTapped() {
+        self.view.endEditing(true)
         self.dismiss(animated: true)
     }
     
