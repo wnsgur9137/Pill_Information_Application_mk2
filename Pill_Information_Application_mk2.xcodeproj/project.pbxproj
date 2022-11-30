@@ -51,6 +51,7 @@
 		6661B00E29343B47003F18B0 /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B00D29343B47003F18B0 /* KeyboardNotification.swift */; };
 		6661B0132935C3B6003F18B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6661B0152935C3B6003F18B0 /* Localizable.strings */; };
 		6661B0182935D71A003F18B0 /* LocalizableString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B0172935D71A003F18B0 /* LocalizableString.swift */; };
+		6661B0572937BD8E003F18B0 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B0562937BD8E003F18B0 /* UITableView.swift */; };
 		66ABD626290369490050D048 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66ABD625290369490050D048 /* GoogleService-Info.plist */; };
 		66ABD62A29036E3A0050D048 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62929036E3A0050D048 /* HomeTabBarController.swift */; };
 		66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62B29038EB30050D048 /* SearchViewController.swift */; };
@@ -128,6 +129,7 @@
 		6661B0142935C3B6003F18B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6661B0162935C3E5003F18B0 /* ko-KR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ko-KR"; path = "ko-KR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		6661B0172935D71A003F18B0 /* LocalizableString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableString.swift; sourceTree = "<group>"; };
+		6661B0562937BD8E003F18B0 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		66ABD625290369490050D048 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66ABD62929036E3A0050D048 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		66ABD62B29038EB30050D048 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				665E929328F83BF10090B51F /* UIButton+.swift */,
 				6661AFF429274EA8003F18B0 /* TabBarShadow.swift */,
 				6661B00D29343B47003F18B0 /* KeyboardNotification.swift */,
+				6661B0562937BD8E003F18B0 /* UITableView.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -605,6 +608,7 @@
 				66FBD3D0290ED9E1008615C5 /* DetailViewController.swift in Sources */,
 				665E928B28F7BD660090B51F /* MainViewController.swift in Sources */,
 				66FBD3CE290ED8B7008615C5 /* ResultViewController.swift in Sources */,
+				6661B0572937BD8E003F18B0 /* UITableView.swift in Sources */,
 				6657ACD529070C540004BD11 /* FindPasswdViewController.swift in Sources */,
 				6661AF6729178E5B003F18B0 /* NoticeListOverview.swift in Sources */,
 				6657ACD7290767750004BD11 /* FindEmailResultViewController.swift in Sources */,

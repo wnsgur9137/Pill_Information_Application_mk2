@@ -276,6 +276,7 @@ Please match the format of 8 to 20 lengths.";
 "로그아웃 하시겠습니까?" = "Are you sure you want to log out?";
 "%@ 님" = "%@";
 "로그인이 \n되어있지 않습니다." = "Login \n is not present.";
+"약을 검색하교\n즐겨찾기를 추가해보세요." = "Search for medicine\nAdd a favorite.";
 
 // ProfileUpdateViewController
 "회원 정보 업데이트" = "Update Profile";

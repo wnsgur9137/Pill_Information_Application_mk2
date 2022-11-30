@@ -146,13 +146,22 @@ final class ProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         attribute()
+        print("\n\n\n")
+        print(starList)
+        print("\n\n\n")
+        DispatchQueue.main.async {
+            self.bookmarkTableView.reloadData()
+        }
     }
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if starList == [[]] {
+        if starList == [[]] || starList == [] {
+            tableView.setEmptyMessage("약을 검색하교\n즐겨찾기를 추가해보세요.".localized())
             return 0
+        } else {
+            tableView.restore()
         }
         return starList.count
     }
