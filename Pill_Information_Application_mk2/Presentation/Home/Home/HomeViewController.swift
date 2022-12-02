@@ -12,6 +12,7 @@ import RxCocoa
 
 import Alamofire
 import SwiftyJSON
+import SafariServices
 
 final class HomeViewController: UIViewController {
     
@@ -32,6 +33,48 @@ final class HomeViewController: UIViewController {
         imageView.image = UIImage(named: "Logo_Eng")
 //        imageView.backgroundColor = .gray
         return imageView
+    }()
+    
+    private lazy var safetyTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "앱 사용 경고 사항 제목".localized()
+//        label.backgroundColor = .lightGray
+        label.textColor = .systemRed
+        label.font = .systemFont(ofSize: 16.0, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var safetyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "앱 사용 경고 사항".localized()
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 12.0, weight: .regular)
+        label.numberOfLines = 0
+
+//        label.layer.borderColor = UIColor.black.cgColor
+//        label.layer.borderWidth = 1.0
+//        label.layer.cornerRadius = 3.0
+        return label
+    }()
+    
+    private lazy var koreaPharmaceuticalInfoCenterLabel: UILabel = {
+        let koreaPharmaceuticalInfoCenter = "koreaPharmaceuticalInfoCenter"
+        
+        let label = UILabel()
+        label.text = "koreaPharmaceuticalInfoCenter".localized()
+        label.textColor = .systemBlue
+        label.font = .systemFont(ofSize: 12.0, weight: .bold)
+        
+        label.isUserInteractionEnabled = true
+        
+        let recognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(fixedLabelTapped(_:))
+        )
+        label.addGestureRecognizer(recognizer)
+        
+        return label
     }()
     
     private lazy var noticeLabel: UILabel = {
@@ -108,6 +151,44 @@ final class HomeViewController: UIViewController {
     }
 }
 
+extension UILabel {
+    // 라벨 내 특정 문자열의 CGRect 반환
+    // parameter subText: CGRect 값을 알고 싶은 특정 문자열
+    func boundingRectForCharacterRange(subText: String) -> CGRect? {
+        guard let attributedText = attributedText else { return nil }
+        guard let text = self.text else { return nil }
+        
+        // 전체 텍스트(text)에서 subText만큼의 range를 구함
+        guard let subRange = text.range(of: subText) else { return nil }
+        let range = NSRange(subRange, in: text)
+        
+        // attributedText를 기반으로 한 NSTextStorage를 선언하고 NSLayoutManager를 추가한다.
+        let layoutManager = NSLayoutManager()
+        let textStorage = NSTextStorage(attributedString: attributedText)
+        textStorage.addLayoutManager(layoutManager)
+        
+        // instrainsicContentSize를 기반으로 NSTextContainer를 선언한다.
+        let textContainer = NSTextContainer(size: intrinsicContentSize)
+        // 정확한 CGRect를 구해야하므로 padding 값은 0을 준다.
+        textContainer.lineFragmentPadding = 0.0
+        // layoutManager에 추가한다.
+        layoutManager.addTextContainer(textContainer)
+        
+        var glyphRange = NSRange()
+        // 주어진 범위(rage)에 대한 실질적인 glyphRange를 구한다.
+        layoutManager.characterRange(
+            forGlyphRange: range,
+            actualGlyphRange: &glyphRange
+        )
+        
+        // textContainer 내에 지정된 glyphRange에 대한 CGRect 값을 반환한다.
+        return layoutManager.boundingRect(
+            forGlyphRange: glyphRange,
+            in: textContainer
+        )
+    }
+}
+
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -171,11 +252,39 @@ private extension HomeViewController {
             })
     }
     
+    @objc func fixedLabelTapped(_ sender: UITapGestureRecognizer) {
+        //fixedLabel에서 UITapGestureRecognizer로 선택된 부분의 CGPoint를 구합니다.
+        let point = sender.location(in: koreaPharmaceuticalInfoCenterLabel)
+        
+        // fixedLabel 내에서 문자열 google이 차지하는 CGRect값을 구해, 그 안에 point가 포함되는지를 판단합니다.
+        
+        if let koreaRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "koreaPharmaceuticalInfoCenter".localized()), koreaRect.contains(point) {
+            present(url: "https://www.health.kr/")
+        }
+        
+        if let googleRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "google"),googleRect.contains(point) {
+            present(url: "https://www.google.com")
+        }
+        if let githubRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "github"),githubRect.contains(point) {
+            present(url: "https://www.github.com")
+        }
+    }
+
+    func present(url string: String) {
+      if let url = URL(string: string) {
+        let viewController = SFSafariViewController(url: url)
+        present(viewController, animated: true)
+      }
+    }
+    
     func setupLayout() {
         [
             backgroundView,
 //            searchBar,
             imageView,
+            safetyTitleLabel,
+            safetyLabel,
+            koreaPharmaceuticalInfoCenterLabel,
             noticeLabel,
             noticeTableView
         ].forEach{ view.addSubview($0) }
@@ -191,22 +300,39 @@ private extension HomeViewController {
         
         imageView.snp.makeConstraints {
 //            $0.top.equalTo(searchBar.snp.bottom).offset(40)
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(40)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20.0)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(80)
-            $0.width.equalTo(340)
+            $0.height.equalTo(80.0)
+            $0.width.equalTo(340.0)
+        }
+        
+        safetyTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(imageView.snp.bottom).offset(30.0)
+            $0.centerX.equalToSuperview()
+        }
+        
+        safetyLabel.snp.makeConstraints {
+            $0.top.equalTo(safetyTitleLabel.snp.bottom).offset(10.0)
+            $0.leading.equalToSuperview().offset(25.0)
+            $0.trailing.equalToSuperview().offset(-25.0)
+        }
+        
+        koreaPharmaceuticalInfoCenterLabel.snp.makeConstraints {
+            $0.top.equalTo(safetyLabel.snp.bottom).offset(5.0)
+            $0.leading.equalToSuperview().offset(25.0)
+            $0.trailing.equalToSuperview().offset(-25.0)
         }
         
         noticeLabel.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(60)
-            $0.leading.equalToSuperview().offset(20)
+            $0.top.equalTo(koreaPharmaceuticalInfoCenterLabel.snp.bottom).offset(30.0)
+            $0.leading.equalToSuperview().offset(20.0)
         }
         
         noticeTableView.snp.makeConstraints {
-            $0.top.equalTo(noticeLabel.snp.bottom).offset(5)
+            $0.top.equalTo(noticeLabel.snp.bottom).offset(5.0)
             $0.leading.equalTo(noticeLabel.snp.leading)
-            $0.trailing.equalToSuperview().inset(10)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
+            $0.trailing.equalToSuperview().inset(10.0)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20.0)
         }
     }
     

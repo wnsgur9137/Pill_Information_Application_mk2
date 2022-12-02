@@ -51,16 +51,17 @@ final class DirectionViewController: UIViewController {
         return label
     }()
     
-    private lazy var pillImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .systemGray
-        return imageView
-    }()
+//    private lazy var pillImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.backgroundColor = .systemGray
+//        return imageView
+//    }()
     
     private lazy var contentTableView: UITableView = {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(DetailTableViewImageCell.self, forCellReuseIdentifier: "DetailTableViewImageCell")
         tableView.register(DetailTableViewCell.self, forCellReuseIdentifier: "DetailTableViewCell")
         return tableView
     }()
@@ -76,27 +77,34 @@ final class DirectionViewController: UIViewController {
         setupLayout()
         LoadingView.hide()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.async {
+            self.contentTableView.reloadData()
+        }
+    }
 }
 
 extension DirectionViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return medicineInfoList.count
+        return medicineInfoList.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "DetailTableViewImageCell", for: indexPath) as? DetailTableViewImageCell else { return UITableViewCell() }
+            
+            let pillImageURL = URL(string: self.medicineImageURL)
+            cell.pillImageView.kf.setImage(with: pillImageURL)
+            return cell
+        }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "DetailTableViewCell", for: indexPath) as? DetailTableViewCell else { return UITableViewCell() }
         
-        print("indexPath.row : \(medicineInfoList[indexPath.row])")
-        cell.titleLabel.text = "\(medicineInfoList[indexPath.row][0])"
-        cell.contentLabel.text = medicineInfoList[indexPath.row][1].replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: "")
+        cell.titleLabel.text = "\(medicineInfoList[indexPath.row-1][0])"
+        cell.contentLabel.text = medicineInfoList[indexPath.row-1][1].replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: "")
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("123")
-    }
-    
-    
 }
 
 private extension DirectionViewController {
@@ -107,8 +115,8 @@ private extension DirectionViewController {
     func attribute() {
         self.titleLabel.text = medicineInfo?.medicineName
         self.directionLabel.text = medicineInfo?.efcyQesitm?.replacingOccurrences(of: "<p>", with: "").replacingOccurrences(of: "</p>", with: "")
-        let pillImageURL = URL(string: self.medicineImageURL)
-        self.pillImageView.kf.setImage(with: pillImageURL)
+//        let pillImageURL = URL(string: self.medicineImageURL)
+//        self.pillImageView.kf.setImage(with: pillImageURL)
         
         let starList = UserDefaults.standard.array(forKey: "starList") as? [[String]]
 
@@ -186,7 +194,7 @@ private extension DirectionViewController {
             backgroundView,
             titleLabel,
             directionLabel,
-            pillImageView,
+//            pillImageView,
             contentTableView
         ].forEach{ view.addSubview($0) }
         
@@ -206,15 +214,15 @@ private extension DirectionViewController {
             $0.trailing.equalTo(titleLabel.snp.trailing)
         }
         
-        pillImageView.snp.makeConstraints {
-            $0.top.equalTo(directionLabel.snp.bottom).offset(20.0)
-            $0.leading.equalTo(titleLabel.snp.leading)
-            $0.trailing.equalTo(titleLabel.snp.trailing)
-            $0.height.equalTo(180.0)
-        }
+//        pillImageView.snp.makeConstraints {
+//            $0.top.equalTo(directionLabel.snp.bottom).offset(20.0)
+//            $0.leading.equalTo(titleLabel.snp.leading)
+//            $0.trailing.equalTo(titleLabel.snp.trailing)
+//            $0.height.equalTo(180.0)
+//        }
         
         contentTableView.snp.makeConstraints {
-            $0.top.equalTo(pillImageView.snp.bottom).offset(50.0)
+            $0.top.equalTo(directionLabel.snp.bottom).offset(20.0)
             $0.leading.equalTo(titleLabel.snp.leading)
             $0.trailing.equalTo(titleLabel.snp.trailing)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)

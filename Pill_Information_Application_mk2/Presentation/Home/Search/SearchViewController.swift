@@ -143,6 +143,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         searchBar.text = searchHistoryList?[indexPath.row]
+        searchBar.becomeFirstResponder()
         searchBar.searchButtonTapped
             .asSignal()
             .emit(to: searchBar.rx.endEditing)

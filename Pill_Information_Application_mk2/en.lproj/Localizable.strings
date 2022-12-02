@@ -5,6 +5,11 @@
 //  Created by 이준혁 on 2022/11/29.
 //
 
+// 의학적 문제
+"앱 사용 경고 사항 제목" = "App Usage Warnings";
+"앱 사용 경고 사항" = "This app only provides information about pills, but when making medical decisions for the purpose of ingestion or treatment, you should be prescribed and taken through a diagnosis with a professional doctor.\n\nsource of Pill information:";
+"koreaPharmaceuticalInfoCenter" = "KOREA PHARMACEUTICAL INFORMATION CENTER LINK";
+
 // Alert Action
 "예" = "Yes";
 "아니오" = "No";
