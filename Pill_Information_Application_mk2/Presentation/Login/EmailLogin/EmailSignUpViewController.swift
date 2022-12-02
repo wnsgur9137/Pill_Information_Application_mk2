@@ -276,7 +276,7 @@ private extension EmailSignUpViewController {
                 if changeText != "" {
                     let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
                     if !NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: changeText) {
-                        self.warningEmailTypeLabel.text = NSLocalizedString("이메일 형식에 맞추어 주십시오.", comment: "")
+                        self.warningEmailTypeLabel.text = NSLocalizedString("이메일 형식에 맞추어 주십시오", comment: "")
                         self.emailBool = false
                     } else {
                         self.warningEmailTypeLabel.text = ""
