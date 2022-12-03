@@ -259,7 +259,24 @@ private extension HomeViewController {
         // fixedLabel 내에서 문자열 google이 차지하는 CGRect값을 구해, 그 안에 point가 포함되는지를 판단합니다.
         
         if let koreaRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "koreaPharmaceuticalInfoCenter".localized()), koreaRect.contains(point) {
-            present(url: "https://www.health.kr/")
+            let alertCon = UIAlertController(
+                title: "앱 외부 사이트로 전환".localized(),
+                message: nil,
+                preferredStyle: UIAlertController.Style.alert
+            )
+            let alertActYes = UIAlertAction(
+                title: "이동".localized(),
+                style: UIAlertAction.Style.default,
+                handler: { [weak self] _ in
+                    self?.present(url: "https://www.health.kr/")
+                }
+            )
+            let alertActNo = UIAlertAction(
+                title: "취소".localized(),
+                style: UIAlertAction.Style.cancel
+            )
+            [ alertActYes, alertActNo ].forEach{alertCon.addAction($0)}
+            self.present(alertCon, animated: true, completion: nil)
         }
         
         if let googleRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "google"),googleRect.contains(point) {

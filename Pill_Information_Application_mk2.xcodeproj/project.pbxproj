@@ -127,6 +127,7 @@
 		6661B0172935D71A003F18B0 /* LocalizableString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableString.swift; sourceTree = "<group>"; };
 		6661B0562937BD8E003F18B0 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		6661B05829398494003F18B0 /* DetailTableViewImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewImageCell.swift; sourceTree = "<group>"; };
+		6661B05D293A693A003F18B0 /* Pill_Information_Application_mk2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pill_Information_Application_mk2.entitlements; sourceTree = "<group>"; };
 		66ABD625290369490050D048 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66ABD62929036E3A0050D048 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		66ABD62B29038EB30050D048 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -204,6 +205,7 @@
 		665E927528F7BD130090B51F /* Pill_Information_Application_mk2 */ = {
 			isa = PBXGroup;
 			children = (
+				6661B05D293A693A003F18B0 /* Pill_Information_Application_mk2.entitlements */,
 				665E927628F7BD130090B51F /* AppDelegate.swift */,
 				665E927828F7BD130090B51F /* SceneDelegate.swift */,
 				6661B00B292CC41F003F18B0 /* RxViewController.swift */,
@@ -793,8 +795,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Pill_Information_Application_mk2/Pill_Information_Application_mk2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 202212032;
+				CURRENT_PROJECT_VERSION = 202212035;
 				DEVELOPMENT_TEAM = VW2UR5Y845;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pill_Information_Application_mk2/Info.plist;
@@ -810,7 +813,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.4;
+				MARKETING_VERSION = 1.2.43;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.junhyeok.Pill-Information-Application-mk2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -828,8 +831,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Pill_Information_Application_mk2/Pill_Information_Application_mk2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 202212032;
+				CURRENT_PROJECT_VERSION = 202212035;
 				DEVELOPMENT_TEAM = VW2UR5Y845;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pill_Information_Application_mk2/Info.plist;
@@ -845,7 +849,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.4;
+				MARKETING_VERSION = 1.2.43;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.junhyeok.Pill-Information-Application-mk2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
