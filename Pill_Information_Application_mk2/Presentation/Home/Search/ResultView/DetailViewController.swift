@@ -12,6 +12,7 @@ import RxCocoa
 
 import Kingfisher
 import Alamofire
+import SafariServices
 
 final class DetailViewController: UIViewController {
     let disposeBag = DisposeBag()
@@ -52,6 +53,42 @@ final class DetailViewController: UIViewController {
         label.textColor = .label
         label.font = .systemFont(ofSize: 20.0, weight: .bold)
         label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var warningTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "필수 지침".localized()
+//        label.backgroundColor = .lightGray
+        label.textColor = .systemRed
+        label.font = .systemFont(ofSize: 16.0, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var warningLabel: UILabel = {
+        let label = UILabel()
+        label.text = "앱 사용 경고 사항".localized()
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 12.0, weight: .regular)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var linkLabel: UILabel = {
+        let label = UILabel()
+        label.text = "koreaPharmaceuticalInfoCenter".localized()
+        label.textColor = .systemBlue
+        label.font = .systemFont(ofSize: 12.0, weight: .bold)
+        
+        label.isUserInteractionEnabled = true
+        
+        let recognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(fixedLabelTapped(_:))
+        )
+        label.addGestureRecognizer(recognizer)
+        
         return label
     }()
     
@@ -110,6 +147,7 @@ final class DetailViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         attribute()
+        contentTableView.reloadData()
     }
 }
 
@@ -255,6 +293,48 @@ private extension DetailViewController {
         classLabel.text = data.className
     }
     
+    @objc func fixedLabelTapped(_ sender: UITapGestureRecognizer) {
+        //fixedLabel에서 UITapGestureRecognizer로 선택된 부분의 CGPoint를 구합니다.
+        let point = sender.location(in: linkLabel)
+        
+        // fixedLabel 내에서 문자열 google이 차지하는 CGRect값을 구해, 그 안에 point가 포함되는지를 판단합니다.
+        
+        if let koreaRect = linkLabel.boundingRectForCharacterRange(subText: "koreaPharmaceuticalInfoCenter".localized()), koreaRect.contains(point) {
+            let alertCon = UIAlertController(
+                title: "앱 외부 사이트로 전환".localized(),
+                message: nil,
+                preferredStyle: UIAlertController.Style.alert
+            )
+            let alertActYes = UIAlertAction(
+                title: "이동".localized(),
+                style: UIAlertAction.Style.default,
+                handler: { [weak self] _ in
+                    self?.present(url: "https://www.health.kr/")
+                }
+            )
+            let alertActNo = UIAlertAction(
+                title: "취소".localized(),
+                style: UIAlertAction.Style.cancel
+            )
+            [ alertActYes, alertActNo ].forEach{alertCon.addAction($0)}
+            self.present(alertCon, animated: true, completion: nil)
+        }
+
+//        if let googleRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "google"),googleRect.contains(point) {
+//            present(url: "https://www.google.com")
+//        }
+//        if let githubRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "github"),githubRect.contains(point) {
+//            present(url: "https://www.github.com")
+//        }
+    }
+    
+    func present(url string: String) {
+      if let url = URL(string: string) {
+        let viewController = SFSafariViewController(url: url)
+        present(viewController, animated: true)
+      }
+    }
+    
     func getMedicineInfoData(completionHandler: @escaping (Result<MedicineInfoOverview, Error>) -> Void) {
 //        let url = "\(MedicineInfoAPI.scheme)://\(MedicineInfoAPI.host + MedicineInfoAPI.path)"
         let url = "\(MedicineInfoAPI.scheme)://\(MedicineInfoAPI.host + MedicineInfoAPI.path)?serviceKey=\(MedicineInfoAPI.apiKeyEncoding)&itemName=\(String(describing: titleLabel.text!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!))&type=json"
@@ -361,6 +441,9 @@ private extension DetailViewController {
             titleLabel,
             classLabel,
             directionButton,
+            warningTitleLabel,
+            warningLabel,
+            linkLabel,
             pillImageView,
             contentTableView
         ].forEach{ view.addSubview($0) }
@@ -370,7 +453,7 @@ private extension DetailViewController {
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(20.0)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(5.0)
             $0.leading.equalToSuperview().offset(10.0)
             $0.trailing.equalToSuperview().inset(10.0)
         }
@@ -388,15 +471,32 @@ private extension DetailViewController {
 //            $0.height.equalTo(40)
         }
         
+        warningTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(directionButton.snp.bottom).offset(20.0)
+            $0.centerX.equalToSuperview()
+        }
+        
+        warningLabel.snp.makeConstraints {
+            $0.top.equalTo(warningTitleLabel.snp.bottom).offset(10.0)
+            $0.leading.equalTo(titleLabel.snp.leading)
+            $0.trailing.equalTo(titleLabel.snp.trailing)
+        }
+        
+        linkLabel.snp.makeConstraints {
+            $0.top.equalTo(warningLabel.snp.bottom).offset(2.0)
+            $0.leading.equalTo(titleLabel.snp.leading)
+            $0.trailing.equalTo(titleLabel.snp.trailing)
+        }
+        
         pillImageView.snp.makeConstraints {
-            $0.top.equalTo(classLabel.snp.bottom).offset(20.0)
+            $0.top.equalTo(linkLabel.snp.bottom).offset(15.0)
             $0.leading.equalTo(titleLabel.snp.leading)
             $0.trailing.equalTo(titleLabel.snp.trailing)
             $0.height.equalTo(180.0)
         }
         
         contentTableView.snp.makeConstraints {
-            $0.top.equalTo(pillImageView.snp.bottom).offset(50.0)
+            $0.top.equalTo(pillImageView.snp.bottom).offset(10.0)
             $0.leading.equalTo(titleLabel.snp.leading)
             $0.trailing.equalTo(titleLabel.snp.trailing)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)

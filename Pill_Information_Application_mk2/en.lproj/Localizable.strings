@@ -7,7 +7,8 @@
 
 // 의학적 문제
 "앱 사용 경고 사항 제목" = "App Usage Warnings";
-"앱 사용 경고 사항" = "This app only provides information about pills, but when making medical decisions for the purpose of ingestion or treatment, you should be prescribed and taken through a diagnosis with a professional doctor.\n\nsource of Pill information:";
+"필수 지침" = "Required Guidelines";
+"앱 사용 경고 사항" = "This app only provides information about pills, so you should not use this app to take them. If the purpose is to consume or treat, make sure to prescribe and take medicine through a diagnosis with a professional doctor.\n\nsource of Pill information:";
 "koreaPharmaceuticalInfoCenter" = "KOREA PHARMACEUTICAL INFORMATION CENTER LINK";
 "앱 외부 사이트로 전환" = "You will switch to a site outside the app.\nDo you want to switch to the site?";
 

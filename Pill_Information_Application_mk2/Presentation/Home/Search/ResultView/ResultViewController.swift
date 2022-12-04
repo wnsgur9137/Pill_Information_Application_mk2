@@ -79,6 +79,7 @@ extension ResultViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
         vc.searchType = "shape"
+//        vc.medicineImage = medicineArray[]
         vc.medicineFastAPI = medicineArray[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }

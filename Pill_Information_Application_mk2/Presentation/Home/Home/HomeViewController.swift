@@ -155,6 +155,7 @@ extension UILabel {
     // 라벨 내 특정 문자열의 CGRect 반환
     // parameter subText: CGRect 값을 알고 싶은 특정 문자열
     func boundingRectForCharacterRange(subText: String) -> CGRect? {
+        print("boundingRect")
         guard let attributedText = attributedText else { return nil }
         guard let text = self.text else { return nil }
         
@@ -278,13 +279,13 @@ private extension HomeViewController {
             [ alertActYes, alertActNo ].forEach{alertCon.addAction($0)}
             self.present(alertCon, animated: true, completion: nil)
         }
-        
-        if let googleRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "google"),googleRect.contains(point) {
-            present(url: "https://www.google.com")
-        }
-        if let githubRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "github"),githubRect.contains(point) {
-            present(url: "https://www.github.com")
-        }
+
+//        if let googleRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "google"),googleRect.contains(point) {
+//            present(url: "https://www.google.com")
+//        }
+//        if let githubRect = koreaPharmaceuticalInfoCenterLabel.boundingRectForCharacterRange(subText: "github"),githubRect.contains(point) {
+//            present(url: "https://www.github.com")
+//        }
     }
 
     func present(url string: String) {
