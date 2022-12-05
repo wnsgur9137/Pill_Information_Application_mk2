@@ -325,14 +325,9 @@ private extension PictureSearchViewController {
 //                    "line": self.lineTextField.text ?? "",
 //                    "markcode": self.markCodeTextField.text ?? ""
 //                ]
-                let shape = self.shapeTextField.text ?? ""
-                let color = self.colorTextField.text ?? ""
-                var line = ""
-                if self.lineTextField.text! == "-" {
-                    line = "실선"
-                } else if self.lineTextField.text! == "+" {
-                    line = "십자"
-                }
+                let shape = self.medicineShape(shape: self.shapeTextField.text ?? "")
+                let color = self.medicineColor(color: self.colorTextField.text ?? "")
+                let line = self.medicineLine(line: self.lineTextField.text ?? "")
                 var markCode = self.markCodeTextField.text ?? ""
                 if markCode == "" {
                     markCode = "nil"
@@ -461,6 +456,88 @@ private extension PictureSearchViewController {
         self.imagePickerController.sourceType = .photoLibrary
         self.present(self.imagePickerController, animated: true, completion: nil)
     }
+    
+    func medicineShape(shape: String) -> String {
+        switch shape {
+        case "Rectangle":
+            return "장방형"
+        case "Circle":
+            return "원형"
+        case "Octagon":
+            return "팔각형"
+        case "Oval":
+            return "타원형"
+        case "Hexagon":
+            return "육각형"
+        case "Semicircular":
+            return "반원형"
+        case "Triangle":
+            return "삼각형"
+        case "Pentagon":
+            return "오각형"
+        case "Rhombus":
+            return "마름모형"
+        case "Other":
+            return "기타"
+        default:
+            return shape
+        }
+    }
+    
+    func medicineColor(color: String) -> String {
+        switch color {
+        case "White":
+            return "하양"
+        case "Red":
+            return "빨강"
+        case "Pink":
+            return "분홍"
+        case "Red Purple":
+            return "자주"
+        case "Orange":
+            return "주황"
+        case "Brown":
+            return "갈색"
+        case "Yellow":
+            return "노랑"
+        case "Light Green":
+            return "연두"
+        case "Green":
+            return "초록"
+        case "Turquoise":
+            return "청록"
+        case "Blue":
+            return "파랑"
+        case "Navy":
+            return "남색"
+        case "Purple":
+            return "보라"
+        case "Gray":
+            return "회색"
+        case "Black":
+            return "검정"
+        case "Transparent":
+            return "투명"
+        default:
+            return color
+        }
+    }
+    
+    func medicineLine(line: String) -> String {
+        switch line {
+        case "None":
+            return "없음"
+        case "-":
+            return "실선"
+        case "+":
+            return "십자"
+        case "Other":
+            return "기타"
+        default:
+            return line
+        }
+    }
+    
     
     func setupLayout() {
         [
