@@ -92,10 +92,10 @@ private extension ResultViewController {
     }
     
     func attribute() {
-        var param = "?medicineShape=\(searchMedicineData![0].addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!)"
-        param += "&medicineColor=\(searchMedicineData![1].addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!)"
-        param += "&medicineLine=\(searchMedicineData![2].addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!)"
-        param += "&medicineCode=\(searchMedicineData![3].addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!)"
+        var param = "?medicineShape=\(searchMedicineData![0].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
+        param += "&medicineColor=\(searchMedicineData![1].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
+        param += "&medicineLine=\(searchMedicineData![2].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
+        param += "&medicineCode=\(searchMedicineData![3].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
         let url = "\(ubuntuServer.host + ubuntuServer.path)/getMedicineListShape/\(param)"
 
         print("\n\n")

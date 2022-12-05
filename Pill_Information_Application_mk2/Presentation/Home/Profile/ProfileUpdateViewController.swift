@@ -576,7 +576,7 @@ private extension ProfileUpdateViewController {
 //        today = today.replacingCharacters(in: " ", with: "%20")
 //        today = today.replacingCharacters(in: ":", with: "%3A")
         
-        let param = "?email=\(String(describing: email!.addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!))&nickname=\(String(describing: nickname))&updateDate=\(String(describing: today.addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed)!))"
+        let param = "?email=\(String(describing: email!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!))&nickname=\(String(describing: nickname))&updateDate=\(String(describing: today.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!))"
         let url = "\(ubuntuServer.host + ubuntuServer.path)/updateUserInfo/\(param)"
         
         print(url)

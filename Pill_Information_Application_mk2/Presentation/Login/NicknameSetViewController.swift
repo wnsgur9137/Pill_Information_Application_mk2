@@ -125,9 +125,9 @@ private extension NicknameSetViewController {
             return
         }
         
-        let nicknameCheckparam = "?nickname=\(nicknameTextField.text ?? "")"
+        let nicknameCheckparam = "nickname=\(nicknameTextField.text ?? "")".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
 //        let nicknameCheckurl = "\(FastAPI.host + FastAPI.path)/getNicknameCheck/\(nicknameCheckparam)"
-        let nicknameCheckurl = "\(ubuntuServer.host + ubuntuServer.path)/getNicknameCheck/\(nicknameCheckparam)"
+        let nicknameCheckurl = "\(ubuntuServer.host + ubuntuServer.path)/getNicknameCheck/?\(String(describing: nicknameCheckparam!))"
         
         AF.request(nicknameCheckurl, method: .get)
             .response(completionHandler: { [weak self] response in
@@ -155,7 +155,9 @@ private extension NicknameSetViewController {
                             urlTime = urlTime.replacingOccurrences(of: " ", with: "%20")
                             urlTime = urlTime.replacingOccurrences(of: ":", with: "%3A")
                             
-                            let param = "?email=\(urlEmail!)&nickname=\(self.nicknameTextField.text ?? "")&updateDate=\(urlTime)"
+                            let nickname = self.nicknameTextField.text!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                            
+                            let param = "?email=\(urlEmail!)&nickname=\(nickname!)&updateDate=\(urlTime)"
                             
 //                            let url = "\(FastAPI.host + FastAPI.path)/setUserInfo/\(param)"
                             let url = "\(ubuntuServer.host + ubuntuServer.path)/setUserInfo/\(param)"

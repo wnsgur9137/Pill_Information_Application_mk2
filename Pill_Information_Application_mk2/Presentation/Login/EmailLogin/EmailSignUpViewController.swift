@@ -117,7 +117,7 @@ final class EmailSignUpViewController: UIViewController {
         let passwdCheckLabel = UILabel()
         passwdCheckLabel.text = NSLocalizedString("비밀번호 확인", comment: "Check Password")
         passwdCheckLabel.textColor = .label
-        passwdCheckLabel.font = .systemFont(ofSize: 14.0, weight: .regular)
+        passwdCheckLabel.font = .systemFont(ofSize: 12.0, weight: .regular)
         passwdCheckLabel.textAlignment = .center
         passwdCheckLabel.numberOfLines = 0
         return passwdCheckLabel
@@ -455,9 +455,9 @@ private extension EmailSignUpViewController {
             $0.width.equalTo(100)
         }
         
-//        passwdCheckTextField.snp.makeConstraints {
-//            $0.height.equalTo(32)
-//        }
+        passwdCheckTextField.snp.makeConstraints {
+            $0.height.equalTo(32)
+        }
         
         passwdCheckVerticalStackView.snp.makeConstraints {
             $0.top.equalTo(passwdVerticalStackView.snp.bottom).offset(1)
