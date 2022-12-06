@@ -801,7 +801,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Pill_Information_Application_mk2/Pill_Information_Application_mk2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 202212051;
+				CURRENT_PROJECT_VERSION = 202212054;
 				DEVELOPMENT_TEAM = VW2UR5Y845;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pill_Information_Application_mk2/Info.plist;
@@ -817,7 +817,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.46;
+				MARKETING_VERSION = 1.2.47;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.junhyeok.Pill-Information-Application-mk2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -837,7 +837,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Pill_Information_Application_mk2/Pill_Information_Application_mk2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 202212051;
+				CURRENT_PROJECT_VERSION = 202212054;
 				DEVELOPMENT_TEAM = VW2UR5Y845;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pill_Information_Application_mk2/Info.plist;
@@ -853,7 +853,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.46;
+				MARKETING_VERSION = 1.2.47;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.junhyeok.Pill-Information-Application-mk2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

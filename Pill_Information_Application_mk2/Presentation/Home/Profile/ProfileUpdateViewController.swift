@@ -566,7 +566,7 @@ private extension ProfileUpdateViewController {
 //        email = email?.replacingCharacters(in: "@", with: "%40")
 //        email = email?.replacingCharacters(in: ".", with: "%2E")
         
-        let nickname = nicknameTextField.text!
+        let nickname = (nicknameTextField.text!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko")
