@@ -281,7 +281,7 @@ private extension EmailLoginViewController {
 //                        }
 //                    }
                     
-                    let vc = HomeTabBarController()
+                    let vc = MainTabBarController()
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
                 } else {

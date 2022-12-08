@@ -28,7 +28,7 @@ private extension MainViewController {
         
         if let _ = Auth.auth().currentUser {
             print("자동로그인 성공")
-            let vc = HomeTabBarController()
+            let vc = MainTabBarController()
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true)
             

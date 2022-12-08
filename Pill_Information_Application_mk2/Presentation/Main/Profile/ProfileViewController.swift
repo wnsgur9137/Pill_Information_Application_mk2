@@ -158,7 +158,7 @@ final class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if starList == [[]] || starList == [] {
-            tableView.setEmptyMessage("약을 검색하교\n즐겨찾기를 추가해보세요.".localized())
+            tableView.setEmptyMessage("약을 검색하고\n즐겨찾기를 추가해보세요.".localized())
             return 0
         } else {
             tableView.restore()

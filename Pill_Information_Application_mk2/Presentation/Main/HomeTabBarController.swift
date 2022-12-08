@@ -1,5 +1,5 @@
 //
-//  HomeTabBarController.swift
+//  MainTabBarController.swift
 //  Pill_Information_Application_mk2
 //
 //  Created by 이준혁 on 2022/10/22.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 import FirebaseAuth
-final class HomeTabBarController: UITabBarController {
+final class MainTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,11 +93,11 @@ final class HomeTabBarController: UITabBarController {
     }
 }
 
-extension HomeTabBarController: UITabBarControllerDelegate {
+extension MainTabBarController: UITabBarControllerDelegate {
     
 }
 
-extension HomeTabBarController {
+extension MainTabBarController {
     func loginCheck() {
         
         if let _ = Auth.auth().currentUser {

@@ -251,7 +251,7 @@ private extension NicknameSetViewController {
                 
                 let alertCon = UIAlertController(title: nil, message: "환영합니다.".localized(), preferredStyle: UIAlertController.Style.alert)
                 let alertAct = UIAlertAction(title: "로그인".localized(), style: UIAlertAction.Style.default, handler: { _ in
-                    let vc = HomeTabBarController()
+                    let vc = MainTabBarController()
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
                 })

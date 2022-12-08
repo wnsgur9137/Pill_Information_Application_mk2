@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
-        let rootViewController = HomeTabBarController()
+        let rootViewController = MainTabBarController()
         
         window?.backgroundColor = .systemBackground
         window?.rootViewController = rootViewController
