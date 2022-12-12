@@ -7,10 +7,14 @@
 
 import Foundation
 
-//enum time {
-//    case AM, PM
-//}
-//
-//struct Time {
-//
-//}
+enum time {
+    case AM, PM
+}
+
+struct Time {
+
+}
+
+struct AlarmModel {
+    
+}
