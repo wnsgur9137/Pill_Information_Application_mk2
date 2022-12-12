@@ -264,33 +264,6 @@ private extension ProfileViewController {
             .disposed(by: disposeBag)
     }
     
-//    @objc func logoutButtonTapped() {
-//        let alertCon = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
-//        let alertActCancel = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
-//        let alertActSure = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { [weak self] _ in
-//            self?.logout()
-//        })
-//        alertCon.addAction(alertActCancel)
-//        alertCon.addAction(alertActSure)
-//        present(alertCon, animated: true)
-//    }
-    
-//    @objc func userUpdateButtonTapped() {
-//        let vc = ProfileUpdateViewController()
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
-    
-//    @objc func resetBookmarkButtonTapped() {
-//        let alertCon = UIAlertController(title: "경고", message: "즐겨찾기를 초기화하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
-//        let alertActYes = UIAlertAction(title: "예", style: UIAlertAction.Style.destructive, handler: { _ in
-//            UserDefaults.standard.removeObject(forKey: "starList")
-//        })
-//        let alertActNo = UIAlertAction(title: "아니오", style: UIAlertAction.Style.default)
-//        alertCon.addAction(alertActYes)
-//        alertCon.addAction(alertActNo)
-//        self.present(alertCon, animated: true)
-//    }
-    
     func loginCheck() -> Bool {
         let userEmail = UserDefaults.standard.string(forKey: "email")
         if userEmail == "" || userEmail == nil {

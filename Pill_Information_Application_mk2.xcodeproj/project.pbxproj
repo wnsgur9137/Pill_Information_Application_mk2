@@ -50,10 +50,18 @@
 		6661B00E29343B47003F18B0 /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B00D29343B47003F18B0 /* KeyboardNotification.swift */; };
 		6661B0132935C3B6003F18B0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6661B0152935C3B6003F18B0 /* Localizable.strings */; };
 		6661B0182935D71A003F18B0 /* LocalizableString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B0172935D71A003F18B0 /* LocalizableString.swift */; };
-		6661B0572937BD8E003F18B0 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B0562937BD8E003F18B0 /* UITableView.swift */; };
+		6661B0572937BD8E003F18B0 /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B0562937BD8E003F18B0 /* UITableView+.swift */; };
 		6661B05929398494003F18B0 /* DetailTableViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B05829398494003F18B0 /* DetailTableViewImageCell.swift */; };
 		6661B05C293A5859003F18B0 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6661B05B293A5859003F18B0 /* FirebaseAuth */; };
 		6661B05F293CA617003F18B0 /* DetailTableViewWarningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6661B05E293CA617003F18B0 /* DetailTableViewWarningCell.swift */; };
+		668F42922944590100210C03 /* AddNoticeViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F42912944590100210C03 /* AddNoticeViewController1.swift */; };
+		668F42942944593A00210C03 /* AddNoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F42932944593A00210C03 /* AddNoticeViewModel.swift */; };
+		668F42962944595300210C03 /* AddNoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F42952944595300210C03 /* AddNoticeModel.swift */; };
+		668F429829445B7700210C03 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F429729445B7700210C03 /* UILabel+.swift */; };
+		668F42AF29463F4E00210C03 /* NoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F42AE29463F4E00210C03 /* NoticeViewModel.swift */; };
+		668F42B229463F7000210C03 /* NoticeViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F42B129463F7000210C03 /* NoticeViewController1.swift */; };
+		668F42B529463F7C00210C03 /* NoticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F42B429463F7C00210C03 /* NoticeModel.swift */; };
+		668F42B729463FE100210C03 /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668F42B629463FE100210C03 /* Notice.swift */; };
 		66ABD626290369490050D048 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 66ABD625290369490050D048 /* GoogleService-Info.plist */; };
 		66ABD62A29036E3A0050D048 /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62929036E3A0050D048 /* HomeTabBarController.swift */; };
 		66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD62B29038EB30050D048 /* SearchViewController.swift */; };
@@ -62,8 +70,15 @@
 		66ABD63629038F760050D048 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD63529038F760050D048 /* HomeViewController.swift */; };
 		66ABD63C290394E60050D048 /* NicknameSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66ABD63B290394E60050D048 /* NicknameSetViewController.swift */; };
 		66E5D5482941EDC1005E4D5C /* BoardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D5472941EDC1005E4D5C /* BoardModel.swift */; };
-		66E5D54A2941EDC8005E4D5C /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D5492941EDC8005E4D5C /* BoardView.swift */; };
 		66E5D54C2941EDD0005E4D5C /* BoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D54B2941EDD0005E4D5C /* BoardViewModel.swift */; };
+		66E5D54E2941EF8C005E4D5C /* AlarmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D54D2941EF8C005E4D5C /* AlarmModel.swift */; };
+		66E5D5522941EFA0005E4D5C /* AlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D5512941EFA0005E4D5C /* AlarmViewModel.swift */; };
+		66E5D55A2941F391005E4D5C /* AlarmViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D5592941F391005E4D5C /* AlarmViewController1.swift */; };
+		66E5D5B529420905005E4D5C /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D5B429420905005E4D5C /* HomeModel.swift */; };
+		66E5D5B72942090C005E4D5C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D5B62942090C005E4D5C /* HomeViewModel.swift */; };
+		66E5D5BB2942091B005E4D5C /* HomeViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D5BA2942091B005E4D5C /* HomeViewController1.swift */; };
+		66E5D5BD2942092C005E4D5C /* HomeTableViewCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D5BC2942092C005E4D5C /* HomeTableViewCellView.swift */; };
+		66E5D5BF29420934005E4D5C /* HomeTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E5D5BE29420934005E4D5C /* HomeTableViewModel.swift */; };
 		66FBD3C6290D5F55008615C5 /* NoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBD3C5290D5F55008615C5 /* NoticeDetailViewController.swift */; };
 		66FBD3C8290D6906008615C5 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBD3C7290D6906008615C5 /* SearchBar.swift */; };
 		66FBD3CA290D7993008615C5 /* TiemrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBD3C9290D7993008615C5 /* TiemrViewController.swift */; };
@@ -126,10 +141,18 @@
 		6661B0142935C3B6003F18B0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6661B0162935C3E5003F18B0 /* ko-KR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ko-KR"; path = "ko-KR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		6661B0172935D71A003F18B0 /* LocalizableString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableString.swift; sourceTree = "<group>"; };
-		6661B0562937BD8E003F18B0 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
+		6661B0562937BD8E003F18B0 /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		6661B05829398494003F18B0 /* DetailTableViewImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewImageCell.swift; sourceTree = "<group>"; };
 		6661B05D293A693A003F18B0 /* Pill_Information_Application_mk2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pill_Information_Application_mk2.entitlements; sourceTree = "<group>"; };
 		6661B05E293CA617003F18B0 /* DetailTableViewWarningCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewWarningCell.swift; sourceTree = "<group>"; };
+		668F42912944590100210C03 /* AddNoticeViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoticeViewController1.swift; sourceTree = "<group>"; };
+		668F42932944593A00210C03 /* AddNoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoticeViewModel.swift; sourceTree = "<group>"; };
+		668F42952944595300210C03 /* AddNoticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoticeModel.swift; sourceTree = "<group>"; };
+		668F429729445B7700210C03 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		668F42AE29463F4E00210C03 /* NoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewModel.swift; sourceTree = "<group>"; };
+		668F42B129463F7000210C03 /* NoticeViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController1.swift; sourceTree = "<group>"; };
+		668F42B429463F7C00210C03 /* NoticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeModel.swift; sourceTree = "<group>"; };
+		668F42B629463FE100210C03 /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
 		66ABD625290369490050D048 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		66ABD62929036E3A0050D048 /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		66ABD62B29038EB30050D048 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -138,8 +161,15 @@
 		66ABD63529038F760050D048 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		66ABD63B290394E60050D048 /* NicknameSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameSetViewController.swift; sourceTree = "<group>"; };
 		66E5D5472941EDC1005E4D5C /* BoardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardModel.swift; sourceTree = "<group>"; };
-		66E5D5492941EDC8005E4D5C /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		66E5D54B2941EDD0005E4D5C /* BoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardViewModel.swift; sourceTree = "<group>"; };
+		66E5D54D2941EF8C005E4D5C /* AlarmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmModel.swift; sourceTree = "<group>"; };
+		66E5D5512941EFA0005E4D5C /* AlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewModel.swift; sourceTree = "<group>"; };
+		66E5D5592941F391005E4D5C /* AlarmViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController1.swift; sourceTree = "<group>"; };
+		66E5D5B429420905005E4D5C /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		66E5D5B62942090C005E4D5C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		66E5D5BA2942091B005E4D5C /* HomeViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController1.swift; sourceTree = "<group>"; };
+		66E5D5BC2942092C005E4D5C /* HomeTableViewCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCellView.swift; sourceTree = "<group>"; };
+		66E5D5BE29420934005E4D5C /* HomeTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewModel.swift; sourceTree = "<group>"; };
 		66FBD3C5290D5F55008615C5 /* NoticeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeDetailViewController.swift; sourceTree = "<group>"; };
 		66FBD3C7290D6906008615C5 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		66FBD3C9290D7993008615C5 /* TiemrViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiemrViewController.swift; sourceTree = "<group>"; };
@@ -322,10 +352,11 @@
 			isa = PBXGroup;
 			children = (
 				6661AFF0292319D8003F18B0 /* LoadingView.swift */,
-				665E929328F83BF10090B51F /* UIButton+.swift */,
 				6661AFF429274EA8003F18B0 /* TabBarShadow.swift */,
 				6661B00D29343B47003F18B0 /* KeyboardNotification.swift */,
-				6661B0562937BD8E003F18B0 /* UITableView.swift */,
+				6661B0562937BD8E003F18B0 /* UITableView+.swift */,
+				665E929328F83BF10090B51F /* UIButton+.swift */,
+				668F429729445B7700210C03 /* UILabel+.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -346,6 +377,7 @@
 				6661AFC5291A659E003F18B0 /* Overview */,
 				6661AFC6291A65AF003F18B0 /* UI */,
 				6661B0172935D71A003F18B0 /* LocalizableString.swift */,
+				668F42B629463FE100210C03 /* Notice.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -377,6 +409,34 @@
 				6661B05E293CA617003F18B0 /* DetailTableViewWarningCell.swift */,
 			);
 			path = DetailTable;
+			sourceTree = "<group>";
+		};
+		668F42B029463F6000210C03 /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				668F42932944593A00210C03 /* AddNoticeViewModel.swift */,
+				668F42AE29463F4E00210C03 /* NoticeViewModel.swift */,
+			);
+			path = Notice;
+			sourceTree = "<group>";
+		};
+		668F42B329463F7400210C03 /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				668F42912944590100210C03 /* AddNoticeViewController1.swift */,
+				668F42B129463F7000210C03 /* NoticeViewController1.swift */,
+			);
+			path = Notice;
+			sourceTree = "<group>";
+		};
+		668F42B82946476E00210C03 /* MVVM */ = {
+			isa = PBXGroup;
+			children = (
+				66E5D5362941E81F005E4D5C /* Models */,
+				66E5D5372941E831005E4D5C /* ViewModels */,
+				66E5D5532941F0AA005E4D5C /* ViewControllers */,
+			);
+			path = MVVM;
 			sourceTree = "<group>";
 		};
 		66ABD63129038ECD0050D048 /* Search */ = {
@@ -416,9 +476,7 @@
 		66ABD63429038EEC0050D048 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				66E5D5362941E81F005E4D5C /* Models */,
-				66E5D5352941E80F005E4D5C /* Views */,
-				66E5D5372941E831005E4D5C /* ViewModels */,
+				668F42B82946476E00210C03 /* MVVM */,
 				66ABD62929036E3A0050D048 /* HomeTabBarController.swift */,
 				66ABD63129038ECD0050D048 /* Search */,
 				66ABD63729038F7A0050D048 /* Home */,
@@ -438,18 +496,6 @@
 				6661AFAD291A63FB003F18B0 /* Entity */,
 			);
 			path = Home;
-			sourceTree = "<group>";
-		};
-		66E5D5352941E80F005E4D5C /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				66E5D5462941E8C5005E4D5C /* Board */,
-				66E5D5452941E8C1005E4D5C /* Search */,
-				66E5D5442941E8BC005E4D5C /* Home */,
-				66E5D5432941E8B8005E4D5C /* Alarm */,
-				66E5D5422941E8B1005E4D5C /* Profile */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		66E5D5362941E81F005E4D5C /* Models */ = {
@@ -486,6 +532,7 @@
 		66E5D5392941E859005E4D5C /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				66E5D54D2941EF8C005E4D5C /* AlarmModel.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -493,6 +540,9 @@
 		66E5D53A2941E85F005E4D5C /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				66E5D5B429420905005E4D5C /* HomeModel.swift */,
+				668F42952944595300210C03 /* AddNoticeModel.swift */,
+				668F42B429463F7C00210C03 /* NoticeModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -523,6 +573,7 @@
 		66E5D53E2941E89E005E4D5C /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				66E5D5512941EFA0005E4D5C /* AlarmViewModel.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -530,6 +581,9 @@
 		66E5D53F2941E8A3005E4D5C /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				66E5D5B62942090C005E4D5C /* HomeViewModel.swift */,
+				66E5D5BE29420934005E4D5C /* HomeTableViewModel.swift */,
+				668F42B029463F6000210C03 /* Notice */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -549,38 +603,53 @@
 			path = Board;
 			sourceTree = "<group>";
 		};
-		66E5D5422941E8B1005E4D5C /* Profile */ = {
+		66E5D5532941F0AA005E4D5C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				66E5D5582941F112005E4D5C /* Board */,
+				66E5D5572941F10E005E4D5C /* Search */,
+				66E5D5562941F109005E4D5C /* Home */,
+				66E5D5552941F103005E4D5C /* Alarm */,
+				66E5D5542941F0FC005E4D5C /* Profile */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		66E5D5542941F0FC005E4D5C /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		66E5D5432941E8B8005E4D5C /* Alarm */ = {
+		66E5D5552941F103005E4D5C /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				66E5D5592941F391005E4D5C /* AlarmViewController1.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
 		};
-		66E5D5442941E8BC005E4D5C /* Home */ = {
+		66E5D5562941F109005E4D5C /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				66E5D5BC2942092C005E4D5C /* HomeTableViewCellView.swift */,
+				66E5D5BA2942091B005E4D5C /* HomeViewController1.swift */,
+				668F42B329463F7400210C03 /* Notice */,
 			);
 			path = Home;
 			sourceTree = "<group>";
 		};
-		66E5D5452941E8C1005E4D5C /* Search */ = {
+		66E5D5572941F10E005E4D5C /* Search */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Search;
 			sourceTree = "<group>";
 		};
-		66E5D5462941E8C5005E4D5C /* Board */ = {
+		66E5D5582941F112005E4D5C /* Board */ = {
 			isa = PBXGroup;
 			children = (
-				66E5D5492941EDC8005E4D5C /* BoardView.swift */,
 			);
 			path = Board;
 			sourceTree = "<group>";
@@ -728,22 +797,30 @@
 				66FBD3DC2911F463008615C5 /* AddNoticeViewController.swift in Sources */,
 				66FBD3D2290EDA1B008615C5 /* DirectionViewController.swift in Sources */,
 				6661B00E29343B47003F18B0 /* KeyboardNotification.swift in Sources */,
+				66E5D54E2941EF8C005E4D5C /* AlarmModel.swift in Sources */,
 				6661AFF7292B19FF003F18B0 /* MedicineOverview.swift in Sources */,
 				66FBD3D0290ED9E1008615C5 /* DetailViewController.swift in Sources */,
+				668F42B229463F7000210C03 /* NoticeViewController1.swift in Sources */,
 				665E928B28F7BD660090B51F /* MainViewController.swift in Sources */,
+				66E5D5BD2942092C005E4D5C /* HomeTableViewCellView.swift in Sources */,
+				668F42B729463FE100210C03 /* Notice.swift in Sources */,
 				66FBD3CE290ED8B7008615C5 /* ResultViewController.swift in Sources */,
-				6661B0572937BD8E003F18B0 /* UITableView.swift in Sources */,
+				668F42962944595300210C03 /* AddNoticeModel.swift in Sources */,
+				6661B0572937BD8E003F18B0 /* UITableView+.swift in Sources */,
 				6657ACD529070C540004BD11 /* FindPasswdViewController.swift in Sources */,
+				66E5D5522941EFA0005E4D5C /* AlarmViewModel.swift in Sources */,
 				6661AF6729178E5B003F18B0 /* NoticeListOverview.swift in Sources */,
 				6657ACD7290767750004BD11 /* FindEmailResultViewController.swift in Sources */,
 				6661AFBE291A6515003F18B0 /* ResultTableViewCell.swift in Sources */,
 				66ABD63029038EC70050D048 /* ProfileViewController.swift in Sources */,
 				6661AFEE2921C692003F18B0 /* DetailTableViewCell.swift in Sources */,
+				66E5D55A2941F391005E4D5C /* AlarmViewController1.swift in Sources */,
 				66ABD63C290394E60050D048 /* NicknameSetViewController.swift in Sources */,
 				6661AFCC291B3CBE003F18B0 /* UpdateNoticeViewController.swift in Sources */,
 				6661AFDA291B8ABA003F18B0 /* ResultTableViewCellData.swift in Sources */,
 				66FBD3DA2910BA47008615C5 /* APIInfo.swift in Sources */,
 				6661B05F293CA617003F18B0 /* DetailTableViewWarningCell.swift in Sources */,
+				66E5D5B72942090C005E4D5C /* HomeViewModel.swift in Sources */,
 				6661AFCE291B6305003F18B0 /* MedicineFastAPIOverview.swift in Sources */,
 				6661B002292BA4F8003F18B0 /* AlarmCell.swift in Sources */,
 				6661AFD2291B74A1003F18B0 /* Network.swift in Sources */,
@@ -761,7 +838,8 @@
 				665E929628F882520090B51F /* EmailLoginViewController.swift in Sources */,
 				665E927928F7BD130090B51F /* SceneDelegate.swift in Sources */,
 				66FBD3D4290EDDF6008615C5 /* PictureSearchViewController.swift in Sources */,
-				66E5D54A2941EDC8005E4D5C /* BoardView.swift in Sources */,
+				668F42B529463F7C00210C03 /* NoticeModel.swift in Sources */,
+				668F42922944590100210C03 /* AddNoticeViewController1.swift in Sources */,
 				6661AFBC291A6506003F18B0 /* ResultTableView.swift in Sources */,
 				6661AFB0291A644E003F18B0 /* BookmarkTableView.swift in Sources */,
 				6661AFF1292319D8003F18B0 /* LoadingView.swift in Sources */,
@@ -770,16 +848,22 @@
 				66FBD3C8290D6906008615C5 /* SearchBar.swift in Sources */,
 				66ABD62E29038EC10050D048 /* AlarmViewController.swift in Sources */,
 				66FBD3D6290FEF9F008615C5 /* SearchViewModel.swift in Sources */,
+				66E5D5BF29420934005E4D5C /* HomeTableViewModel.swift in Sources */,
 				6661AFF529274EA8003F18B0 /* TabBarShadow.swift in Sources */,
 				6661AF6929188EE2003F18B0 /* NoticeTableViewCell.swift in Sources */,
 				6661B05929398494003F18B0 /* DetailTableViewImageCell.swift in Sources */,
 				6661AFC3291A653C003F18B0 /* BoardTableViewCell.swift in Sources */,
+				668F42942944593A00210C03 /* AddNoticeViewModel.swift in Sources */,
 				6661B006292BA784003F18B0 /* Alarm.swift in Sources */,
+				66E5D5B529420905005E4D5C /* HomeModel.swift in Sources */,
 				66FBD3DE291239C3008615C5 /* UserInfoOverview.swift in Sources */,
+				66E5D5BB2942091B005E4D5C /* HomeViewController1.swift in Sources */,
 				6661B008292BA79D003F18B0 /* UNNotificationCenter.swift in Sources */,
 				6657ACDB2907EC6D0004BD11 /* PasswdCheckViewController.swift in Sources */,
 				66ABD62C29038EB30050D048 /* SearchViewController.swift in Sources */,
+				668F42AF29463F4E00210C03 /* NoticeViewModel.swift in Sources */,
 				66FBD3C6290D5F55008615C5 /* NoticeDetailViewController.swift in Sources */,
+				668F429829445B7700210C03 /* UILabel+.swift in Sources */,
 				665E929228F7C3370090B51F /* LoginNavigationController.swift in Sources */,
 				665E929B28F88D360090B51F /* EmailSignUpViewController.swift in Sources */,
 			);

@@ -90,12 +90,12 @@ private extension AddNoticeViewController {
                 let urlTitle = (self.titleTextField.text ?? "").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 let urlWriter = (UserDefaults.standard.string(forKey: "nickname")!).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 let urlContent = (self.contentTextView.text ?? "").replacingOccurrences(of: "\n", with: "%5Cn").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                
+
                 let param = "?title=\(urlTitle)&writer=\(urlWriter)&content=\(urlContent)"
-                
+
 //                let url = "\(FastAPI.host + FastAPI.path)/setNotice/\(param)"
                 let url = "\(ubuntuServer.host + ubuntuServer.path)/setNotice/\(param)"
-                
+
                 AF.request(url, method: .post)
                     .response(completionHandler: { response in
                         switch response.result {
@@ -115,10 +115,10 @@ private extension AddNoticeViewController {
                             self.present(alertCon, animated: true)
                         }
                     })
-                
+
                 print(url)
                 print("param: \(param)")
-                
+
             })
             .disposed(by: disposeBag)
     }
@@ -164,6 +164,27 @@ private extension AddNoticeViewController {
         addNoticeButton.snp.makeConstraints {
             $0.top.equalTo(contentTextView.snp.bottom).offset(15)
             $0.trailing.equalToSuperview().inset(30)
+        }
+    }
+}
+
+typealias Alert = (title: String, message: String?)
+extension Reactive where Base: MainViewController {
+    var setAlert: Binder<Alert> {
+        // base -> MainViewController
+        return Binder(base) { base, data in
+            let alertController = UIAlertController(
+                title: data.title,
+                message: data.message,
+                preferredStyle: .alert
+            )
+            let alertAction = UIAlertAction(
+                title: "확인",
+                style: .cancel,
+                handler: nil
+            )
+            alertController.addAction(alertAction)
+            base.present(alertController, animated: true, completion: nil)
         }
     }
 }
